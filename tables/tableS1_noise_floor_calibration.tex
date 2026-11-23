@@ -1,0 +1,25 @@
+\begin{table*}[t]
+\centering
+\scriptsize
+\caption{Calibrated noise floor estimates (sigma\_hat\_D) from 100-station Classical Inversion across all 12 domains.}
+\label{tab:supp_noise_floor_calibration}
+\begin{tabular}{lcccccc}
+\toprule
+Domain & Regime & N Cal. & Eval dc (km/s) & Calibrated $\hat{\sigma}$\_D & GT Noise Floor (Eval) & Ratio $\hat{\sigma}$\_D / GT \\
+\midrule
+LongBeach (Tuning 30\%) & Shallow & 300 & 2.5e-05 & 0.00612 & -- & -- \\
+CSRM (Validation) & Deep & 300 & 5.0e-03 & 0.01356 & -- & -- \\
+LongBeach-Matched (Val) & Shallow & 100 & 2.5e-05 & 0.00924 & 0.00963 & 0.96$\times$ \\
+Shallow Benchmark (Val) & Shallow & 100 & 2.5e-05 & 0.00932 & 0.00983 & 0.95$\times$ \\
+Deep Benchmark (Val) & Deep & 100 & 5.0e-03 & 0.02584 & 0.01347 & 1.92$\times$ \\
+Shallow Multi-Structure & Shallow & 100 & 2.5e-05 & 0.00881 & 0.00967 & 0.91$\times$ \\
+Shallow Prior-Shift & Shallow & 100 & 2.5e-05 & 0.00992 & 0.00977 & 1.02$\times$ \\
+Deep Lithospheric & Deep & 100 & 5.0e-03 & 0.02417 & 0.01329 & 1.82$\times$ \\
+Noise Scan 0.5$\times$ & Shallow & 100 & 2.5e-05 & 0.00456 & 0.00491 & 0.93$\times$ \\
+Noise Scan 1.0$\times$ & Shallow & 100 & 2.5e-05 & 0.00927 & 0.00972 & 0.95$\times$ \\
+Noise Scan 2.0$\times$ & Shallow & 100 & 2.5e-05 & 0.01845 & 0.01935 & 0.95$\times$ \\
+Noise Scan 4.0$\times$ & Shallow & 100 & 2.5e-05 & 0.03759 & 0.03969 & 0.95$\times$ \\
+\bottomrule
+\end{tabular}
+\par\vspace{2pt}\noindent\footnotesize{\textit{Calibrated L2 trust-region bounds $\Delta$ (km/s): OpenSWI shallow = 0.2445, OpenSWI deep = 0.0821, DispFormer shallow = 0.1713, DispFormer deep = 0.0784. Deep Lithospheric uses its dedicated calibration split ($\hat{\sigma}$\_D = 0.02417, ratio = 1.82$\times$ vs GT 0.01329).}}
+\end{table*}

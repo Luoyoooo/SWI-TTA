@@ -1,0 +1,24 @@
+\begin{table*}[t]
+\centering
+\scriptsize
+\caption{Synthetic benchmark Resolvable-Depth Vs RMSE and field Held-Out Dispersion Misfit across all evaluated pipelines.}
+\label{tab:benchmark_overview}
+\begin{tabular}{lccccccc}
+\toprule
+Method & LB-Matched RMSE ($\Delta$\%) & Shallow Bench. RMSE ($\Delta$\%) & Deep Bench. RMSE ($\Delta$\%) & Shallow Tail (conv. dc) & LB Report HO (Tail) & CSRM Report HO (Tail) & LB Time (ms) \\
+\midrule
+Zero-Shot (Raw) & 0.1118 (-5.16\%) & 0.0597 (+71.76\%) & 0.1845 (+39.26\%) & 5.17\% & 8.33\% (0.32\%) & 2.13\% (0.00\%) & 0.14 \\
+Input-Aligned Zero-Shot & 0.1179 (+0.00\%) & 0.0347 (+0.00\%) & 0.1325 (+0.00\%) & 4.07\% & 3.75\% (0.92\%) & 1.23\% (0.11\%) & 0.03 \\
+Ungated Adapter (Raw) & 0.0700 (-40.63\%) & 0.0367 (+5.59\%) & 0.2094 (+58.07\%) & 0.03\% & 1.88\% (0.00\%) & 1.21\% (0.00\%) & 5221.23 \\
+Gated Adapter (Raw) & 0.0719 (-39.03\%) & 0.0385 (+10.79\%) & 0.1597 (+20.56\%) & 0.13\% & 1.90\% (0.00\%) & 1.20\% (0.00\%) & 5221.23 \\
+Soft-Gated Output-Refined (Raw) & 0.0549 (-53.47\%) & 0.0639 (+83.90\%) & 0.1802 (+36.00\%) & 13.61\% & 1.18\% (0.43\%) & 1.17\% (0.00\%) & 5225.44 \\
+Output-Refined (Raw) & 0.0530 (-55.07\%) & 0.0556 (+59.97\%) & 0.1895 (+43.06\%) & 7.80\% & 1.14\% (0.00\%) & 1.14\% (0.00\%) & 5225.45 \\
+Adapter + Output-Refined (Raw) & 0.0522 (-55.77\%) & 0.0520 (+49.71\%) & 0.1818 (+37.20\%) & 6.92\% & 1.00\% (0.01\%) & 0.94\% (0.00\%) & 5226.64 \\
+Output-Space Refinement & 0.0566 (-52.01\%) & 0.0324 (-6.74\%) & 0.1614 (+21.86\%) & 1.36\% & 0.81\% (0.00\%) & 1.10\% (0.00\%) & 5225.35 \\
+Low-DOF Adapter & 0.0681 (-42.28\%) & 0.0300 (-13.58\%) & 0.1404 (+6.00\%) & 0.07\% & 1.59\% (0.00\%) & 0.96\% (0.00\%) & 5220.60 \\
+Gated Adapter + Output-Refined & 0.0498 (-57.79\%) & 0.0305 (-12.13\%) & 0.1699 (+28.21\%) & 0.01\% & 0.83\% (0.00\%) & 1.04\% (0.00\%) & 5226.03 \\
+Classical Inversion (500-sta) & -- & -- & -- & -- & 0.66\% (--) & 1.43\% (--) & 908612.7 \\
+\bottomrule
+\end{tabular}
+\par\vspace{2pt}\noindent\footnotesize{\textit{Synthetic RMSE reports judged-checkpoint mean Resolvable-Depth Vs RMSE (km/s) with relative change vs Input-Aligned Zero-Shot. Field columns report 4-checkpoint mean Held-Out Dispersion Misfit median (\%) and tail failure rate (>20\% HO) evaluated at converged disba step sizes (dc = 2.5e-5 km/s shallow, dc = 5e-3 km/s deep).}}
+\end{table*}

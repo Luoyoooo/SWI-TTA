@@ -1,0 +1,56 @@
+# Synthetic benchmarks, held-out synthetic diagnostic domains, and field array configurations.
+
+paths:
+  raw_data_dir: data/raw
+  splits_dir: data/splits
+  results_summary_dir: results_summary
+  figures_dir: figures
+  tables_dir: tables
+
+regimes:
+  shallow:
+    depth_layers: 70
+    period_band_s: [0.20, 10.0]
+    field_effective_band_s: [0.26, 1.67]
+    resolvable_ref_depth_km: [0.0, 0.5]
+    compute_group_velocity: false
+    remove_group_input: true
+    disba_dc_km_s: 0.000025
+    velocity_bounds_km_s: [0.08, 4.45]
+  deep:
+    depth_layers: 301
+    period_band_s: [1.0, 100.0]
+    field_effective_band_s: [8.0, 70.0]
+    resolvable_ref_depth_km: [10.0, 100.0]
+    compute_group_velocity: true
+    remove_group_input: false
+    disba_dc_km_s: 0.005
+    velocity_bounds_km_s: [0.15, 4.98]
+
+field_datasets:
+  longbeach:
+    display_name: "LongBeach Dense Array"
+    total_stations: 5297
+    min_valid_periods: 10
+    spatial_split_file: data/splits/longbeach_blocks.json
+    heldout_period_file: data/splits/heldout_periods.json
+    tuning_ratio: 0.30
+    report_ratio: 0.70
+    slice_depths_km: [0.12, 0.24, 0.36, 0.48]
+    reference_depth_max_km: 1.36
+  csrm:
+    display_name: "China Seismological Reference Model (CSRM)"
+    total_grid_points: 12705
+    min_valid_periods: 10
+    spatial_split_file: data/splits/csrm_blocks.json
+    heldout_period_file: data/splits/heldout_periods.json
+    validation_ratio: 0.30
+    report_ratio: 0.70
+    slice_depths_km: [15.0, 35.0, 60.0, 90.0]
+    reference_depth_max_km: 120.0
+
+diagnostic_signature_bins:
+  edges: [0.0, 1.0, 1.5, 2.0, 3.0, 5.0, 10.0, 20.0, .inf]
+  min_bin_count: 30
+  bootstrap_resamples: 2000
+  bootstrap_seed: 20261123

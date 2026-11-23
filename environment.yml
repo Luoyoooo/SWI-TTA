@@ -1,0 +1,19 @@
+name: swi-tta-diagnostics
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - pip
+  - numpy>=1.26
+  - scipy>=1.11
+  - matplotlib>=3.8
+  - pyyaml>=6.0
+  - requests>=2.31
+  - tqdm>=4.66
+  - pytest>=8.0
+  - pip:
+      - disba==0.7.0
+      - numba>=0.59
+      - torch>=2.1
+      - -e .

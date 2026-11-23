@@ -1,0 +1,86 @@
+# Backbone architectures, forward surrogate ensemble, and test-time adaptation hyperparameters.
+
+backbones:
+  openswi_transformer:
+    shallow:
+      model_dim: 64
+      num_heads: 8
+      num_layers: 3
+      output_dim: 70
+      official_output_dim: 72
+      slice_dim: 70
+      scale_factor: 4.5
+    deep:
+      model_dim: 128
+      num_heads: 8
+      num_layers: 3
+      output_dim: 301
+      slice_dim: 301
+      scale_factor: 5.0
+  dispformer:
+    shallow:
+      model_dim: 64
+      num_heads: 8
+      num_layers: 3
+      output_dim: 70
+      slice_dim: 70
+      scale_factor: 4.5
+      grid_mapping: identity
+    deep:
+      model_dim: 128
+      num_heads: 8
+      num_layers: 3
+      output_dim: 301
+      slice_dim: 301
+      scale_factor: 6.5
+      grid_mapping: identity
+    deep_official:
+      model_dim: 128
+      num_heads: 8
+      num_layers: 3
+      output_dim: 400
+      slice_dim: 301
+      scale_factor: 6.5
+      grid_mapping: pair_avg_halfspace_301
+
+surrogate_ensemble:
+  num_members: 4
+  architectures:
+    - dilated_resnet
+    - se_pyramid
+    - unet1d
+    - depth_transformer
+  dense_period_grid_points: 96
+  eps_rel: 0.05
+
+adaptation:
+  low_dof_adapter:
+    scope: norm_adapter
+    gate_mode: soft
+    gate_granularity: point
+    tau_quantile: 0.95
+    lr: 0.002
+    num_steps: 50
+    batch_size: 256
+    lambda_prior: 0.05
+    grad_clip: 1.0
+    min_valid_weight_ratio: 0.10
+  output_space_refinement:
+    lr_aligned: 0.02
+    lr_raw: 0.06
+    num_steps: 50
+    check_interval: 5
+    lambda_prior: 0.05
+    batch_size_shallow: 1024
+    batch_size_deep: 512
+    grad_clip_per_station: null
+  holdout_early_stopping:
+    stop_split_ratio: 0.20
+    stop_split_seed: 20261121
+    stop_split_keep_endpoints: true
+    check_interval: 5
+  pre_registered_safe_tta:
+    candidate_alphas: [1.0, 1.25, 1.5, 2.0]
+    truth_gate_max_rel_change_pct: 2.0
+    validation_checkpoint_passed: false
+    validation_checkpoint_reason: no_alpha_passed_truth_gate

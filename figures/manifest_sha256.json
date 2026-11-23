@@ -1,0 +1,269 @@
+{
+  "schema_version": "1.0",
+  "dpi_png": 600,
+  "formats": [
+    "pdf",
+    "png",
+    "svg"
+  ],
+  "n_figures": 15,
+  "total_size_bytes": 26531108,
+  "total_size_mb": 25.302,
+  "figures": {
+    "fig01_workflow_and_protocol": {
+      "pdf": {
+        "relative_path": "main/fig01_workflow_and_protocol.pdf",
+        "size_bytes": 46456,
+        "sha256": "1f5b42abb170be89ba54baf2f9ba8142655fc0f67c822d73a68c3eb382f52067"
+      },
+      "png": {
+        "relative_path": "main/fig01_workflow_and_protocol.png",
+        "size_bytes": 705557,
+        "sha256": "c875e7c0fdbf1d8d8e29199b85dbcaccfd45476453f335fe5eaf36c1abb31a57"
+      },
+      "svg": {
+        "relative_path": "main/fig01_workflow_and_protocol.svg",
+        "size_bytes": 57936,
+        "sha256": "7c2e65bbd310405a6ee5950ce7baa10814a4ef04bfb247984867536250532de0"
+      }
+    },
+    "fig02_benchmark_overview": {
+      "pdf": {
+        "relative_path": "main/fig02_benchmark_overview.pdf",
+        "size_bytes": 42564,
+        "sha256": "262f5438304d9df1a7ece9bc164956ca0f821be2f2f51a9cd738815a94610b29"
+      },
+      "png": {
+        "relative_path": "main/fig02_benchmark_overview.png",
+        "size_bytes": 693090,
+        "sha256": "a3805c90f9dbf93f9896c55daa6e3f8c322e7f3d8b3e6b427cc5698943a1f2c4"
+      },
+      "svg": {
+        "relative_path": "main/fig02_benchmark_overview.svg",
+        "size_bytes": 64441,
+        "sha256": "d0af1ed3f0f2109a2724619ec5c24a522045428b26394ac77b225d25dff5b8bc"
+      }
+    },
+    "fig03_disba_root_skipping": {
+      "pdf": {
+        "relative_path": "main/fig03_disba_root_skipping.pdf",
+        "size_bytes": 49727,
+        "sha256": "a32fa90c5d86a16bbcfbc91c12d9c9e6bd096c5b44cbbe704b6cf2b41dacbb81"
+      },
+      "png": {
+        "relative_path": "main/fig03_disba_root_skipping.png",
+        "size_bytes": 956965,
+        "sha256": "be02ba49afb9f495247c460ffcae35506886a83527104a9b092cd5eb12bb4695"
+      },
+      "svg": {
+        "relative_path": "main/fig03_disba_root_skipping.svg",
+        "size_bytes": 93765,
+        "sha256": "d405f6d851067e17d01b7bc05531de9ad5783362d6df53b055e53564179ef41c"
+      }
+    },
+    "fig04_openswi_signature_curves": {
+      "pdf": {
+        "relative_path": "main/fig04_openswi_signature_curves.pdf",
+        "size_bytes": 41155,
+        "sha256": "7c00754b002ba88202645a9f7cf4b90dd40c5fcdcd8c547a6d93d25bcf3d1fe2"
+      },
+      "png": {
+        "relative_path": "main/fig04_openswi_signature_curves.png",
+        "size_bytes": 998017,
+        "sha256": "7dafe40e286bbea9da420f70844a54f2099f092674f9b9a0e38d59bb1ca90650"
+      },
+      "svg": {
+        "relative_path": "main/fig04_openswi_signature_curves.svg",
+        "size_bytes": 91444,
+        "sha256": "7c1f5952591ebd06e514b74bd92fe6460ab9f33b73c30cbf35fa963f53ff8880"
+      }
+    },
+    "fig05_cross_backbone_signatures": {
+      "pdf": {
+        "relative_path": "main/fig05_cross_backbone_signatures.pdf",
+        "size_bytes": 41800,
+        "sha256": "7add9acd29bb062f3bd677c7f003b943289f1a5115f58e47ee37ba665bee68e2"
+      },
+      "png": {
+        "relative_path": "main/fig05_cross_backbone_signatures.png",
+        "size_bytes": 743723,
+        "sha256": "00ba4315e83fd2b6d8e444a1e6807eebfc14876f65b82730038fbfde4cbef298"
+      },
+      "svg": {
+        "relative_path": "main/fig05_cross_backbone_signatures.svg",
+        "size_bytes": 92881,
+        "sha256": "28068a3f9058ff987479e4ad23da7eb9822ff854f54f1a6b5dad4993dc506a37"
+      }
+    },
+    "fig06_noise_amplitude_scan": {
+      "pdf": {
+        "relative_path": "main/fig06_noise_amplitude_scan.pdf",
+        "size_bytes": 38141,
+        "sha256": "6cc0cf72d2e931f6898e44dbdc35c4a45112dc9d347351f3e6ab163db6247660"
+      },
+      "png": {
+        "relative_path": "main/fig06_noise_amplitude_scan.png",
+        "size_bytes": 538847,
+        "sha256": "1b51a8c1f18ae5977c7859a7710ae9c924c36d70cafa5ac709a8f7d54398b1eb"
+      },
+      "svg": {
+        "relative_path": "main/fig06_noise_amplitude_scan.svg",
+        "size_bytes": 51707,
+        "sha256": "f52dd68d98d825e5943a21cb50c61924001fc6689878a0bca1eb044591c71ea9"
+      }
+    },
+    "fig07_safe_tta_failure_attribution": {
+      "pdf": {
+        "relative_path": "main/fig07_safe_tta_failure_attribution.pdf",
+        "size_bytes": 52548,
+        "sha256": "c7061039712b44e2e4d11ba06a3d3dfcb4bbeee2d7ba459e24f0d7193a5bb0df"
+      },
+      "png": {
+        "relative_path": "main/fig07_safe_tta_failure_attribution.png",
+        "size_bytes": 1038394,
+        "sha256": "cc9f827e924777a821a915155f56c21224d23386ee252e0defeeca739e3cff7c"
+      },
+      "svg": {
+        "relative_path": "main/fig07_safe_tta_failure_attribution.svg",
+        "size_bytes": 96413,
+        "sha256": "934994662760d854fbbdf4008ffd283adbc538d6c40e53e736b4be443e127518"
+      }
+    },
+    "fig08_longbeach_slices": {
+      "pdf": {
+        "relative_path": "main/fig08_longbeach_slices.pdf",
+        "size_bytes": 343980,
+        "sha256": "10a32b593a58b6f43baab0c86e6960eef21c6fd5e5e3f46041dd2d8f8717864a"
+      },
+      "png": {
+        "relative_path": "main/fig08_longbeach_slices.png",
+        "size_bytes": 4316388,
+        "sha256": "a217df6426da4634c24c25f7181636118c3c8376a845126620616fcf544ed0f5"
+      },
+      "svg": {
+        "relative_path": "main/fig08_longbeach_slices.svg",
+        "size_bytes": 517937,
+        "sha256": "c00047c26e15183c9a0c06e4f146a49b7f0177737d44e694496587d292906dce"
+      }
+    },
+    "fig09_csrm_slices_and_station": {
+      "pdf": {
+        "relative_path": "main/fig09_csrm_slices_and_station.pdf",
+        "size_bytes": 388935,
+        "sha256": "d38308c3e6909af506a7d57f89f267d6273bb6a13f39ad27594ff6595129913a"
+      },
+      "png": {
+        "relative_path": "main/fig09_csrm_slices_and_station.png",
+        "size_bytes": 6203427,
+        "sha256": "b80233decd54d0d017fc789feb8b94972f34ab3d5a9c0fa67fb0bb473ebb8dac"
+      },
+      "svg": {
+        "relative_path": "main/fig09_csrm_slices_and_station.svg",
+        "size_bytes": 598094,
+        "sha256": "2334c26112eca75435c59386d2b44ae170e3478a159d494b311bf6bf85d39a72"
+      }
+    },
+    "figS01_iteration_curves_and_lag": {
+      "pdf": {
+        "relative_path": "supplementary/figS01_iteration_curves_and_lag.pdf",
+        "size_bytes": 47265,
+        "sha256": "b2ae7e6e29544b3b40c71d4fde2bfc1b25f624d0d660d2571a06ba5ab9918cb9"
+      },
+      "png": {
+        "relative_path": "supplementary/figS01_iteration_curves_and_lag.png",
+        "size_bytes": 1080162,
+        "sha256": "b427466ba95f0b8128c21e27b75a730ae1224241d89b305a9c26eb6272c63c6b"
+      },
+      "svg": {
+        "relative_path": "supplementary/figS01_iteration_curves_and_lag.svg",
+        "size_bytes": 123734,
+        "sha256": "e6554b31df64cb6dd4322ec2503d264c718844d454c50d6c363bccb2e4e9814c"
+      }
+    },
+    "figS02_lvz_counterfactual_examples": {
+      "pdf": {
+        "relative_path": "supplementary/figS02_lvz_counterfactual_examples.pdf",
+        "size_bytes": 73150,
+        "sha256": "7f3028a8591f67d64cd4f88f1e37198c17d1c225c720808206b3ee86ff167699"
+      },
+      "png": {
+        "relative_path": "supplementary/figS02_lvz_counterfactual_examples.png",
+        "size_bytes": 1308531,
+        "sha256": "d364f701c5340fb25a8bd2bbedc02ef24e2425d6ff7dd28efd36e2d9eb6be4fa"
+      },
+      "svg": {
+        "relative_path": "supplementary/figS02_lvz_counterfactual_examples.svg",
+        "size_bytes": 278409,
+        "sha256": "ca41ae07238826e127973828f8e9c7cbca3951bf518058e37ed9c20f543d4c80"
+      }
+    },
+    "figS03_old_vs_new_dc_scatter": {
+      "pdf": {
+        "relative_path": "supplementary/figS03_old_vs_new_dc_scatter.pdf",
+        "size_bytes": 56061,
+        "sha256": "d8124ae405ef8fc28d3da341b02be0144547f954a45acf19114b1c62d7ef7824"
+      },
+      "png": {
+        "relative_path": "supplementary/figS03_old_vs_new_dc_scatter.png",
+        "size_bytes": 857563,
+        "sha256": "6bd79fda06ea805c31b48e20ba9c0e0954bacbcad9180ec533507ff1577cb5d8"
+      },
+      "svg": {
+        "relative_path": "supplementary/figS03_old_vs_new_dc_scatter.svg",
+        "size_bytes": 139571,
+        "sha256": "adaca3434cbc6a6f0b4a1249b77f527b1311ad674d326b9325f239fb59e7c09b"
+      }
+    },
+    "figS04_safe_tta_alpha_sensitivity": {
+      "pdf": {
+        "relative_path": "supplementary/figS04_safe_tta_alpha_sensitivity.pdf",
+        "size_bytes": 48050,
+        "sha256": "9203f846d1c08a1528ccc9707f5f011041cc55f6b7206da7df0c7b47cc515ce5"
+      },
+      "png": {
+        "relative_path": "supplementary/figS04_safe_tta_alpha_sensitivity.png",
+        "size_bytes": 913626,
+        "sha256": "74e936fb19f08166a43ccc3a216b6b996f8e7598dbda736f30eca88a6ce465fb"
+      },
+      "svg": {
+        "relative_path": "supplementary/figS04_safe_tta_alpha_sensitivity.svg",
+        "size_bytes": 88710,
+        "sha256": "fb9875a49662efd3d48b5c621f7879cbc8ee38b7aaf624d3dd7586dddbb95eb4"
+      }
+    },
+    "figS05_field_spatial_misfit_and_data": {
+      "pdf": {
+        "relative_path": "supplementary/figS05_field_spatial_misfit_and_data.pdf",
+        "size_bytes": 123842,
+        "sha256": "a6f0cc09dc0c01627e3c9484fc144a6801313c77c3a7834570bab80f4589b709"
+      },
+      "png": {
+        "relative_path": "supplementary/figS05_field_spatial_misfit_and_data.png",
+        "size_bytes": 1797947,
+        "sha256": "7a57c9e573cdaa4abefd4220085a662c3a802483ec805b34b3465d4aa4eabc22"
+      },
+      "svg": {
+        "relative_path": "supplementary/figS05_field_spatial_misfit_and_data.svg",
+        "size_bytes": 234849,
+        "sha256": "c4b0411d1941779855450e869a3962cfca60ce8dacd96fa1f5217921a57a9468"
+      }
+    },
+    "graphical_abstract": {
+      "pdf": {
+        "relative_path": "graphical_abstract.pdf",
+        "size_bytes": 48126,
+        "sha256": "69081678e0520141dbd760bc62c5d9e1a8cbc832874e3b514ed756a04055cd62"
+      },
+      "png": {
+        "relative_path": "graphical_abstract.png",
+        "size_bytes": 363008,
+        "sha256": "514a6f2164c0da0295f3a3b06298b80bc4be8f3d602183c428fc49167b91e61a"
+      },
+      "svg": {
+        "relative_path": "graphical_abstract.svg",
+        "size_bytes": 44172,
+        "sha256": "72f3a2d2baafa0c253f7f4b009ad77b545938b0582ba47e1475447b8da4a85f6"
+      }
+    }
+  }
+}

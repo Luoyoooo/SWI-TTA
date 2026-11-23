@@ -1,0 +1,26 @@
+# Physics referee (disba) forward-modeling and root-search convergence settings.
+# All relative paths are resolved from the repository root.
+
+physics_referee:
+  solver: disba
+  wave: rayleigh
+  fundamental_mode: 0
+  empirical_relations:
+    vp_from_vs: brocher_2005_eq9
+    mantle_depth_threshold_km: 120.0
+    mantle_vp_vs_ratio: 1.79
+    rho_from_vp: brocher_2005_eq1_nafe_drake
+    min_vs_floor_km_s: 0.05
+    min_thickness_km: 0.0001
+  root_search_step_km_s:
+    default: 0.005
+    shallow_converged: 0.000025
+    deep_converged: 0.005
+  retry_factor_on_empty: 0.2
+  convergence_tolerance:
+    max_pct_changed_gt_0p1pp: 1.0
+    max_pct_cross_tail_threshold: 0.1
+    tail_misfit_threshold: 0.20
+  parallelism:
+    max_workers: 20
+    default_workers: 8

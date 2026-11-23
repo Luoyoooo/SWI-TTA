@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+title: "swi-tta-diagnostics: Diagnostic Framework for Test-Time Adaptation in Surface-Wave Dispersion Inversion"
+message: "If you use this software, benchmark diagnostics, or figure-reproduction scripts in your research, please cite the accompanying manuscript and archived release."
+type: software
+version: "1.0.0"
+date-released: "2026-11-23"
+license: MIT
+repository-code: "https://github.com/swi-tta-diagnostics/swi-tta-diagnostics"
+keywords:
+  - surface-wave dispersion inversion
+  - test-time adaptation
+  - disba root-finding convergence
+  - seismic velocity tomography
+  - noise-floor diagnostics
+  - geophysics machine learning
+authors:
+  - family-names: "Mao"
+    given-names: "Rui"
+    affiliation: "Corresponding Author (complete affiliation prior to publication)"
+preferred-citation:
+  type: article
+  title: "When Does Test-Time Adaptation Help or Harm Deep Surface-Wave Dispersion Inversion? Noise-Floor Regimes, Forward-Solver Pitfalls, and Cross-Backbone Diagnostics"
+  journal: "Computers & Geosciences"
+  year: 2026
+  authors:
+    - family-names: "Mao"
+      given-names: "Rui"

@@ -1,0 +1,42 @@
+# Unlabeled noise-floor calibration (sigma_hat_D) and trust-region half-widths (Delta).
+# Noise floors are estimated by converged classical global inversion (3 random starts,
+# 20,000 target forward evaluations) evaluated under the converged disba root-search step.
+
+noise_floor_calibration:
+  classical_inversion_budget:
+    target_nfev: 20000
+    popsize: 16
+    num_initializations: 3
+    internal_dc_km_s: 0.005
+    eval_dc_shallow_km_s: 0.000025
+    eval_dc_deep_km_s: 0.005
+  sigma_hat_d:
+    longbeach_tuning: 0.00611648628010533
+    csrm_validation: 0.013558571715482293
+    longbeach_matched_val: 0.009237418652285036
+    shallow_benchmark_val: 0.009317551491711337
+    deep_benchmark_val: 0.025843549798306283
+    shallow_multi_structure: 0.008809278328145886
+    shallow_prior_shift: 0.009919848018425412
+    deep_lithospheric: 0.02416589723283842
+    noise_0p5x: 0.00456019694008785
+    noise_1p0x: 0.00927004898281339
+    noise_2p0x: 0.018445600524257345
+    noise_4p0x: 0.0375878999536996
+  ground_truth_noise_floor_eval_median:
+    longbeach_matched_val: 0.009633786807377937
+    shallow_benchmark_val: 0.0098298955555279
+    deep_benchmark_val: 0.013469695306049082
+    shallow_multi_structure: 0.00966854546270723
+    shallow_prior_shift: 0.009771405384333506
+    deep_lithospheric: 0.013289561546567415
+    noise_0p5x: 0.0049084204078679436
+    noise_1p0x: 0.009723774820035835
+    noise_2p0x: 0.01934929723979739
+    noise_4p0x: 0.03969422544425251
+
+trust_region_delta_p95:
+  openswi_shallow: 0.24448588626402742
+  openswi_deep: 0.08206540277923507
+  dispformer_shallow: 0.17132119168371007
+  dispformer_deep: 0.07836882503262516

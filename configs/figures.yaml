@@ -1,0 +1,36 @@
+# Elsevier / Computers & Geosciences publication figure styling and export settings.
+
+journal_standard:
+  journal: "Computers & Geosciences"
+  publisher: "Elsevier"
+  single_column_mm: 90.0
+  double_column_mm: 190.0
+  max_height_mm: 240.0
+  png_dpi: 600
+  graphical_abstract_min_px: [1328, 531]
+  graphical_abstract_aspect: 2.5
+  formats: ["pdf", "png", "svg"]
+  font_family: "sans-serif"
+  font_sans_serif: ["DejaVu Sans", "Arial", "Helvetica"]
+  pdf_fonttype: 42
+  ps_fonttype: 42
+  svg_fonttype: "none"
+  svg_hashsalt: "swi-tta-diagnostics-cg"
+
+palette_okabe_ito:
+  blue: "#0072B2"
+  vermilion: "#D55E00"
+  bluish_green: "#009E73"
+  orange: "#E69F00"
+  sky_blue: "#56B4E9"
+  reddish_purple: "#CC79A7"
+  yellow: "#F0E442"
+  black: "#111111"
+  dark_gray: "#4D4D4D"
+  light_gray: "#D0D7DE"
+
+outputs:
+  main_dir: figures/main
+  supplementary_dir: figures/supplementary
+  graphical_abstract_stem: figures/graphical_abstract
+  manifest_path: figures/manifest_sha256.json

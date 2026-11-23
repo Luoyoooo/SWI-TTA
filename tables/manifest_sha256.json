@@ -1,0 +1,79 @@
+{
+  "schema_version": "1.0",
+  "n_tables": 6,
+  "total_size_bytes": 36187,
+  "tables": {
+    "table1_benchmark_comparison": {
+      "md": {
+        "relative_path": "table1_benchmark_comparison.md",
+        "size_bytes": 2064,
+        "sha256": "20b89b9f5194689e6b541a71dc041cb6ed8dea2d444f33974cad34e86c0fea73"
+      },
+      "tex": {
+        "relative_path": "table1_benchmark_comparison.tex",
+        "size_bytes": 2347,
+        "sha256": "f6869220131070acbb005d3ad8d80d440449aa7a2014eee62ba05b0d2fb00fbf"
+      }
+    },
+    "table2_referee_convergence_and_tails": {
+      "md": {
+        "relative_path": "table2_referee_convergence_and_tails.md",
+        "size_bytes": 1934,
+        "sha256": "8a2dd0cdc6af3de14b8e2cfc9881abaca77d04e89bb27241c08cf2f42c297a22"
+      },
+      "tex": {
+        "relative_path": "table2_referee_convergence_and_tails.tex",
+        "size_bytes": 2162,
+        "sha256": "59c913ee08a0c076929c9a1e1aab085b58c2e47224e2fbdaa50e5e32050872d8"
+      }
+    },
+    "table3_cross_backbone_diagnostics": {
+      "md": {
+        "relative_path": "table3_cross_backbone_diagnostics.md",
+        "size_bytes": 2487,
+        "sha256": "fb1844244624b833981bb3067b564c371aa7fd4bade47aed6c5ff2ca1a017955"
+      },
+      "tex": {
+        "relative_path": "table3_cross_backbone_diagnostics.tex",
+        "size_bytes": 2815,
+        "sha256": "a764241ea17f5d8da65f7ba1c5266da7d111c46785f2fa19f27dfc86b1733c1b"
+      }
+    },
+    "table4_safe_tta_validation_audit": {
+      "md": {
+        "relative_path": "table4_safe_tta_validation_audit.md",
+        "size_bytes": 1576,
+        "sha256": "879bce1f9671d0e493a26ebeabd602e354df635be3be3e8d91c5b5d80fb6dc52"
+      },
+      "tex": {
+        "relative_path": "table4_safe_tta_validation_audit.tex",
+        "size_bytes": 1893,
+        "sha256": "dbeabf733f6a2ebdfeac5b4583d14ae3e0ae32fdcbe3e3fe98147626e225a791"
+      }
+    },
+    "tableS1_noise_floor_calibration": {
+      "md": {
+        "relative_path": "tableS1_noise_floor_calibration.md",
+        "size_bytes": 1420,
+        "sha256": "8bed9c0399f493556123bc89ff02280d9109efec504fe717aa3ec644b6d26ab1"
+      },
+      "tex": {
+        "relative_path": "tableS1_noise_floor_calibration.tex",
+        "size_bytes": 1734,
+        "sha256": "785d20088669a6af6ac32f7597651d6c4bc06164b28aaae14ec90c970f4aa2a3"
+      }
+    },
+    "tableS2_signature_bins": {
+      "md": {
+        "relative_path": "tableS2_signature_bins.md",
+        "size_bytes": 7681,
+        "sha256": "c831d2d3995c8872bfd1ba07f32c51a2abfae9eed75eb94a779c953fd7a5100c"
+      },
+      "tex": {
+        "relative_path": "tableS2_signature_bins.tex",
+        "size_bytes": 8074,
+        "sha256": "6d716f5d9e522c5e57d62e25136a7ccd6dee28d824e6ef92fa89d9aca4e3c27a"
+      }
+    }
+  }
+}

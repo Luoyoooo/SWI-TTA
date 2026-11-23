@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0",
+  "total_size_bytes": 5240998,
+  "total_size_mb": 4.9982,
+  "files": {
+    "benchmark_overview.json": {
+      "size_bytes": 127646,
+      "sha256": "b81d1678b36659b6d549a8730c580cebbc41edf21b50108bafd674e3dd516333"
+    },
+    "calibration_and_domains.json": {
+      "size_bytes": 15112,
+      "sha256": "3a61ac0da38429dc871f7fa0951208a46e9ff24e6653e58d85058c02209f2569"
+    },
+    "cross_backbone_diagnostics.json": {
+      "size_bytes": 1636263,
+      "sha256": "2b9af61e72bcafafd05c3b61786d745b454c26e656f79752761f01ddba0a755a"
+    },
+    "field_slices_csrm.npz": {
+      "size_bytes": 616431,
+      "sha256": "1d998a3121c74f1829d9f1f890efad47da834e1372448ecfcbe4bd278d831358"
+    },
+    "field_slices_longbeach.npz": {
+      "size_bytes": 288518,
+      "sha256": "f4e06a3ab6989797d968ff381dde1feb4e9ea2181b72af66c15809ab9fbe46dd"
+    },
+    "resampling_boxplots.npz": {
+      "size_bytes": 103386,
+      "sha256": "338b5af8e66f455dcdbe60d63cd7f07eba7aec9333154876b0543c28a59f684d"
+    },
+    "root_skipping_diagnostics.json": {
+      "size_bytes": 359965,
+      "sha256": "bc0e711660f257e38238cb4672678ad230d6130bffd4a816ffe6d990358cf6d0"
+    },
+    "root_skipping_scatter.npz": {
+      "size_bytes": 226374,
+      "sha256": "a5b60b7d1b1fbe8c8dc55594411751b95c90d0edb1ea93706bf521fd4f6b39e9"
+    },
+    "safe_tta_validation_audit.json": {
+      "size_bytes": 1867303,
+      "sha256": "8edc05de8145a4e4e1620b055b6d8f12bf6f79af969b977cbdc06e0bb9a41af1"
+    }
+  }
+}

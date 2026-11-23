@@ -1,0 +1,73 @@
+"""Inversion backbone architectures, forward surrogate ensembles, and lightweight adapters."""
+
+from __future__ import annotations
+
+from swi_tta.models.adapters import (
+    AdaptedOpenSWITransformer,
+    FeatureStatsCalibrator,
+    snapshot_frozen_parameters,
+    verify_frozen_parameters_unchanged,
+)
+from swi_tta.models.backbones import (
+    DispFormerBackbone,
+    LocalFeatureExtraction,
+    MaskedConv1d,
+    OpenSWITransformer,
+    PeriodPositionalEncoding,
+    load_dispformer_checkpoint,
+    load_openswi_checkpoint,
+    map_dispformer_official_400_to_301,
+    predict_batches,
+    prepare_openswi_input,
+    strip_module_prefix,
+)
+from swi_tta.models.surrogate import (
+    DEFAULT_DEEP_GRID,
+    DEFAULT_SHALLOW_GRID,
+    SURROGATE_ARCH_NAMES,
+    SurrogateDepthTransformer,
+    SurrogateDilatedResNet1D,
+    SurrogateEnsemble,
+    SurrogateSEPyramid1D,
+    SurrogateUNet1D,
+    brocher_physics_features,
+    build_surrogate,
+    catmull_rom_interp,
+    default_dense_grid,
+    load_surrogate_ensemble,
+    load_surrogate_member,
+    save_surrogate_checkpoint,
+)
+
+__all__ = [
+    "AdaptedOpenSWITransformer",
+    "DEFAULT_DEEP_GRID",
+    "DEFAULT_SHALLOW_GRID",
+    "DispFormerBackbone",
+    "FeatureStatsCalibrator",
+    "LocalFeatureExtraction",
+    "MaskedConv1d",
+    "OpenSWITransformer",
+    "PeriodPositionalEncoding",
+    "SURROGATE_ARCH_NAMES",
+    "SurrogateDepthTransformer",
+    "SurrogateDilatedResNet1D",
+    "SurrogateEnsemble",
+    "SurrogateSEPyramid1D",
+    "SurrogateUNet1D",
+    "brocher_physics_features",
+    "build_surrogate",
+    "catmull_rom_interp",
+    "default_dense_grid",
+    "load_dispformer_checkpoint",
+    "load_openswi_checkpoint",
+    "load_surrogate_ensemble",
+    "load_surrogate_member",
+    "map_dispformer_official_400_to_301",
+    "predict_batches",
+    "prepare_openswi_input",
+    "save_surrogate_checkpoint",
+    "snapshot_frozen_parameters",
+    "strip_module_prefix",
+    "verify_frozen_parameters_unchanged",
+]

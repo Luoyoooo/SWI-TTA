@@ -1,0 +1,70 @@
+### Table S2. Complete Eight-Bin Noise-Floor-Normalized Diagnostic Signatures
+
+| Domain & Backbone | Misfit / GT Bin | N (Share %) | 50-step Med ΔRMSE (IQR) | Holdout ES Med ΔRMSE | Ideal ES Med ΔRMSE |
+| --- | --- | --- | --- | --- | --- |
+| Shallow Multi-Structure — OpenSWI (All) | [0, 1) | 1378 (1.6%) | +156.67% [+53.7, +320.1] | +43.68% | +0.00% |
+| Shallow Multi-Structure — OpenSWI (All) | [1, 1.5) | 34097 (39.7%) | +144.73% [+48.8, +314.5] | +56.32% | +0.00% |
+| Shallow Multi-Structure — OpenSWI (All) | [1.5, 2) | 16889 (19.7%) | +77.28% [+7.4, +211.4] | +27.51% | +0.00% |
+| Shallow Multi-Structure — OpenSWI (All) | [2, 3) | 12643 (14.7%) | +25.96% [-21.9, +127.5] | +1.67% | -10.97% |
+| Shallow Multi-Structure — OpenSWI (All) | [3, 5) | 7590 (8.8%) | -13.78% [-48.8, +36.2] | -16.43% | -31.92% |
+| Shallow Multi-Structure — OpenSWI (All) | [5, 10) | 5430 (6.3%) | -48.90% [-65.9, -12.1] | -45.78% | -53.95% |
+| Shallow Multi-Structure — OpenSWI (All) | [10, 20) | 3635 (4.2%) | -59.68% [-71.9, -37.2] | -59.11% | -64.57% |
+| Shallow Multi-Structure — OpenSWI (All) | [20, inf) | 4214 (4.9%) | -75.13% [-82.9, -61.6] | -80.26% | -85.18% |
+| Shallow Multi-Structure — DispFormer (All) | [0, 1) | 556 (0.9%) | +33.08% [-9.3, +89.7] | -- | -4.18% |
+| Shallow Multi-Structure — DispFormer (All) | [1, 1.5) | 14351 (22.3%) | +3.63% [-31.9, +58.1] | -- | -25.72% |
+| Shallow Multi-Structure — DispFormer (All) | [1.5, 2) | 12440 (19.3%) | -14.35% [-42.3, +27.7] | -- | -36.88% |
+| Shallow Multi-Structure — DispFormer (All) | [2, 3) | 14332 (22.3%) | -27.89% [-50.0, +3.3] | -- | -44.10% |
+| Shallow Multi-Structure — DispFormer (All) | [3, 5) | 12216 (19.0%) | -34.85% [-55.7, -9.7] | -- | -45.66% |
+| Shallow Multi-Structure — DispFormer (All) | [5, 10) | 7356 (11.4%) | -36.33% [-58.3, -11.1] | -- | -42.76% |
+| Shallow Multi-Structure — DispFormer (All) | [10, 20) | 2608 (4.0%) | -26.33% [-56.8, +4.1] | -- | -31.04% |
+| Shallow Multi-Structure — DispFormer (All) | [20, inf) | 548 (0.9%) | -10.83% [-51.4, +24.8] | -- | -17.32% |
+| Shallow Prior-Shift — OpenSWI (All) | [0, 1) | 459 (0.5%) | +98.47% [+27.2, +258.0] | +12.98% | +0.00% |
+| Shallow Prior-Shift — OpenSWI (All) | [1, 1.5) | 12177 (14.2%) | +69.38% [+12.7, +176.0] | +13.20% | +0.00% |
+| Shallow Prior-Shift — OpenSWI (All) | [1.5, 2) | 9694 (11.3%) | +6.54% [-32.0, +65.6] | +0.00% | -13.45% |
+| Shallow Prior-Shift — OpenSWI (All) | [2, 3) | 12043 (14.0%) | -20.83% [-50.9, +20.2] | -20.19% | -33.96% |
+| Shallow Prior-Shift — OpenSWI (All) | [3, 5) | 12995 (15.1%) | -42.81% [-62.9, -7.8] | -39.29% | -48.46% |
+| Shallow Prior-Shift — OpenSWI (All) | [5, 10) | 16198 (18.9%) | -57.35% [-68.2, -35.8] | -53.38% | -59.28% |
+| Shallow Prior-Shift — OpenSWI (All) | [10, 20) | 11247 (13.1%) | -60.16% [-70.2, -46.4] | -58.08% | -63.28% |
+| Shallow Prior-Shift — OpenSWI (All) | [20, inf) | 11063 (12.9%) | -73.47% [-82.2, -58.3] | -78.69% | -83.56% |
+| Shallow Prior-Shift — DispFormer (All) | [0, 1) | 198 (0.3%) | +6.47% [-25.9, +49.6] | -- | -11.92% |
+| Shallow Prior-Shift — DispFormer (All) | [1, 1.5) | 9224 (14.3%) | -16.19% [-43.8, +22.7] | -- | -31.37% |
+| Shallow Prior-Shift — DispFormer (All) | [1.5, 2) | 8098 (12.6%) | -30.66% [-51.7, -0.2] | -- | -43.43% |
+| Shallow Prior-Shift — DispFormer (All) | [2, 3) | 11934 (18.5%) | -38.03% [-56.1, -14.3] | -- | -47.40% |
+| Shallow Prior-Shift — DispFormer (All) | [3, 5) | 12746 (19.8%) | -42.92% [-60.5, -21.0] | -- | -50.25% |
+| Shallow Prior-Shift — DispFormer (All) | [5, 10) | 12947 (20.1%) | -46.52% [-65.6, -18.2] | -- | -52.30% |
+| Shallow Prior-Shift — DispFormer (All) | [10, 20) | 7300 (11.3%) | -41.37% [-64.3, +3.9] | -- | -46.45% |
+| Shallow Prior-Shift — DispFormer (All) | [20, inf) | 1960 (3.0%) | -22.27% [-60.2, +21.9] | -- | -28.88% |
+| Deep Lithospheric — OpenSWI (All) | [0, 1) | 4857 (12.6%) | +9.36% [-4.5, +31.9] | +0.00% | -2.25% |
+| Deep Lithospheric — OpenSWI (All) | [1, 1.5) | 11740 (30.4%) | +3.73% [-8.7, +23.0] | +0.00% | -6.58% |
+| Deep Lithospheric — OpenSWI (All) | [1.5, 2) | 5423 (14.0%) | -2.49% [-14.4, +10.6] | -5.59% | -12.10% |
+| Deep Lithospheric — OpenSWI (All) | [2, 3) | 5441 (14.1%) | -8.16% [-21.4, +3.8] | -9.38% | -16.64% |
+| Deep Lithospheric — OpenSWI (All) | [3, 5) | 4326 (11.2%) | -13.11% [-26.5, +0.3] | -12.30% | -19.65% |
+| Deep Lithospheric — OpenSWI (All) | [5, 10) | 2844 (7.4%) | -11.23% [-28.2, +24.9] | -9.05% | -18.51% |
+| Deep Lithospheric — OpenSWI (All) | [10, 20) | 1507 (3.9%) | +72.23% [+7.8, +159.6] | +6.93% | +0.00% |
+| Deep Lithospheric — OpenSWI (All) | [20, inf) | 2544 (6.6%) | +135.71% [+76.0, +239.1] | +47.97% | +0.00% |
+| Deep Lithospheric — DispFormer (All) | [0, 1) | 570 (2.6%) | -2.52% [-15.0, +25.3] | -- | -9.33% |
+| Deep Lithospheric — DispFormer (All) | [1, 1.5) | 5375 (24.3%) | -5.16% [-16.7, +11.5] | -- | -13.11% |
+| Deep Lithospheric — DispFormer (All) | [1.5, 2) | 4884 (22.1%) | -9.14% [-19.7, +2.4] | -- | -16.74% |
+| Deep Lithospheric — DispFormer (All) | [2, 3) | 5578 (25.2%) | -11.79% [-22.0, -2.2] | -- | -19.81% |
+| Deep Lithospheric — DispFormer (All) | [3, 5) | 2809 (12.7%) | -14.19% [-25.6, -4.3] | -- | -20.36% |
+| Deep Lithospheric — DispFormer (All) | [5, 10) | 1088 (4.9%) | -2.56% [-24.3, +43.3] | -- | -14.20% |
+| Deep Lithospheric — DispFormer (All) | [10, 20) | 815 (3.7%) | +44.26% [+16.4, +102.7] | -- | +0.00% |
+| Deep Lithospheric — DispFormer (All) | [20, inf) | 985 (4.5%) | +44.20% [+28.7, +71.1] | -- | +0.00% |
+| Deep Lithospheric — OpenSWI (Retrained-only) | [0, 1) | 3309 (10.0%) | +13.25% [-1.1, +38.1] | +0.00% | -1.01% |
+| Deep Lithospheric — OpenSWI (Retrained-only) | [1, 1.5) | 9203 (27.8%) | +5.26% [-7.6, +25.1] | +0.00% | -6.54% |
+| Deep Lithospheric — OpenSWI (Retrained-only) | [1.5, 2) | 4975 (15.0%) | -2.32% [-14.5, +10.7] | -5.86% | -12.42% |
+| Deep Lithospheric — OpenSWI (Retrained-only) | [2, 3) | 5195 (15.7%) | -8.31% [-21.6, +3.4] | -9.65% | -16.88% |
+| Deep Lithospheric — OpenSWI (Retrained-only) | [3, 5) | 4151 (12.5%) | -13.37% [-26.6, -0.5] | -12.55% | -20.05% |
+| Deep Lithospheric — OpenSWI (Retrained-only) | [5, 10) | 2682 (8.1%) | -12.59% [-29.2, +17.4] | -10.59% | -19.68% |
+| Deep Lithospheric — OpenSWI (Retrained-only) | [10, 20) | 1371 (4.1%) | +70.99% [+3.2, +161.1] | +6.47% | +0.00% |
+| Deep Lithospheric — OpenSWI (Retrained-only) | [20, inf) | 2270 (6.8%) | +150.61% [+85.3, +255.4] | +53.66% | +0.00% |
+| Deep Lithospheric — DispFormer (Retrained-only) | [0, 1) | 156 (0.9%) | +15.24% [-0.5, +37.4] | -- | -5.21% |
+| Deep Lithospheric — DispFormer (Retrained-only) | [1, 1.5) | 2999 (18.1%) | +0.19% [-15.3, +19.0] | -- | -15.43% |
+| Deep Lithospheric — DispFormer (Retrained-only) | [1.5, 2) | 3649 (22.0%) | -7.93% [-21.0, +5.2] | -- | -19.58% |
+| Deep Lithospheric — DispFormer (Retrained-only) | [2, 3) | 4815 (29.0%) | -12.27% [-23.1, -1.4] | -- | -21.39% |
+| Deep Lithospheric — DispFormer (Retrained-only) | [3, 5) | 2602 (15.7%) | -14.70% [-26.2, -4.4] | -- | -20.99% |
+| Deep Lithospheric — DispFormer (Retrained-only) | [5, 10) | 967 (5.8%) | -4.98% [-25.5, +35.3] | -- | -15.74% |
+| Deep Lithospheric — DispFormer (Retrained-only) | [10, 20) | 699 (4.2%) | +49.51% [+14.7, +107.1] | -- | +0.00% |
+| Deep Lithospheric — DispFormer (Retrained-only) | [20, inf) | 691 (4.2%) | +51.08% [+28.3, +85.1] | -- | +0.00% |
+
+*Asterisk (*) marks low-count bins (n < 200). On Deep Lithospheric [0, 1), excluding the official checkpoint reveals consistent below-floor degradation across both architectures (OpenSWI +13.25%, DispFormer +15.24%).*

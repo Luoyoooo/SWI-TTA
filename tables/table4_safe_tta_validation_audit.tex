@@ -1,0 +1,22 @@
+\begin{table*}[t]
+\centering
+\scriptsize
+\caption{Pre-Registered Safe-TTA validation truth gate across alpha, outcome-group decomposition, and deep high-misfit attribution.}
+\label{tab:safe_tta_audit}
+\begin{tabular}{lccccc}
+\toprule
+Section / Setting & LB-Matched (Val) $\Delta$RMSE & Shallow Bench. (Val) $\Delta$RMSE & Deep Bench. (Val) $\Delta$RMSE & LB Tuning HO (Tail) & Truth Gate ($\le$+2\%) \\
+\midrule
+Safe-TTA ($\alpha$ = 1) & -50.63\% [-54.50, -46.08] & +19.60\% [+17.10, +22.18] & +2.07\% [+1.16, +3.02] & 1.01\% (0.00\%) & FAIL \\
+Safe-TTA ($\alpha$ = 1.25) & -50.17\% [-54.11, -45.54] & +12.43\% [+10.22, +14.71] & +2.38\% [+1.53, +3.29] & 1.01\% (0.00\%) & FAIL \\
+Safe-TTA ($\alpha$ = 1.5) & -49.23\% [-53.34, -44.62] & +2.78\% [+0.96, +4.60] & +2.85\% [+2.03, +3.72] & 1.02\% (0.00\%) & FAIL \\
+Safe-TTA ($\alpha$ = 2) & -45.91\% [-49.87, -41.43] & -12.26\% [-13.52, -10.98] & +3.54\% [+2.79, +4.34] & 1.15\% (0.00\%) & FAIL \\
+$\alpha$=1.25 Group: Step-0 Stop & +0.00\% (1.4\% sta) & +0.00\% (19.5\% sta) & +0.00\% (76.6\% sta) & -- & -- \\
+$\alpha$=1.25 Group: Mid-Stop & -10.71\% (28.4\% sta) & +8.31\% (32.5\% sta) & -2.89\% (15.8\% sta) & -- & -- \\
+$\alpha$=1.25 Group: Ran 50 Steps & -39.46\% (70.2\% sta) & +4.12\% (38.9\% sta) & +5.27\% (7.3\% sta) & -- & -- \\
+$\alpha$=1.25 Group: Reverted & +0.00\% (0.0\% sta) & +0.00\% (9.1\% sta) & +0.00\% (0.3\% sta) & -- & -- \\
+Deep >5$\hat{\sigma}$\_D Attribution (7 ckpts) & Aligned misfit: 19.0--38.2\% & GT misfit: 1.33--1.40\% & Full GT: 1.35\% & >10 km $\Delta$SqErr: 80--153\% & Model Failure \\
+\bottomrule
+\end{tabular}
+\par\vspace{2pt}\noindent\footnotesize{\textit{Pre-registered validation truth gate requires $\Delta$Resolvable-Depth Vs RMSE $\le$ +2.0\% on all three validation benchmarks simultaneously. No $\alpha$ passed (0/4); $\alpha$ = 1.25 is audited in detail as the closest candidate.}}
+\end{table*}

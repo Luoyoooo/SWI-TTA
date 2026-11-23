@@ -42,8 +42,8 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/cageo/swi-tta-diagnostics"
-Repository = "https://github.com/cageo/swi-tta-diagnostics"
+Homepage = "https://github.com/Luoyoooo/swi-tta-diagnostics"
+Repository = "https://github.com/Luoyoooo/swi-tta-diagnostics"
 
 [project.optional-dependencies]
 dev = [

@@ -164,7 +164,7 @@ python scripts/run_mechanism_audit.py --summary-check
 - **Program language**: Python (3.10–3.11)
 - **Software required**: `numpy`, `scipy`, `torch`, `disba` (>= 0.7.0), `matplotlib`, `pyyaml`, `pillow`, `pytest` (exact versions locked in `requirements-lock.txt` and `environment.yml`).
 - **Program size**: 0.41 MB for source code, scripts, configurations, documentation, and tests (`src/`, `scripts/`, `configs/`, `docs/`, `tests/`, root metadata); 5.00 MB for the compact reproduction archive (`results_summary/`); 2.86 MB for split manifests and checksums (`data/`); 25.4 MB for pre-rendered publication figures (`figures/`) and tables (`tables/`); 33.7 MB total repository working tree.
-- **The source codes are available for downloading at the link**: <https://github.com/cageo/swi-tta-diagnostics>
+- **The source codes are available for downloading at the link**: <https://github.com/Luoyoooo/swi-tta-diagnostics>
 
 ---
 
@@ -178,7 +178,7 @@ If you use this diagnostic framework, converged `disba` referee protocol, or ben
   author  = {Mao, Rui},
   journal = {Computers \& Geosciences},
   year    = {2026},
-  url     = {https://github.com/cageo/swi-tta-diagnostics},
+  url     = {https://github.com/Luoyoooo/swi-tta-diagnostics},
   note    = {Software archive: swi-tta-diagnostics (v1.0.0)}
 }
 ```

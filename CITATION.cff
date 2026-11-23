@@ -5,8 +5,8 @@ type: software
 version: "1.0.0"
 date-released: "2026-11-23"
 license: MIT
-repository-code: "https://github.com/cageo/swi-tta-diagnostics"
-url: "https://github.com/cageo/swi-tta-diagnostics"
+repository-code: "https://github.com/Luoyoooo/swi-tta-diagnostics"
+url: "https://github.com/Luoyoooo/swi-tta-diagnostics"
 keywords:
   - surface-wave dispersion inversion
   - test-time adaptation

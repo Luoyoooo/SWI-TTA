@@ -41,6 +41,10 @@ dependencies = [
     "tqdm>=4.66",
 ]
 
+[project.urls]
+Homepage = "https://github.com/cageo/swi-tta-diagnostics"
+Repository = "https://github.com/cageo/swi-tta-diagnostics"
+
 [project.optional-dependencies]
 dev = [
     "pytest>=8.0",

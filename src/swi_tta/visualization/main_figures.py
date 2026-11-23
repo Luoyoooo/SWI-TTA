@@ -129,12 +129,12 @@ def make_fig01_workflow_and_protocol(
 
     # Panel (a): Diagnostic Evaluation Architecture
     ax_a = fig.add_subplot(gs[0])
-    ax_a.set_xlim(0.0, 1.0)
-    ax_a.set_ylim(0.0, 1.0)
+    ax_a.set_xlim(-0.02, 1.02)
+    ax_a.set_ylim(-0.02, 1.02)
     ax_a.axis("off")
     ax_a.text(
-        0.005,
-        0.95,
+        0.0,
+        0.97,
         "(a) Zero-Leakage Diagnostic Evaluation Architecture",
         fontsize=8.6,
         fontweight="bold",
@@ -193,12 +193,12 @@ def make_fig01_workflow_and_protocol(
 
     # Panel (b): Four-Step Safe-TTA Operational Protocol
     ax_b = fig.add_subplot(gs[1])
-    ax_b.set_xlim(0.0, 1.0)
-    ax_b.set_ylim(0.0, 1.0)
+    ax_b.set_xlim(-0.02, 1.02)
+    ax_b.set_ylim(-0.02, 1.02)
     ax_b.axis("off")
     ax_b.text(
-        0.005,
-        0.97,
+        0.0,
+        0.98,
         "(b) Four-Step Operational Protocol for Safe Surface-Wave Test-Time Adaptation",
         fontsize=8.5,
         fontweight="bold",
@@ -299,7 +299,7 @@ def make_fig01_workflow_and_protocol(
 
     ax_b.text(0.514, 0.75, "Safe\nSkip", fontsize=5.8, color=PALETTE["teal"], ha="center", fontweight="bold")
     ax_b.text(0.518, 0.515, "TTA", fontsize=5.8, color=PALETTE["blue"], ha="center", fontweight="bold")
-    ax_b.text(0.506, 0.17, "Audit /\nFallback", fontsize=5.7, color=PALETTE["vermillion"], ha="center", fontweight="bold")
+    ax_b.text(0.506, 0.105, "Audit /\nFallback", fontsize=5.7, color=PALETTE["vermillion"], ha="center", va="center", fontweight="bold")
 
     return save_figure(fig, out_stem, formats=formats, dpi=dpi)
 
@@ -324,14 +324,14 @@ def make_graphical_abstract(
     fig = plt.figure(figsize=(7.5, 3.0), dpi=dpi)
     fig.patch.set_facecolor("white")
 
-    # Top title banner
+    # Top title banner sized cleanly inside 7.5 in canvas with generous left/right margins
     fig.text(
         0.5,
         0.955,
-        "When Does Test-Time Adaptation Help Surface-Wave Inversion?  Physics Referee & Noise-Floor Regime Diagnostics",
+        "When Does Test-Time Adaptation Help Surface-Wave Inversion? Physics Referee & Noise-Floor Diagnostics",
         ha="center",
         va="top",
-        fontsize=8.6,
+        fontsize=7.6,
         fontweight="bold",
         color="#111111",
     )
@@ -339,12 +339,12 @@ def make_graphical_abstract(
     gs = gridspec.GridSpec(
         1,
         3,
-        left=0.055,
-        right=0.985,
+        left=0.060,
+        right=0.980,
         bottom=0.17,
         top=0.83,
         wspace=0.28,
-        width_ratios=[0.95, 1.35, 1.0],
+        width_ratios=[0.95, 1.35, 1.02],
     )
 
     # Panel 1: Hidden Evaluation Pitfall (disba root-skipping collapse)
@@ -403,50 +403,60 @@ def make_graphical_abstract(
     ax2.set_title("2. Noise-Floor Regime Signature", fontsize=7.8, fontweight="bold", color=PALETTE["blue"])
     ax2.legend(loc="upper right", fontsize=5.7, handlelength=1.4)
 
-    # Panel 3: Operational Safe-TTA Decision Guide
+    # Panel 3: Operational Safe-TTA Decision Guide (dimensionless ratio r_0 = m_0 / sigma_hat_D)
     ax3 = fig.add_subplot(gs[2])
-    ax3.set_xlim(0.0, 1.0)
-    ax3.set_ylim(0.0, 1.0)
+    ax3.set_xlim(-0.02, 1.02)
+    ax3.set_ylim(-0.02, 1.04)
     ax3.axis("off")
-    ax3.set_title("3. Four-Step Safe Protocol", fontsize=7.8, fontweight="bold", color=PALETTE["teal"])
+    ax3.set_title("3. Four-Step Safe Protocol", fontsize=7.8, fontweight="bold", color=PALETTE["teal"], pad=6)
+    ax3.text(
+        0.5,
+        0.995,
+        r"Dimensionless ratio $r_0 = m_0 / \hat{\sigma}_D$",
+        ha="center",
+        va="top",
+        fontsize=5.9,
+        color="#333333",
+        style="italic",
+    )
     _draw_box(
         ax3,
         0.015,
-        0.69,
+        0.64,
         0.97,
-        0.27,
-        "Below Floor ($r_0 < 1.5 - 2.0\\,\\hat{\\sigma}_D$)",
+        0.26,
+        "Below Floor ($r_0 < 1.5$–$2.0$)",
         "Keep Input-Aligned Zero-Shot\n(avoid noise-floor overfitting)",
         PALETTE["safe_tint"],
         PALETTE["teal"],
         fontsize_title=6.1,
-        fontsize_body=5.7,
+        fontsize_body=5.6,
     )
     _draw_box(
         ax3,
         0.015,
-        0.36,
+        0.33,
         0.97,
-        0.27,
-        "Moderate OOD ($2 - 5\\,\\hat{\\sigma}_D$)",
+        0.26,
+        r"Moderate OOD ($2.0 \leq r_0 \leq 5.0$)",
         "Output-Space Refinement + Holdout ES\n(depth-resolvable regularization)",
         PALETTE["info_tint"],
         PALETTE["blue"],
         fontsize_title=6.1,
-        fontsize_body=5.7,
+        fontsize_body=5.6,
     )
     _draw_box(
         ax3,
         0.015,
-        0.03,
+        0.02,
         0.97,
-        0.27,
-        "Severe Tail ($> 5\\,\\hat{\\sigma}_D$)",
+        0.26,
+        r"Severe Tail ($r_0 > 5.0$)",
         "Audit exact disba & depth smoothness\nor fall back to Classical Inversion",
         PALETTE["warn_tint"],
         PALETTE["vermillion"],
         fontsize_title=6.1,
-        fontsize_body=5.7,
+        fontsize_body=5.6,
     )
 
     # Note: bbox_inches=None preserves the exact 5:2 canvas dimensions (2700 x 1080 px)
@@ -491,9 +501,9 @@ def make_fig02_benchmark_overview(
         {
             "zero_shot_raw": (-8, -11),
             "zero_shot_aligned": (8, 8),
-            "low_dof_adapter": (12, -10),
-            "output_refined_aligned": (16, 10),
-            "adapter_output_refined_aligned": (16, -6),
+            "low_dof_adapter": (7, -1),
+            "output_refined_aligned": (26, 26),
+            "adapter_output_refined_aligned": (6, -15),
         },
         {
             "zero_shot_raw": (-8, -12),
@@ -570,12 +580,12 @@ def make_fig02_benchmark_overview(
         )
         ax.text(
             gt_nf + 0.015 * xr,
-            yl_top - 0.14 * (yl_top - yl_bot) if idx < 2 else yl_bot + 0.04 * (yl_top - yl_bot),
+            yl_top - 0.14 * (yl_top - yl_bot),
             f"GT floor {gt_nf:.2f}%",
             color="#555555",
             fontsize=5.3,
             ha="left",
-            va="top" if idx < 2 else "bottom",
+            va="top",
             rotation=90,
         )
 
@@ -671,7 +681,7 @@ def make_fig03_disba_root_skipping(
 
     # Panel (a): Counterfactual & Direct dc Sensitivity on Shallow Tail Cases
     ax = axes[0, 0]
-    cats = ["Original\n(dc=5e-3)", "LVZ-Raised\n(dc=5e-3)", "Restore >z_res\n(dc=5e-3)", "ZS Aligned\n(dc=5e-3)", "Original\n(dc=2e-4)"]
+    cats = ["Original\n(dc=5e-3)", "LVZ-Raised\n(dc=5e-3)", "Restore $>z_{\\mathrm{res}}$\n(dc=5e-3)", "ZS Aligned\n(dc=5e-3)", "Original\n(dc=2e-4)"]
     vals_p3 = [
         cf["output_refined_aligned"]["tail"]["original"]["ho_median"] * 100.0,
         cf["output_refined_aligned"]["tail"]["lvz_raised"]["ho_median"] * 100.0,
@@ -760,6 +770,7 @@ def make_fig03_disba_root_skipping(
     ax.set_xscale("log")
     ax.set_yscale("log")
     ax.invert_xaxis()
+    ax.set_ylim(5.5, 520.0)
     ax.set_xlabel("disba Phase-Velocity Step dc (km/s, finer →)")
     ax.set_ylabel("Median Forward Runtime (ms / station)")
     ax.set_title("Per-Regime Convergence & Compute Cost", fontsize=8.0)
@@ -769,9 +780,9 @@ def make_fig03_disba_root_skipping(
     ax.annotate(
         f"Shallow selected: dc=2.5e-5\n({sh_sel_t:.1f} ms; Δ>0.1pp={sh_ru['pct_changed_gt_0p1pp']:.3f}%)",
         xy=(2.5e-5, sh_sel_t),
-        xytext=(0.12, 0.72),
+        xytext=(0.38, 0.56),
         textcoords="axes fraction",
-        fontsize=5.9,
+        fontsize=5.8,
         color="#005B42",
         bbox=dict(boxstyle="round,pad=0.22", facecolor=PALETTE["safe_tint"], edgecolor=PALETTE["teal"], lw=0.7),
         arrowprops=dict(arrowstyle="->", color=PALETTE["teal"], lw=0.9),
@@ -779,14 +790,14 @@ def make_fig03_disba_root_skipping(
     ax.annotate(
         f"Deep selected: dc=5e-3\n({dp_sel_t:.1f} ms; Δ>0.1pp={dp_ru['pct_changed_gt_0p1pp']:.3f}%)",
         xy=(5e-3, dp_sel_t),
-        xytext=(0.06, 0.28),
+        xytext=(0.16, 0.25),
         textcoords="axes fraction",
-        fontsize=5.9,
+        fontsize=5.8,
         color="#8C3800",
         bbox=dict(boxstyle="round,pad=0.22", facecolor=PALETTE["warn_tint"], edgecolor=PALETTE["vermillion"], lw=0.7),
         arrowprops=dict(arrowstyle="->", color=PALETTE["vermillion"], lw=0.9),
     )
-    ax.legend(loc="lower right", fontsize=6.0)
+    ax.legend(loc="upper right", fontsize=5.8)
     add_panel_label(ax, "(c)", x=-0.12, y=1.04)
 
     # Panel (d): Shallow Benchmark Tail Failure Rate Collapse (>20% HO Misfit)
@@ -1233,8 +1244,8 @@ def make_fig07_safe_tta_failure_attribution(
         max(b["methods"]["safe_tta_alpha_1p25"]["mean_rel_change_vs_aligned_pct"] for b in dp_ret),
         max(b["methods"]["output_refined_step50"]["mean_rel_change_vs_aligned_pct"] for b in dp_all),
     )
-    ax.set_ylim(-26, max(75.0, y_max_dp * 1.15))
-    ax.text(5.95, ax.get_ylim()[1] * 0.94, "High-misfit\ndegradation", ha="center", va="top", fontsize=5.6, color="#9A2D00", fontweight="bold")
+    ax.set_ylim(-26, max(124.0, y_max_dp * 1.26))
+    ax.text(5.92, ax.get_ylim()[1] * 0.96, "High-misfit\ndegradation", ha="center", va="top", fontsize=5.6, color="#9A2D00", fontweight="bold")
     ax.set_xticks(bx_d)
     ax.set_xticklabels(blabs_d, rotation=28, ha="right", fontsize=6.1)
     ax.set_xlabel(r"Zero-Shot (Aligned) Misfit / $\hat{\sigma}_D$")
@@ -1265,10 +1276,12 @@ def make_fig07_safe_tta_failure_attribution(
             for dk, _ in ds_specs
         ]
         bars = ax.bar(x + (gi - 1.5) * w, vals, w, color=gcol, label=glbl)
-        for bar, v in zip(bars, vals):
+        for bi, (bar, v) in enumerate(zip(bars, vals)):
             if abs(v) >= 0.4:
+                # Nudge +8.3% bar label slightly left on Shallow Benchmark (Val) to clear Net Total diamond
+                dx = -0.11 if (gk == "mid_stop" and bi == 1) else 0.0
                 ax.text(
-                    bar.get_x() + bar.get_width() / 2,
+                    bar.get_x() + bar.get_width() / 2 + dx,
                     v + (1.0 if v >= 0 else -1.4),
                     f"{v:+.1f}%",
                     ha="center",
@@ -1282,7 +1295,7 @@ def make_fig07_safe_tta_failure_attribution(
     ax.set_xticks(x)
     ax.set_xticklabels([s[1] for s in ds_specs], fontsize=6.4)
     ax.set_ylabel("Signed Contribution to Δ $V_s$ RMSE (%)")
-    ax.set_ylim(-58, 22)
+    ax.set_ylim(-58, 25)
     ax.set_title("Outcome-Group Error Attribution (α = 1.25)", fontsize=7.9)
     ax.legend(loc="lower right", ncol=2, fontsize=5.5, columnspacing=0.65)
     add_panel_label(ax, "(c)", x=-0.13, y=1.04)
@@ -1491,7 +1504,7 @@ def make_fig09_csrm_slices_and_station(
             if r == 0:
                 ax.set_title(cname, fontsize=6.9, fontweight="bold", pad=3)
             if c == 0:
-                ax.set_ylabel(f"z = {depths[r]:.0f} km\nLat (°N)", fontsize=6.4)
+                ax.set_ylabel(f"({chr(97 + r)}) z = {depths[r]:.0f} km\nLat (°N)", fontsize=6.3)
                 ax.tick_params(axis="y", labelsize=5.7)
             else:
                 ax.set_yticklabels([])
@@ -1517,7 +1530,7 @@ def make_fig09_csrm_slices_and_station(
     km = z["station_1__kept_mask"] > 0
     hm = z["station_1__ho_mask"] > 0
 
-    ax_d.axvspan(10.0, 14.0, color="#FFF3CD", alpha=0.55, zorder=0, label="10–14 s held-out band")
+    ax_d.axvspan(10.0, 14.0, color="#FFF3CD", alpha=0.55, zorder=0, label="10–14 s short-period bump")
     ax_d.plot(T[km[:, 0]], ph_obs[km[:, 0]], "o", color="#1A1A1A", ms=3.5, label="Obs. Phase (kept)")
     ax_d.plot(T[hm[:, 0]], ph_obs[hm[:, 0]], "D", mfc="white", mec="#1A1A1A", ms=4.2, mew=0.9, label="Obs. Phase (held-out)")
     ax_d.plot(T[km[:, 1]], gp_obs[km[:, 1]], "^", color="#555555", ms=3.3, label="Obs. Group (kept)")
@@ -1539,9 +1552,9 @@ def make_fig09_csrm_slices_and_station(
 
     ax_d.set_xlabel("Period (s)")
     ax_d.set_ylabel("Rayleigh Phase / Group Velocity (km/s)")
-    ax_d.set_ylim(2.65, 4.02)
+    ax_d.set_ylim(2.65, 4.28)
     ax_d.set_title(f"(e) Station #{st_id} ({st_xy[0]:.2f}°E, {st_xy[1]:.2f}°N): Dispersion Fit", fontsize=7.9)
-    ax_d.legend(loc="upper left", bbox_to_anchor=(0.13, 0.99), fontsize=5.1, ncol=2, columnspacing=0.55, handlelength=1.3)
+    ax_d.legend(loc="upper left", bbox_to_anchor=(0.01, 0.99), fontsize=5.0, ncol=2, columnspacing=0.55, handlelength=1.3)
 
     # Panel (f): Station #10067 1D Vs(z) Profile
     ax_v = fig.add_subplot(gs_bot[1])

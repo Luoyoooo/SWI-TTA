@@ -79,15 +79,19 @@ def make_figS01_iteration_curves_and_lag(
         lag = int(c_out["lag_best_ho_minus_best_rmse_steps"])
         ax.axvline(b_rmse, color=PALETTE["vermillion"], lw=0.85, ls=":")
         ax.axvline(b_ho, color=PALETTE["blue"], lw=0.85, ls=":")
+        if col == 2:
+            # Give clean headroom above the rising Deep Benchmark RMSE curve (steps 35-50)
+            y_lo_c, y_hi_c = ax.get_ylim()
+            ax.set_ylim(y_lo_c, y_hi_c + 0.34 * (y_hi_c - y_lo_c))
         ax.text(
             0.97,
             0.96,
-            f"Best RMSE: step {b_rmse}\nBest HO: step {b_ho}\nLag: {lag:+d} steps",
+            f"Output-Ref.:\nBest RMSE: step {b_rmse}\nBest HO: step {b_ho}\nLag: {lag:+d} steps",
             transform=ax.transAxes,
             ha="right",
             va="top",
-            fontsize=5.6,
-            bbox=dict(boxstyle="round,pad=0.2", facecolor="white", edgecolor="#CCCCCC", alpha=0.92),
+            fontsize=5.3,
+            bbox=dict(boxstyle="round,pad=0.18", facecolor="white", edgecolor="#CCCCCC", alpha=0.92),
         )
 
         ax.set_title(title, fontsize=7.9, fontweight="bold")
@@ -122,16 +126,16 @@ def make_figS01_iteration_curves_and_lag(
         ax = axes[1, col]
         sp_d = bo["spearman_ho_vs_rmse"][dk]
         x = np.arange(len(key_methods))
-        w = 0.36
+        w = 0.34
         rho_all = [sp_d[mk]["converged_dc_all_rho"] for mk, _ in key_methods]
         rho_nt = [sp_d[mk]["converged_dc_no_tail_rho"] for mk, _ in key_methods]
 
         b1 = ax.bar(x - w / 2, rho_all, w, color=PALETTE["blue"], label="All samples (conv. dc)")
         b2 = ax.bar(x + w / 2, rho_nt, w, color=PALETTE["orange"], label="Tail-excluded (≤20%)")
         for bar, v in zip(b1, rho_all):
-            ax.text(bar.get_x() + bar.get_width() / 2 - 0.04, v + 0.02, f"{v:.2f}", ha="center", va="bottom", fontsize=4.7)
+            ax.text(bar.get_x() + bar.get_width() - 0.03, v + 0.02, f"{v:.2f}", ha="right", va="bottom", fontsize=4.3)
         for bar, v in zip(b2, rho_nt):
-            ax.text(bar.get_x() + bar.get_width() / 2 + 0.04, v + 0.02, f"{v:.2f}", ha="center", va="bottom", fontsize=4.7)
+            ax.text(bar.get_x() + 0.03, v + 0.02, f"{v:.2f}", ha="left", va="bottom", fontsize=4.3)
 
         # Annotate below-GT-floor fraction for Output-Refined (50-step)
         nf_out = bo["noise_floor_overfit"][dk]["methods"]["output_refined_aligned"]
@@ -196,7 +200,7 @@ def make_figS02_lvz_counterfactual_examples(
         ax_v.text(
             0.96,
             0.05,
-            f"z_res={ex['z_res_km']:.2f} km\nmin Vs={ex['vs_min_km_s']:.2f}",
+            f"$z_{{\\mathrm{{res}}}}={ex['z_res_km']:.2f}$ km\nmin $V_s={ex['vs_min_km_s']:.2f}$",
             transform=ax_v.transAxes,
             ha="right",
             va="bottom",

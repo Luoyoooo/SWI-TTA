@@ -726,32 +726,27 @@ L 350.803833 153.289459
    <g id="text_36">
     <text style="font-weight: 700; font-size: 5.6px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #1a1a1a" x="275.06692" y="113.534653" transform="rotate(-0 275.06692 113.534653)">ZS (Aligned)</text>
    </g>
-   <g id="patch_12">
-    <path d="M 250.643368 138.391233 
-Q 244.31441 136.39448 237.985452 134.397727 
-" style="fill: none; opacity: 0.8; stroke: #009e73; stroke-width: 0.6; stroke-linecap: round"/>
-   </g>
    <g id="text_37">
-    <text style="font-size: 5.6px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #009e73" x="248.075562" y="145.250073" transform="rotate(-0 248.075562 145.250073)">Low-DOF Adp.</text>
+    <text style="font-size: 5.6px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #009e73" x="243.075562" y="136.250073" transform="rotate(-0 243.075562 136.250073)">Low-DOF Adp.</text>
    </g>
-   <g id="patch_13">
-    <path d="M 240.70794 122.241466 
-Q 233.686409 124.283002 226.664878 126.324538 
+   <g id="patch_12">
+    <path d="M 259.214873 106.694193 
+Q 242.84385 116.282259 226.472827 125.870325 
 " style="fill: none; opacity: 0.8; stroke: #d55e00; stroke-width: 0.6; stroke-linecap: round"/>
    </g>
    <g id="text_38">
-    <text style="font-weight: 700; font-size: 5.6px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #d55e00" x="240.74336" y="118.338133" transform="rotate(-0 240.74336 118.338133)">Output-Ref.</text>
+    <text style="font-weight: 700; font-size: 5.6px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #d55e00" x="250.74336" y="102.338133" transform="rotate(-0 250.74336 102.338133)">Output-Ref.</text>
    </g>
-   <g id="patch_14">
-    <path d="M 237.117467 134.566384 
-Q 232.08159 133.632683 227.045713 132.698982 
+   <g id="patch_13">
+    <path d="M 238.626572 141.422021 
+Q 232.684871 137.43622 226.743171 133.450418 
 " style="fill: none; opacity: 0.8; stroke: #0072b2; stroke-width: 0.6; stroke-linecap: round"/>
    </g>
    <g id="text_39">
-    <text style="font-weight: 700; font-size: 5.6px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #0072b2" x="241.079561" y="139.789344" transform="rotate(-0 241.079561 139.789344)">Adp.+Out.</text>
+    <text style="font-weight: 700; font-size: 5.6px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #0072b2" x="231.079561" y="148.789344" transform="rotate(-0 231.079561 148.789344)">Adp.+Out.</text>
    </g>
    <g id="text_40">
-    <g id="patch_15">
+    <g id="patch_14">
      <path d="M 287.227566 148.81623 
 L 346.673691 148.81623 
 Q 347.733691 148.81623 347.733691 147.75623 
@@ -823,7 +818,7 @@ z
    </g>
   </g>
   <g id="axes_3">
-   <g id="patch_16">
+   <g id="patch_15">
     <path d="M 389.351829 153.289459 
 L 527.023244 153.289459 
 L 527.023244 14.95875 
@@ -1053,12 +1048,12 @@ L 445.065779 14.95875
 L 438.337789 14.95875 
 " clip-path="url(#p96c58c6f15)" style="fill: none; stroke-dasharray: 0.85,1.4025; stroke-dashoffset: 0; stroke: #8c8c8c; stroke-width: 0.85"/>
    </g>
-   <g id="patch_17">
+   <g id="patch_16">
     <path d="M 389.351829 153.289459 
 L 389.351829 14.95875 
 " style="fill: none; stroke: #333333; stroke-width: 0.75; stroke-linejoin: miter; stroke-linecap: square"/>
    </g>
-   <g id="patch_18">
+   <g id="patch_17">
     <path d="M 389.351829 153.289459 
 L 527.023244 153.289459 
 " style="fill: none; stroke: #333333; stroke-width: 0.75; stroke-linejoin: miter; stroke-linecap: square"/>
@@ -1067,9 +1062,9 @@ L 527.023244 153.289459
     <text style="font-weight: 700; font-size: 5.5px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #cc79a7" x="447.819207" y="23.287812" transform="rotate(-0 447.819207 23.287812)">Classical 1.43%</text>
    </g>
    <g id="text_56">
-    <text style="font-size: 5.3px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #555555" transform="translate(444.430032 147.75623) rotate(-90)">GT floor 1.36%</text>
+    <text style="font-size: 5.3px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #555555" transform="translate(444.430032 73.688315) rotate(-90)">GT floor 1.36%</text>
    </g>
-   <g id="patch_19">
+   <g id="patch_18">
     <path d="M 498.750446 73.423629 
 Q 503.218234 70.828585 507.686022 68.233541 
 " style="fill: none; opacity: 0.8; stroke: #7f7f7f; stroke-width: 0.6; stroke-linecap: round"/>
@@ -1080,7 +1075,7 @@ Q 503.218234 70.828585 507.686022 68.233541
    <g id="text_58">
     <text style="font-weight: 700; font-size: 5.6px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #1a1a1a" x="434.270503" y="127.250073" transform="rotate(-0 434.270503 127.250073)">ZS (Aligned)</text>
    </g>
-   <g id="patch_20">
+   <g id="patch_19">
     <path d="M 388.443036 117.260688 
 Q 394.341139 120.015069 400.239243 122.769449 
 " style="fill: none; opacity: 0.8; stroke: #009e73; stroke-width: 0.6; stroke-linecap: round"/>
@@ -1088,7 +1083,7 @@ Q 394.341139 120.015069 400.239243 122.769449
    <g id="text_59">
     <text style="font-size: 5.6px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: end; fill: #009e73" x="396.0497" y="113.069828" transform="rotate(-0 396.0497 113.069828)">Low-DOF Adp.</text>
    </g>
-   <g id="patch_21">
+   <g id="patch_20">
     <path d="M 429.633599 93.015356 
 Q 423.085165 94.634769 416.536731 96.254182 
 " style="fill: none; opacity: 0.8; stroke: #d55e00; stroke-width: 0.6; stroke-linecap: round"/>
@@ -1096,7 +1091,7 @@ Q 423.085165 94.634769 416.536731 96.254182
    <g id="text_60">
     <text style="font-weight: 700; font-size: 5.6px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #d55e00" x="432.594415" y="89.189419" transform="rotate(-0 432.594415 89.189419)">Output-Ref.</text>
    </g>
-   <g id="patch_22">
+   <g id="patch_21">
     <path d="M 423.581197 81.359686 
 Q 417.079863 83.368705 410.578529 85.377723 
 " style="fill: none; opacity: 0.8; stroke: #0072b2; stroke-width: 0.6; stroke-linecap: round"/>
@@ -1105,7 +1100,7 @@ Q 417.079863 83.368705 410.578529 85.377723
     <text style="font-weight: 700; font-size: 5.6px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #0072b2" x="424.666907" y="77.423351" transform="rotate(-0 424.666907 77.423351)">Adp.+Out.</text>
    </g>
    <g id="text_62">
-    <g id="patch_23">
+    <g id="patch_22">
      <path d="M 463.446977 148.81623 
 L 522.893102 148.81623 
 Q 523.953102 148.81623 523.953102 147.75623 
@@ -1177,7 +1172,7 @@ z
    </g>
   </g>
   <g id="legend_1">
-   <g id="patch_24">
+   <g id="patch_23">
     <path d="M 16.923299 209.050089 
 L 536.241299 209.050089 
 Q 537.521299 209.050089 537.521299 207.770089 

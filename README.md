@@ -16,8 +16,8 @@ Pretrained neural surface-wave inversion models (such as OpenSWI and DispFormer)
 1. **Hidden Evaluation Pitfall (`disba` Root-Skipping in Shallow Low-Velocity Zones)**: Evaluating shallow profiles containing deep low-velocity zones (LVZs) under `disba`'s default phase-velocity search step (`dc = 0.005 km/s`) causes fundamental-mode root skipping onto Mode 1, inflating >20% tail-failure rates artificially (`Output-Space Refinement`: **9.35% → 1.36%**; `Gated Adapter + Output-Refined`: **8.30% → 0.01%**; `Ground Truth`: **0.16% → 0.00%**). Refining to the converged step **`dc = 2.5e-5 km/s`** (shallow) while retaining **`dc = 5.0e-3 km/s`** (deep) eliminates artificial root-skipping within `< 0.1%` residual uncertainty.
 2. **Noise-Floor-Normalized Regime Signature Across Backbones**: When stations are stratified by initial exact misfit normalized by the observational noise floor, both **OpenSWI** and **DispFormer** follow a unified regime law:
    - **Below / near the noise floor (`< 1.5–2×`)**: Forward-loss refinement fits observation noise and degrades Resolvable-Depth $V_s$ RMSE (median `+156.7%` in `[0, 1)` on Shallow Multi-Structure; `+13.25%` OpenSWI and `+15.24%` DispFormer on Deep Lithospheric when excluding the official checkpoint).
-   - **Above the noise floor (`>= 2–3×`)**: Forward-loss refinement yields consistent $V_s$ gains (`-39.1%` overall on Shallow Prior-Shift), and **Holdout ES** captures substantial accuracy improvements (`-12.2%` vs `-4.5%` on Shallow Multi-Structure; `-1.5%` vs `+10.6%` on Deep Lithospheric) without oracle stopping.
-   - **Controlled noise-amplitude scaling (`0.5×` to `4.0×`)**: Unlabeled classical-inversion noise-floor calibration ($\hat{\sigma}_D$) tracks the ground-truth noise floor linearly (`0.929–0.953×`), while 50-step TTA transitions monotonically from `-9.4%` gain at `0.5×` noise to `+47.4%` degradation at `4.0×` noise.
+   - **Above the noise floor (`>= 2–3×`)**: Forward-loss refinement yields consistent $V_s$ gains (`-39.07%` overall on Shallow Prior-Shift), and **Holdout ES** captures substantial accuracy improvements (`-12.15%` vs `-4.48%` on Shallow Multi-Structure; `-1.50%` vs `+10.59%` on Deep Lithospheric) without oracle stopping.
+   - **Controlled noise-amplitude scaling (`0.5×` to `4.0×`)**: Unlabeled classical-inversion noise-floor calibration ($\hat{\sigma}_D$) tracks the ground-truth noise floor linearly (`0.929–0.953×`), while 50-step TTA transitions monotonically from `-9.56%` (`0.5×`) gain to `+46.93%` (`4.0×`) degradation.
 3. **Why Naive Discrepancy Stopping Alone Fails**: A pre-registered validation audit of single-threshold discrepancy stopping (`Pre-Registered Safe-TTA`, $\alpha \in \{1.0, 1.25, 1.5, 2.0\}$) fails the `<= +2.0%` multi-domain truth gate (`0/4` passing) due to near-floor escape in shallow benchmarks and deep crustal (`>10 km`) over-correction on high-misfit (`> 5\hat{\sigma}_D`) model failures.
 
 ### Quantitative Summary Across Benchmarks and Diagnostics
@@ -25,13 +25,13 @@ Pretrained neural surface-wave inversion models (such as OpenSWI and DispFormer)
 | Evaluation Domain | Key Diagnostic Metric | Reference Value |
 | :--- | :--- | :--- |
 | **Shallow Benchmark (`disba` Referee Audit)** | Tail rate (`>20%` HO): Default `dc=5e-3` → Converged `dc=2.5e-5` | `Output-Refined (50-step)`: **9.35% → 1.36%**; `Gated Adapter + Output-Ref.`: **8.30% → 0.01%** |
-| **LongBeach-Matched Shallow** | Resolvable-Depth $V_s$ RMSE (`Input-Aligned Zero-Shot` → `Gated Adapter + Output-Ref.`) | **0.1179 → 0.0499 km/s** (**-57.66%**) |
-| **LongBeach (Report 70%, 3,705 stations)** | Held-Out Dispersion Misfit median (`Input-Aligned Zero-Shot` → `Gated Adapter + Output-Ref.`) | **3.76% → 0.85%** (`Classical Inversion`: **0.66%**) |
-| **CSRM (Report, 8,842 grid points)** | Held-Out Dispersion Misfit median (`Input-Aligned Zero-Shot` → `Low-DOF Adapter`) | **1.22% → 0.96%** (`Classical Inversion`: **1.43%**) |
+| **LongBeach-Matched Shallow** | Resolvable-Depth $V_s$ RMSE (`Input-Aligned Zero-Shot` → `Gated Adapter + Output-Ref.`) | **0.1179 → 0.0498 km/s** (**-57.79%**) |
+| **LongBeach (Report 70%, 3,705 stations)** | Held-Out Dispersion Misfit median (`Input-Aligned Zero-Shot` → `Gated Adapter + Output-Ref.`) | **3.75% → 0.83%** (`Classical Inversion`: **0.66%**) |
+| **CSRM (Report, 8,842 grid points)** | Held-Out Dispersion Misfit median (`Input-Aligned Zero-Shot` → `Low-DOF Adapter`) | **1.23% → 0.96%** (`Classical Inversion`: **1.43%**) |
 | **Shallow Multi-Structure (Held-Out)** | OpenSWI Δ $V_s$ RMSE: `50-step` / `Holdout ES` / `Ideal ES` | **-4.48%** / **-12.15%** / **-36.47%** |
-| **Shallow Prior-Shift (81.54% StyleA)** | OpenSWI Δ $V_s$ RMSE: `50-step` / `Holdout ES` / `Ideal ES` | **-39.06%** / **-39.26%** / **-49.24%** |
+| **Shallow Prior-Shift (81.54% StyleA)** | OpenSWI Δ $V_s$ RMSE: `50-step` / `Holdout ES` / `Ideal ES` | **-39.07%** / **-39.34%** / **-49.18%** |
 | **Deep Lithospheric (Held-Out)** | Calibrated $\hat{\sigma}_D$ vs GT floor; Retrained-only `[0, 1)` ΔRMSE | $\hat{\sigma}_D =$ **0.02417** (**1.82×** vs `0.01329`); OpenSWI **+13.25%**, DispFormer **+15.24%** |
-| **Noise Amplitude Scan (`0.5×`–`4.0×`)** | $\hat{\sigma}_D / \text{GT}$ tracking ratio; `50-step` ΔRMSE shift | **0.929–0.953×**; **-9.41% (`0.5×`) → +47.41% (`4.0×`)** |
+| **Noise Amplitude Scan (`0.5×`–`4.0×`)** | $\hat{\sigma}_D / \text{GT}$ tracking ratio; `50-step` ΔRMSE shift | **0.929–0.953×**; **-9.56% (`0.5×`) → +46.93% (`4.0×`)** |
 
 ---
 
@@ -163,7 +163,7 @@ python scripts/run_mechanism_audit.py --summary-check
 - **Hardware requirements**: Multi-core CPU with 4 GB RAM for installation verification, unit testing, and complete reproduction of all manuscript figures and tables (< 30 s). Optional CUDA-capable GPU (>= 8 GB VRAM) for full-scale neural adaptation on raw OpenSWI archives.
 - **Program language**: Python (3.10–3.11)
 - **Software required**: `numpy`, `scipy`, `torch`, `disba` (>= 0.7.0), `matplotlib`, `pyyaml`, `pillow`, `pytest` (exact versions locked in `requirements-lock.txt` and `environment.yml`).
-- **Program size**: 0.41 MB for source code, scripts, configurations, documentation, and tests (`src/`, `scripts/`, `configs/`, `docs/`, `tests/`, root metadata); 5.00 MB for the compact reproduction archive (`results_summary/`); 2.86 MB for split manifests and checksums (`data/`); 25.3 MB for pre-rendered publication figures (`figures/`) and tables (`tables/`); 33.6 MB total repository working tree.
+- **Program size**: 0.41 MB for source code, scripts, configurations, documentation, and tests (`src/`, `scripts/`, `configs/`, `docs/`, `tests/`, root metadata); 5.00 MB for the compact reproduction archive (`results_summary/`); 2.86 MB for split manifests and checksums (`data/`); 25.4 MB for pre-rendered publication figures (`figures/`) and tables (`tables/`); 33.7 MB total repository working tree.
 - **The source codes are available for downloading at the link**: <https://github.com/cageo/swi-tta-diagnostics>
 
 ---
@@ -174,10 +174,11 @@ If you use this diagnostic framework, converged `disba` referee protocol, or ben
 
 ```bibtex
 @article{mao2026switta,
-  title   = {When Does Test-Time Adaptation Help Surface-Wave Inversion? Physics-Referee Root-Skipping Diagnostics and Noise-Floor Regime Characterization},
-  author  = {Mao, Rui and Co-authors},
+  title   = {When Does Test-Time Adaptation Help or Harm Deep Surface-Wave Dispersion Inversion? Noise-Floor Regimes, Forward-Solver Pitfalls, and Cross-Backbone Diagnostics},
+  author  = {Mao, Rui},
   journal = {Computers \& Geosciences},
   year    = {2026},
+  url     = {https://github.com/cageo/swi-tta-diagnostics},
   note    = {Software archive: swi-tta-diagnostics (v1.0.0)}
 }
 ```

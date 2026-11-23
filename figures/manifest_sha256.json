@@ -7,58 +7,58 @@
     "svg"
   ],
   "n_figures": 15,
-  "total_size_bytes": 26531108,
-  "total_size_mb": 25.302,
+  "total_size_bytes": 26583164,
+  "total_size_mb": 25.3517,
   "figures": {
     "fig01_workflow_and_protocol": {
       "pdf": {
         "relative_path": "main/fig01_workflow_and_protocol.pdf",
-        "size_bytes": 46456,
-        "sha256": "1f5b42abb170be89ba54baf2f9ba8142655fc0f67c822d73a68c3eb382f52067"
+        "size_bytes": 46483,
+        "sha256": "65b3c008ea1ca9c560f81cf1ddc6fcc4ea39f50bf8f448a0cba7a7a9de6fcd32"
       },
       "png": {
         "relative_path": "main/fig01_workflow_and_protocol.png",
-        "size_bytes": 705557,
-        "sha256": "c875e7c0fdbf1d8d8e29199b85dbcaccfd45476453f335fe5eaf36c1abb31a57"
+        "size_bytes": 709624,
+        "sha256": "ed671c1ef7ea74909c6e5a03336300826b3985ea3393c899d90873962631b93e"
       },
       "svg": {
         "relative_path": "main/fig01_workflow_and_protocol.svg",
-        "size_bytes": 57936,
-        "sha256": "7c2e65bbd310405a6ee5950ce7baa10814a4ef04bfb247984867536250532de0"
+        "size_bytes": 57950,
+        "sha256": "0e5b5502acfef0c81b2391d163fadff69550a961abb6e519899e17666ed384b0"
       }
     },
     "fig02_benchmark_overview": {
       "pdf": {
         "relative_path": "main/fig02_benchmark_overview.pdf",
-        "size_bytes": 42564,
-        "sha256": "262f5438304d9df1a7ece9bc164956ca0f821be2f2f51a9cd738815a94610b29"
+        "size_bytes": 42522,
+        "sha256": "709f66f05068e74c96b8505e1235757cc0c5b8b7f6642b3f0d6f3fedfa7b5ea7"
       },
       "png": {
         "relative_path": "main/fig02_benchmark_overview.png",
-        "size_bytes": 693090,
-        "sha256": "a3805c90f9dbf93f9896c55daa6e3f8c322e7f3d8b3e6b427cc5698943a1f2c4"
+        "size_bytes": 698308,
+        "sha256": "6c633b4429de420272b135a2f1c4661e2a5c78b083d6aa315a09baa5c96f9c68"
       },
       "svg": {
         "relative_path": "main/fig02_benchmark_overview.svg",
-        "size_bytes": 64441,
-        "sha256": "d0af1ed3f0f2109a2724619ec5c24a522045428b26394ac77b225d25dff5b8bc"
+        "size_bytes": 64233,
+        "sha256": "798cbd5dc19d523b1cb59df3db1778646fc16f6345130bede9eefff09fcd190d"
       }
     },
     "fig03_disba_root_skipping": {
       "pdf": {
         "relative_path": "main/fig03_disba_root_skipping.pdf",
-        "size_bytes": 49727,
-        "sha256": "a32fa90c5d86a16bbcfbc91c12d9c9e6bd096c5b44cbbe704b6cf2b41dacbb81"
+        "size_bytes": 52855,
+        "sha256": "e78748365a8d80b1628fa9b80e9e8906918d4d46a648bcbc9e85069bd6987e08"
       },
       "png": {
         "relative_path": "main/fig03_disba_root_skipping.png",
-        "size_bytes": 956965,
-        "sha256": "be02ba49afb9f495247c460ffcae35506886a83527104a9b092cd5eb12bb4695"
+        "size_bytes": 949842,
+        "sha256": "fc3edcd64f810a401b54c5ffdad87d6b5fdfcdcf6d5e2206536cb763be067e27"
       },
       "svg": {
         "relative_path": "main/fig03_disba_root_skipping.svg",
-        "size_bytes": 93765,
-        "sha256": "d405f6d851067e17d01b7bc05531de9ad5783362d6df53b055e53564179ef41c"
+        "size_bytes": 95491,
+        "sha256": "34e8c84bf1a0127936056497e976550a9e256dc0247ee2b8cc2f5ac63b3fa930"
       }
     },
     "fig04_openswi_signature_curves": {
@@ -115,18 +115,18 @@
     "fig07_safe_tta_failure_attribution": {
       "pdf": {
         "relative_path": "main/fig07_safe_tta_failure_attribution.pdf",
-        "size_bytes": 52548,
-        "sha256": "c7061039712b44e2e4d11ba06a3d3dfcb4bbeee2d7ba459e24f0d7193a5bb0df"
+        "size_bytes": 52572,
+        "sha256": "bb5aae56dc318dbcaed46bc94a52e7140fc213d3b8ca6b982e09586022c46af4"
       },
       "png": {
         "relative_path": "main/fig07_safe_tta_failure_attribution.png",
-        "size_bytes": 1038394,
-        "sha256": "cc9f827e924777a821a915155f56c21224d23386ee252e0defeeca739e3cff7c"
+        "size_bytes": 1042992,
+        "sha256": "71f04941f57cebc989ce6c086a0fa465d02af5264e54a38179ef39cac704181b"
       },
       "svg": {
         "relative_path": "main/fig07_safe_tta_failure_attribution.svg",
-        "size_bytes": 96413,
-        "sha256": "934994662760d854fbbdf4008ffd283adbc538d6c40e53e736b4be443e127518"
+        "size_bytes": 97105,
+        "sha256": "d0b2c9113e95feda85c71d08aead312f478bf0367772cfcaf36bed1297ea3978"
       }
     },
     "fig08_longbeach_slices": {
@@ -149,52 +149,52 @@
     "fig09_csrm_slices_and_station": {
       "pdf": {
         "relative_path": "main/fig09_csrm_slices_and_station.pdf",
-        "size_bytes": 388935,
-        "sha256": "d38308c3e6909af506a7d57f89f267d6273bb6a13f39ad27594ff6595129913a"
+        "size_bytes": 389150,
+        "sha256": "caf8f6b651d0b6ca010f3632307e8976865413a45ddd2c0072b21d2c3c9d3d59"
       },
       "png": {
         "relative_path": "main/fig09_csrm_slices_and_station.png",
-        "size_bytes": 6203427,
-        "sha256": "b80233decd54d0d017fc789feb8b94972f34ab3d5a9c0fa67fb0bb473ebb8dac"
+        "size_bytes": 6204323,
+        "sha256": "953944f6f9b5ae49893353edb725210feafa2b274f2dfdc3516fb65d7d0c9120"
       },
       "svg": {
         "relative_path": "main/fig09_csrm_slices_and_station.svg",
-        "size_bytes": 598094,
-        "sha256": "2334c26112eca75435c59386d2b44ae170e3478a159d494b311bf6bf85d39a72"
+        "size_bytes": 599459,
+        "sha256": "1ff4e39941c3f2a52b116c31d95bb7268587981ac6a86cb42972bd5cb5cf6b46"
       }
     },
     "figS01_iteration_curves_and_lag": {
       "pdf": {
         "relative_path": "supplementary/figS01_iteration_curves_and_lag.pdf",
-        "size_bytes": 47265,
-        "sha256": "b2ae7e6e29544b3b40c71d4fde2bfc1b25f624d0d660d2571a06ba5ab9918cb9"
+        "size_bytes": 47409,
+        "sha256": "021a3dc635c6dd25720bee7583c3ce3462fd232460cb8667feb84ee55f75e698"
       },
       "png": {
         "relative_path": "supplementary/figS01_iteration_curves_and_lag.png",
-        "size_bytes": 1080162,
-        "sha256": "b427466ba95f0b8128c21e27b75a730ae1224241d89b305a9c26eb6272c63c6b"
+        "size_bytes": 1086240,
+        "sha256": "0149e3fdc3c30df805307bcc2d9e37760cddc350ff0dd08868eea8c50bd7cf23"
       },
       "svg": {
         "relative_path": "supplementary/figS01_iteration_curves_and_lag.svg",
-        "size_bytes": 123734,
-        "sha256": "e6554b31df64cb6dd4322ec2503d264c718844d454c50d6c363bccb2e4e9814c"
+        "size_bytes": 125603,
+        "sha256": "a5863548ef529b89beecf6bdd2bdb416f16226c2436b513f4e232e09159d7130"
       }
     },
     "figS02_lvz_counterfactual_examples": {
       "pdf": {
         "relative_path": "supplementary/figS02_lvz_counterfactual_examples.pdf",
-        "size_bytes": 73150,
-        "sha256": "7f3028a8591f67d64cd4f88f1e37198c17d1c225c720808206b3ee86ff167699"
+        "size_bytes": 73070,
+        "sha256": "79e49f0a483b63fd79436c0496db3912ae104a6bb110647dfb23753d8f1dcbeb"
       },
       "png": {
         "relative_path": "supplementary/figS02_lvz_counterfactual_examples.png",
-        "size_bytes": 1308531,
-        "sha256": "d364f701c5340fb25a8bd2bbedc02ef24e2425d6ff7dd28efd36e2d9eb6be4fa"
+        "size_bytes": 1305212,
+        "sha256": "c644f6a7cfedaaa1d3f2deab28ed7a7e525e2f432825c3b49adf87562a4da685"
       },
       "svg": {
         "relative_path": "supplementary/figS02_lvz_counterfactual_examples.svg",
-        "size_bytes": 278409,
-        "sha256": "ca41ae07238826e127973828f8e9c7cbca3951bf518058e37ed9c20f543d4c80"
+        "size_bytes": 292284,
+        "sha256": "6f551007ee7448d616aeba99eb90a03504f9cdd91a6152f2dea676b7cba7f251"
       }
     },
     "figS03_old_vs_new_dc_scatter": {
@@ -251,18 +251,18 @@
     "graphical_abstract": {
       "pdf": {
         "relative_path": "graphical_abstract.pdf",
-        "size_bytes": 48126,
-        "sha256": "69081678e0520141dbd760bc62c5d9e1a8cbc832874e3b514ed756a04055cd62"
+        "size_bytes": 54020,
+        "sha256": "3ee5b54ae3aba3c7e9145ff91a1a2353f928788cf23c7f1c8324951c026f8329"
       },
       "png": {
         "relative_path": "graphical_abstract.png",
-        "size_bytes": 363008,
-        "sha256": "514a6f2164c0da0295f3a3b06298b80bc4be8f3d602183c428fc49167b91e61a"
+        "size_bytes": 371844,
+        "sha256": "f06dd373aadf12709d3879e1ccf9c1a4dbc3df3711bdfb17b74071cd2f0fa33d"
       },
       "svg": {
         "relative_path": "graphical_abstract.svg",
-        "size_bytes": 44172,
-        "sha256": "72f3a2d2baafa0c253f7f4b009ad77b545938b0582ba47e1475447b8da4a85f6"
+        "size_bytes": 48334,
+        "sha256": "1a5d8034394806f103d00895bb249b1de386d23141658c51eaa581cebb410301"
       }
     }
   }

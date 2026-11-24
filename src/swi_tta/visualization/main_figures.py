@@ -109,7 +109,183 @@ def _draw_arrow(
 
 # ---------------------------------------------------------------------------
 # Figure 1: Diagnostic Evaluation Framework & Four-Step Safe-TTA Protocol
+# (PaperBanana-inspired pure-vector scientific architecture diagram)
 # ---------------------------------------------------------------------------
+
+
+def _draw_shadow_card(
+    ax: plt.Axes,
+    x: float,
+    y: float,
+    w: float,
+    h: float,
+    facecolor: str = "#FFFFFF",
+    edgecolor: str = "#CBD5E1",
+    lw: float = 0.85,
+    radius: float = 0.014,
+    zorder: int = 2,
+) -> None:
+    shadow = patches.FancyBboxPatch(
+        (x + 0.0035, y - 0.009),
+        w,
+        h,
+        boxstyle=f"round,pad=0.0,rounding_size={radius}",
+        linewidth=0.0,
+        facecolor="#E2E8F0",
+        alpha=0.65,
+        zorder=zorder - 1,
+    )
+    ax.add_patch(shadow)
+    card = patches.FancyBboxPatch(
+        (x, y),
+        w,
+        h,
+        boxstyle=f"round,pad=0.0,rounding_size={radius}",
+        linewidth=lw,
+        edgecolor=edgecolor,
+        facecolor=facecolor,
+        zorder=zorder,
+    )
+    ax.add_patch(card)
+
+
+def _draw_module_card(
+    ax: plt.Axes,
+    x: float,
+    y: float,
+    w: float,
+    h: float,
+    step_num: str,
+    title: str,
+    footer: str,
+    accent: str,
+    tint: str,
+) -> Tuple[float, float, float, float]:
+    """Draw a sleek PaperBanana-style module card and return inner schematic bbox."""
+    _draw_shadow_card(ax, x, y, w, h, facecolor="#FFFFFF", edgecolor=accent, lw=0.95, radius=0.015, zorder=2)
+
+    hh = h * 0.23
+    hy = y + h - hh
+    header = patches.FancyBboxPatch(
+        (x, hy),
+        w,
+        hh,
+        boxstyle="round,pad=0.0,rounding_size=0.014",
+        linewidth=0.0,
+        facecolor=tint,
+        zorder=3,
+    )
+    ax.add_patch(header)
+    ax.add_patch(patches.Rectangle((x, hy), w, hh * 0.45, linewidth=0.0, facecolor=tint, zorder=3))
+    ax.plot([x + 0.002, x + w - 0.002], [hy, hy], color=accent, lw=0.75, alpha=0.55, zorder=4)
+
+    cx = x + 0.016
+    cy = hy + hh * 0.50
+    badge = patches.Ellipse((cx, cy), width=0.022, height=hh * 0.62, facecolor=accent, edgecolor="none", zorder=5)
+    ax.add_patch(badge)
+    ax.text(cx, cy, step_num, ha="center", va="center", fontsize=5.6, fontweight="bold", color="white", zorder=6)
+
+    ax.text(
+        x + 0.030,
+        cy,
+        title,
+        ha="left",
+        va="center",
+        fontsize=6.0,
+        fontweight="bold",
+        color="#0F172A",
+        zorder=6,
+    )
+
+    ax.text(
+        x + w / 2.0,
+        y + h * 0.145,
+        footer,
+        ha="center",
+        va="center",
+        fontsize=5.35,
+        color="#334155",
+        linespacing=1.22,
+        zorder=5,
+    )
+
+    return (x + w * 0.08, y + h * 0.29, w * 0.84, h * 0.43)
+
+
+def _draw_accent_card(
+    ax: plt.Axes,
+    x: float,
+    y: float,
+    w: float,
+    h: float,
+    title: str,
+    subtitle: str,
+    accent: str,
+    tint: str,
+    tag_text: str,
+) -> None:
+    """Draw a modern white card with bold left accent stripe and status pill."""
+    _draw_shadow_card(ax, x, y, w, h, facecolor="#FFFFFF", edgecolor="#CBD5E1", lw=0.8, radius=0.012, zorder=2)
+    bg = patches.FancyBboxPatch(
+        (x + 0.001, y + 0.001),
+        w - 0.002,
+        h - 0.002,
+        boxstyle="round,pad=0.0,rounding_size=0.011",
+        linewidth=0.0,
+        facecolor=tint,
+        alpha=0.52,
+        zorder=2,
+    )
+    ax.add_patch(bg)
+    stripe = patches.FancyBboxPatch(
+        (x, y),
+        0.010,
+        h,
+        boxstyle="round,pad=0.0,rounding_size=0.006",
+        linewidth=0.0,
+        facecolor=accent,
+        zorder=4,
+    )
+    ax.add_patch(stripe)
+
+    pill_w = 0.098
+    pill_h = h * 0.34
+    px = x + w - pill_w - 0.010
+    py = y + h - pill_h - h * 0.11
+    pill = patches.FancyBboxPatch(
+        (px, py),
+        pill_w,
+        pill_h,
+        boxstyle="round,pad=0.0,rounding_size=0.008",
+        linewidth=0.0,
+        facecolor=accent,
+        zorder=5,
+    )
+    ax.add_patch(pill)
+    ax.text(px + pill_w / 2.0, py + pill_h / 2.0, tag_text, ha="center", va="center", fontsize=5.0, fontweight="bold", color="white", zorder=6)
+
+    ax.text(
+        x + 0.020,
+        y + h * 0.72,
+        title,
+        ha="left",
+        va="center",
+        fontsize=6.25,
+        fontweight="bold",
+        color="#0F172A",
+        zorder=5,
+    )
+    ax.text(
+        x + 0.020,
+        y + h * 0.31,
+        subtitle,
+        ha="left",
+        va="center",
+        fontsize=5.5,
+        color="#334155",
+        linespacing=1.22,
+        zorder=5,
+    )
 
 
 def make_fig01_workflow_and_protocol(
@@ -118,188 +294,267 @@ def make_fig01_workflow_and_protocol(
     formats: Sequence[str] = ("pdf", "png", "svg"),
     dpi: int = 600,
 ) -> Dict[str, Dict[str, object]]:
-    """Generate Figure 1: diagnostic framework and four-step deployment protocol."""
+    """Generate Figure 1: PaperBanana-style vector diagnostic pipeline and 4-step protocol."""
     apply_cg_style()
     rs = _load_json(summary_dir, "root_skipping_diagnostics.json")
     dc_sh = rs["step_sizes_km_s"]["shallow_converged"]
     dc_dp = rs["step_sizes_km_s"]["deep_converged"]
 
-    fig = plt.figure(figsize=(DOUBLE_COL_IN, mm_to_in(118.0)))
-    gs = gridspec.GridSpec(2, 1, height_ratios=[1.0, 1.28], hspace=0.14)
+    fig = plt.figure(figsize=(DOUBLE_COL_IN, mm_to_in(138.0)))
+    fig.patch.set_facecolor("white")
+    gs = gridspec.GridSpec(2, 1, height_ratios=[1.02, 1.24], hspace=0.10, left=0.012, right=0.988, top=0.985, bottom=0.015)
 
-    # Panel (a): Diagnostic Evaluation Architecture
+    # Panel (a): Zero-Leakage Diagnostic Evaluation Pipeline
     ax_a = fig.add_subplot(gs[0])
-    ax_a.set_xlim(-0.02, 1.02)
-    ax_a.set_ylim(-0.02, 1.02)
+    ax_a.set_xlim(0.0, 1.0)
+    ax_a.set_ylim(0.0, 1.0)
     ax_a.axis("off")
+
+    band_a = patches.FancyBboxPatch(
+        (0.005, 0.02),
+        0.990,
+        0.955,
+        boxstyle="round,pad=0.0,rounding_size=0.018",
+        linewidth=0.85,
+        edgecolor="#CBD5E1",
+        facecolor="#F8FAFC",
+        zorder=0,
+    )
+    ax_a.add_patch(band_a)
     ax_a.text(
-        0.0,
-        0.97,
-        "(a) Zero-Leakage Diagnostic Evaluation Architecture",
-        fontsize=8.6,
+        0.020,
+        0.935,
+        "(a) Zero-Leakage Diagnostic Evaluation Pipeline",
+        fontsize=8.2,
         fontweight="bold",
-        color="#111111",
+        color="#0F172A",
         va="top",
+        zorder=5,
     )
 
-    y0, bh = 0.10, 0.70
-    boxes_a = [
-        (
-            0.008,
-            0.172,
-            "1. Dispersion Input",
-            "Station (T, c_obs, u_obs)\nStratified 20% held-out\nperiods sealed off",
-            PALETTE["bg_tint"],
-            PALETTE["dark_gray"],
-        ),
-        (
-            0.208,
-            0.174,
-            "2. Input Alignment",
-            "Interpolate onto backbone\ntraining period grid\n(zero held-out leakage)",
-            PALETTE["info_tint"],
-            PALETTE["blue"],
-        ),
-        (
-            0.410,
-            0.180,
-            "3. Backbone & TTA",
-            "OpenSWI / DispFormer +\ndifferentiable forward loss\n(Adapter / Output-Ref.)",
-            "#FFF6E5",
-            PALETTE["orange"],
-        ),
-        (
-            0.618,
-            0.176,
-            "4. Exact disba Referee",
-            f"Shallow dc={dc_sh:.1e}\nDeep dc={dc_dp:.0e} km/s\nNo LVZ root-skipping",
-            PALETTE["safe_tint"],
-            PALETTE["teal"],
-        ),
-        (
-            0.822,
-            0.170,
-            "5. Regime Diagnostics",
-            "Bin by misfit / $\\hat{\\sigma}_D$\nResolvable $V_s$ RMSE &\nheld-out dispersion fit",
-            PALETTE["warn_tint"],
-            PALETTE["vermillion"],
-        ),
-    ]
-    for bx, bw, bt, bb, fc, ec in boxes_a:
-        _draw_box(ax_a, bx, y0, bw, bh, bt, bb, fc, ec, fontsize_title=6.0, fontsize_body=5.6)
+    cw = 0.174
+    gap = 0.0215
+    x0 = 0.018
+    cy0, ch = 0.075, 0.765
 
-    for x_l, x_r in ((0.182, 0.206), (0.384, 0.408), (0.592, 0.616), (0.796, 0.820)):
-        _draw_arrow(ax_a, x_l, y0 + bh / 2.0, x_r, y0 + bh / 2.0, lw=1.05)
+    # Card 1: Dispersion Input
+    gx, gy, gw, gh = _draw_module_card(
+        ax_a, x0, cy0, cw, ch, "1", "Dispersion Input",
+        "20% interior periods\nsealed before alignment", "#475569", "#F1F5F9"
+    )
+    ax_a.plot([gx, gx, gx + gw], [gy + gh, gy, gy], color="#64748B", lw=0.7, zorder=4)
+    tx = np.linspace(0.08, 0.92, 9)
+    ty = 0.18 + 0.68 * (1.0 - np.exp(-2.6 * tx))
+    kept_idx = [0, 1, 3, 4, 6, 7, 8]
+    ho_idx = [2, 5]
+    ax_a.plot(gx + tx * gw, gy + ty * gh, "-", color="#94A3B8", lw=0.8, zorder=4)
+    ax_a.scatter(gx + tx[kept_idx] * gw, gy + ty[kept_idx] * gh, s=11, color="#1E293B", zorder=5)
+    ax_a.scatter(gx + tx[ho_idx] * gw, gy + ty[ho_idx] * gh, s=16, marker="D", facecolors="white", edgecolors=PALETTE["vermillion"], linewidths=0.9, zorder=6)
+    ax_a.text(gx + gw * 0.96, gy + gh * 0.14, "Kept  /  HO", ha="right", va="bottom", fontsize=4.6, color="#475569", zorder=6)
+
+    # Card 2: Input Alignment
+    x1 = x0 + (cw + gap)
+    gx, gy, gw, gh = _draw_module_card(
+        ax_a, x1, cy0, cw, ch, "2", "Input Alignment",
+        "Resample onto training\nperiod grid (zero leak)", PALETTE["blue"], "#EFF6FF"
+    )
+    y_top, y_bot = gy + gh * 0.72, gy + gh * 0.24
+    ax_a.plot([gx + gw * 0.04, gx + gw * 0.96], [y_top, y_top], color="#94A3B8", lw=0.8, zorder=4)
+    ax_a.plot([gx + gw * 0.04, gx + gw * 0.96], [y_bot, y_bot], color=PALETTE["blue"], lw=1.1, zorder=4)
+    raw_pts = np.array([0.10, 0.24, 0.34, 0.56, 0.75, 0.88])
+    uni_pts = np.linspace(0.10, 0.90, 7)
+    ax_a.scatter(gx + raw_pts * gw, np.full_like(raw_pts, y_top), s=11, color="#64748B", zorder=5)
+    ax_a.scatter(gx + uni_pts * gw, np.full_like(uni_pts, y_bot), s=12, marker="s", color=PALETTE["blue"], zorder=5)
+    for rx in [0.18, 0.50, 0.82]:
+        ax_a.annotate("", xy=(gx + rx * gw, y_bot + gh * 0.08), xytext=(gx + rx * gw, y_top - gh * 0.08),
+                      arrowprops=dict(arrowstyle="-|>,head_length=0.25,head_width=0.14", color=PALETTE["blue"], lw=0.7), zorder=5)
+    ax_a.text(gx + gw * 0.5, gy + gh * 0.95, "Field periods", ha="center", va="top", fontsize=4.5, color="#64748B", zorder=6)
+    ax_a.text(gx + gw * 0.5, gy + gh * 0.02, "Backbone grid", ha="center", va="bottom", fontsize=4.6, fontweight="bold", color=PALETTE["blue"], zorder=6)
+
+    # Card 3: Backbone & TTA Loop
+    x2 = x0 + 2 * (cw + gap)
+    gx, gy, gw, gh = _draw_module_card(
+        ax_a, x2, cy0, cw, ch, "3", "Backbone & TTA",
+        "OpenSWI / DispFormer\n+ surrogate forward loop", "#D97706", "#FFFBEB"
+    )
+    trap = patches.Polygon(
+        [[gx + gw * 0.03, gy + gh * 0.84], [gx + gw * 0.38, gy + gh * 0.72],
+         [gx + gw * 0.38, gy + gh * 0.36], [gx + gw * 0.03, gy + gh * 0.24]],
+        closed=True, facecolor="#FDE68A", edgecolor="#D97706", lw=0.8, zorder=4
+    )
+    ax_a.add_patch(trap)
+    ax_a.text(gx + gw * 0.20, gy + gh * 0.54, "NN", ha="center", va="center", fontsize=5.2, fontweight="bold", color="#92400E", zorder=5)
+    vs_box = patches.FancyBboxPatch((gx + gw * 0.52, gy + gh * 0.32), gw * 0.44, gh * 0.48,
+                                    boxstyle="round,pad=0.0,rounding_size=0.008", facecolor="#FFFFFF", edgecolor="#D97706", lw=0.75, zorder=4)
+    ax_a.add_patch(vs_box)
+    pz = np.array([0.75, 0.58, 0.58, 0.45, 0.45, 0.35])
+    pv = np.array([0.58, 0.62, 0.72, 0.72, 0.84, 0.90])
+    ax_a.plot(gx + pv * gw, gy + pz * gh, "-", color="#B45309", lw=1.0, zorder=5)
+    ax_a.text(gx + gw * 0.74, gy + gh * 0.85, r"$\hat{V}_s(z)$", ha="center", va="bottom", fontsize=4.8, color="#92400E", zorder=6)
+    ax_a.annotate("", xy=(gx + gw * 0.51, gy + gh * 0.55), xytext=(gx + gw * 0.39, gy + gh * 0.55),
+                  arrowprops=dict(arrowstyle="-|>,head_length=0.25,head_width=0.14", color="#B45309", lw=0.8), zorder=5)
+    ax_a.annotate("", xy=(gx + gw * 0.20, gy + gh * 0.22), xytext=(gx + gw * 0.74, gy + gh * 0.30),
+                  arrowprops=dict(arrowstyle="-|>,head_length=0.28,head_width=0.15", color="#D97706", lw=0.85, connectionstyle="arc3,rad=-0.28"), zorder=5)
+    ax_a.text(gx + gw * 0.48, gy + gh * 0.02, "Surrogate loss", ha="center", va="bottom", fontsize=4.5, color="#92400E", fontweight="bold", zorder=6)
+
+    # Card 4: Exact disba Referee
+    x3 = x0 + 3 * (cw + gap)
+    gx, gy, gw, gh = _draw_module_card(
+        ax_a, x3, cy0, cw, ch, "4", "Exact disba",
+        f"Shallow dc={dc_sh:.1e}\nDeep dc={dc_dp:.0e} km/s", PALETTE["teal"], "#ECFDF5"
+    )
+    ax_a.plot([gx, gx, gx + gw], [gy + gh, gy, gy], color="#64748B", lw=0.7, zorder=4)
+    rx = np.linspace(0.08, 0.92, 16)
+    y_m0 = 0.22 + 0.04 * rx
+    y_jump = 0.22 + 0.65 * (1.0 / (1.0 + np.exp(-9.0 * (rx - 0.42))))
+    ax_a.plot(gx + rx * gw, gy + y_jump * gh, "--", color=PALETTE["vermillion"], lw=0.95, zorder=4)
+    ax_a.plot(gx + rx * gw, gy + y_m0 * gh, "-", color=PALETTE["teal"], lw=1.25, zorder=5)
+    ax_a.scatter(gx + rx[::3] * gw, gy + y_m0[::3] * gh, s=8, color="#1E293B", zorder=6)
+    ax_a.text(gx + gw * 0.04, gy + gh * 0.94, "Mode 1 (coarse)", ha="left", va="top", fontsize=4.4, color=PALETTE["vermillion"], zorder=6)
+    ax_a.text(gx + gw * 0.94, gy + gh * 0.04, "Mode 0 (conv.)", ha="right", va="bottom", fontsize=4.5, fontweight="bold", color=PALETTE["teal"], zorder=6)
+
+    # Card 5: Regime Diagnostics
+    x4 = x0 + 4 * (cw + gap)
+    gx, gy, gw, gh = _draw_module_card(
+        ax_a, x4, cy0, cw, ch, "5", "Regime Audit",
+        r"Stratify by $r_0 = m_0/\hat{\sigma}_D$" + "\n" + r"Resolvable $V_s$ RMSE", PALETTE["vermillion"], "#FFF7ED"
+    )
+    y_zero = gy + gh * 0.48
+    ax_a.add_patch(patches.Rectangle((gx, y_zero), gw, gy + gh - y_zero, facecolor="#FEE2E2", alpha=0.55, lw=0, zorder=3))
+    ax_a.add_patch(patches.Rectangle((gx, gy), gw, y_zero - gy, facecolor="#D1FAE5", alpha=0.55, lw=0, zorder=3))
+    ax_a.plot([gx, gx, gx + gw], [gy + gh, gy, gy], color="#64748B", lw=0.7, zorder=4)
+    ax_a.plot([gx, gx + gw], [y_zero, y_zero], ":", color="#475569", lw=0.7, zorder=4)
+    sx = np.linspace(0.08, 0.92, 8)
+    sy = np.array([0.85, 0.72, 0.50, 0.34, 0.22, 0.16, 0.45, 0.80])
+    ax_a.plot(gx + sx * gw, gy + sy * gh, "-o", color=PALETTE["vermillion"], lw=1.0, ms=2.2, zorder=5)
+    ax_a.text(gx + gw * 0.52, gy + gh * 0.88, "Harm", ha="center", va="top", fontsize=4.4, color="#9A2D00", fontweight="bold", zorder=6)
+    ax_a.text(gx + gw * 0.52, gy + gh * 0.05, "Gain", ha="center", va="bottom", fontsize=4.4, color="#00664B", fontweight="bold", zorder=6)
+
+    for k in range(4):
+        xa = x0 + k * (cw + gap) + cw + 0.002
+        xb = x0 + (k + 1) * (cw + gap) - 0.002
+        _draw_arrow(ax_a, xa, cy0 + ch * 0.50, xb, cy0 + ch * 0.50, color="#475569", lw=1.15)
 
     # Panel (b): Four-Step Safe-TTA Operational Protocol
     ax_b = fig.add_subplot(gs[1])
-    ax_b.set_xlim(-0.02, 1.02)
-    ax_b.set_ylim(-0.02, 1.02)
+    ax_b.set_xlim(0.0, 1.0)
+    ax_b.set_ylim(0.0, 1.0)
     ax_b.axis("off")
+
+    band_b = patches.FancyBboxPatch(
+        (0.005, 0.015),
+        0.990,
+        0.965,
+        boxstyle="round,pad=0.0,rounding_size=0.018",
+        linewidth=0.85,
+        edgecolor="#CBD5E1",
+        facecolor="#F8FAFC",
+        zorder=0,
+    )
+    ax_b.add_patch(band_b)
     ax_b.text(
-        0.0,
-        0.98,
+        0.020,
+        0.945,
         "(b) Four-Step Operational Protocol for Safe Surface-Wave Test-Time Adaptation",
-        fontsize=8.5,
+        fontsize=8.2,
         fontweight="bold",
-        color="#111111",
+        color="#0F172A",
         va="top",
+        zorder=5,
     )
 
-    _draw_box(
-        ax_b,
-        0.008,
-        0.50,
-        0.215,
-        0.37,
-        "Step 1: Input Alignment",
-        "Align observed dispersion\nto backbone period grid;\nrun Input-Aligned Zero-Shot.",
-        PALETTE["info_tint"],
-        PALETTE["blue"],
-        fontsize_title=6.7,
-        fontsize_body=5.8,
-    )
-    _draw_box(
-        ax_b,
-        0.008,
-        0.04,
-        0.215,
-        0.37,
-        "Step 2: Referee & Floor",
-        "Verify disba dc convergence;\ncalibrate domain floor $\\hat{\\sigma}_D$\nvia Classical Inversion.",
-        PALETTE["safe_tint"],
-        PALETTE["teal"],
-        fontsize_title=6.7,
-        fontsize_body=5.8,
-    )
-    _draw_arrow(ax_b, 0.115, 0.495, 0.115, 0.415)
+    lx, lw_col = 0.020, 0.220
+    _draw_shadow_card(ax_b, lx, 0.495, lw_col, 0.355, facecolor="#FFFFFF", edgecolor=PALETTE["blue"], lw=0.95, radius=0.014, zorder=2)
+    ax_b.add_patch(patches.FancyBboxPatch((lx, 0.775), lw_col, 0.075, boxstyle="round,pad=0.0,rounding_size=0.012", lw=0, facecolor="#EFF6FF", zorder=3))
+    ax_b.add_patch(patches.Rectangle((lx, 0.775), lw_col, 0.030, lw=0, facecolor="#EFF6FF", zorder=3))
+    ax_b.add_patch(patches.Ellipse((lx + 0.018, 0.812), width=0.024, height=0.046, facecolor=PALETTE["blue"], zorder=5))
+    ax_b.text(lx + 0.018, 0.812, "1", ha="center", va="center", fontsize=5.8, fontweight="bold", color="white", zorder=6)
+    ax_b.text(lx + 0.034, 0.812, "Step 1: Input Alignment", ha="left", va="center", fontsize=6.2, fontweight="bold", color="#0F172A", zorder=6)
+    ax_b.text(lx + lw_col / 2.0, 0.630, "Resample observed curves\nto backbone training grid;\nrun Input-Aligned Zero-Shot.",
+              ha="center", va="center", fontsize=5.55, color="#334155", linespacing=1.28, zorder=5)
 
-    _draw_box(
-        ax_b,
-        0.258,
-        0.23,
-        0.215,
-        0.52,
-        "Step 3: Noise-Floor\nRegime Screening",
-        "Compute initial exact\nkept-period ratio:\n$r_0 = m_0 / \\hat{\\sigma}_D$\n(separates noise vs OOD)",
-        "#FFF8E1",
-        PALETTE["orange"],
-        fontsize_title=6.7,
-        fontsize_body=5.8,
-    )
-    _draw_arrow(ax_b, 0.226, 0.68, 0.255, 0.57)
-    _draw_arrow(ax_b, 0.226, 0.22, 0.255, 0.39)
+    _draw_shadow_card(ax_b, lx, 0.065, lw_col, 0.355, facecolor="#FFFFFF", edgecolor=PALETTE["teal"], lw=0.95, radius=0.014, zorder=2)
+    ax_b.add_patch(patches.FancyBboxPatch((lx, 0.345), lw_col, 0.075, boxstyle="round,pad=0.0,rounding_size=0.012", lw=0, facecolor="#ECFDF5", zorder=3))
+    ax_b.add_patch(patches.Rectangle((lx, 0.345), lw_col, 0.030, lw=0, facecolor="#ECFDF5", zorder=3))
+    ax_b.add_patch(patches.Ellipse((lx + 0.018, 0.382), width=0.024, height=0.046, facecolor=PALETTE["teal"], zorder=5))
+    ax_b.text(lx + 0.018, 0.382, "2", ha="center", va="center", fontsize=5.8, fontweight="bold", color="white", zorder=6)
+    ax_b.text(lx + 0.034, 0.382, "Step 2: Referee & Floor", ha="left", va="center", fontsize=6.2, fontweight="bold", color="#0F172A", zorder=6)
+    ax_b.text(lx + lw_col / 2.0, 0.200, "Verify disba dc convergence;\ncalibrate domain floor " + r"$\hat{\sigma}_D$" + "\nvia Classical Inversion.",
+              ha="center", va="center", fontsize=5.55, color="#334155", linespacing=1.28, zorder=5)
 
-    _draw_box(
-        ax_b,
-        0.565,
-        0.65,
-        0.427,
-        0.24,
-        "Regime A: Near / Below Floor ($r_0 < 1.5 - 2.0$)",
-        "DO NOT REFINE — Retain Input-Aligned Zero-Shot.\nPrevents +40% to +157% noise-fitting $V_s$ degradation.",
-        PALETTE["safe_tint"],
-        PALETTE["teal"],
-        title_color="#00664B",
-        fontsize_title=6.6,
-        fontsize_body=5.8,
+    _draw_arrow(ax_b, lx + lw_col / 2.0, 0.490, lx + lw_col / 2.0, 0.425, color="#475569", lw=1.1)
+
+    mx, mw = 0.272, 0.205
+    _draw_shadow_card(ax_b, mx, 0.175, mw, 0.560, facecolor="#FFFFFF", edgecolor="#D97706", lw=1.05, radius=0.015, zorder=2)
+    ax_b.add_patch(patches.FancyBboxPatch((mx, 0.650), mw, 0.085, boxstyle="round,pad=0.0,rounding_size=0.013", lw=0, facecolor="#FFFBEB", zorder=3))
+    ax_b.add_patch(patches.Rectangle((mx, 0.650), mw, 0.035, lw=0, facecolor="#FFFBEB", zorder=3))
+    ax_b.add_patch(patches.Ellipse((mx + 0.018, 0.692), width=0.024, height=0.046, facecolor="#D97706", zorder=5))
+    ax_b.text(mx + 0.018, 0.692, "3", ha="center", va="center", fontsize=5.8, fontweight="bold", color="white", zorder=6)
+    ax_b.text(mx + 0.034, 0.692, "Step 3: Regime Screen", ha="left", va="center", fontsize=6.15, fontweight="bold", color="#0F172A", zorder=6)
+
+    ax_b.text(mx + mw / 2.0, 0.535, "Compute initial exact\nkept-period misfit ratio:", ha="center", va="center", fontsize=5.5, color="#334155", linespacing=1.25, zorder=5)
+    fpill = patches.FancyBboxPatch((mx + 0.022, 0.395), mw - 0.044, 0.088, boxstyle="round,pad=0.0,rounding_size=0.010",
+                                   facecolor="#FEF3C7", edgecolor="#D97706", lw=0.8, zorder=4)
+    ax_b.add_patch(fpill)
+    ax_b.text(mx + mw / 2.0, 0.439, r"$r_0 = m_0 / \hat{\sigma}_D$", ha="center", va="center", fontsize=7.1, fontweight="bold", color="#92400E", zorder=5)
+
+    bar_x = mx + 0.018
+    bar_w = mw - 0.036
+    bar_y, bar_h = 0.275, 0.048
+    ax_b.add_patch(patches.Rectangle((bar_x, bar_y), bar_w * 0.32, bar_h, facecolor=PALETTE["teal"], alpha=0.85, lw=0, zorder=4))
+    ax_b.add_patch(patches.Rectangle((bar_x + bar_w * 0.32, bar_y), bar_w * 0.36, bar_h, facecolor=PALETTE["blue"], alpha=0.85, lw=0, zorder=4))
+    ax_b.add_patch(patches.Rectangle((bar_x + bar_w * 0.68, bar_y), bar_w * 0.32, bar_h, facecolor=PALETTE["vermillion"], alpha=0.85, lw=0, zorder=4))
+    ax_b.text(bar_x, bar_y - 0.018, "0", ha="center", va="top", fontsize=4.8, color="#475569", zorder=5)
+    ax_b.text(bar_x + bar_w * 0.32, bar_y - 0.018, "1.5–2", ha="center", va="top", fontsize=4.8, color="#475569", zorder=5)
+    ax_b.text(bar_x + bar_w * 0.68, bar_y - 0.018, "5.0", ha="center", va="top", fontsize=4.8, color="#475569", zorder=5)
+    ax_b.text(bar_x + bar_w, bar_y - 0.018, r"$\infty$", ha="center", va="top", fontsize=5.2, color="#475569", zorder=5)
+    ax_b.text(bar_x + bar_w * 0.16, bar_y + bar_h * 0.5, "A", ha="center", va="center", fontsize=5.2, fontweight="bold", color="white", zorder=5)
+    ax_b.text(bar_x + bar_w * 0.50, bar_y + bar_h * 0.5, "B", ha="center", va="center", fontsize=5.2, fontweight="bold", color="white", zorder=5)
+    ax_b.text(bar_x + bar_w * 0.84, bar_y + bar_h * 0.5, "C", ha="center", va="center", fontsize=5.2, fontweight="bold", color="white", zorder=5)
+    ax_b.text(mx + mw / 2.0, 0.212, "Separates noise vs. OOD shift", ha="center", va="center", fontsize=5.0, style="italic", color="#64748B", zorder=5)
+
+    _draw_arrow(ax_b, lx + lw_col + 0.002, 0.660, mx - 0.003, 0.545, color="#475569", lw=1.1, rad=-0.08)
+    _draw_arrow(ax_b, lx + lw_col + 0.002, 0.240, mx - 0.003, 0.355, color="#475569", lw=1.1, rad=0.08)
+
+    rx, rw = 0.580, 0.400
+    _draw_accent_card(
+        ax_b, rx, 0.640, rw, 0.235,
+        "Regime A: Near / Below Floor",
+        "DO NOT REFINE — retain Input-Aligned Zero-Shot.\nPrevents +13% to +157% noise-fitting $V_s$ harm.",
+        PALETTE["teal"], "#ECFDF5", "Safe Skip"
     )
-    _draw_box(
-        ax_b,
-        0.565,
-        0.345,
-        0.427,
-        0.25,
-        "Regime B: Moderate Shift ($2.0 \\leq r_0 \\leq 5.0$)",
-        "Step 4: Apply Output-Space Refinement + Holdout ES\n(stop on internal held-out periods; freeze $z > z_{\\mathrm{res}}$).",
-        PALETTE["info_tint"],
-        PALETTE["blue"],
-        title_color="#004C78",
-        fontsize_title=6.6,
-        fontsize_body=5.8,
+    _draw_accent_card(
+        ax_b, rx, 0.350, rw, 0.245,
+        "Regime B: Moderate Shift",
+        "Step 4: Output-Space Refinement + Holdout ES.\nInternal 20% stop split; freeze $z > z_{\\mathrm{res}}$; disba check.",
+        PALETTE["blue"], "#EFF6FF", "Step 4: TTA"
     )
-    _draw_box(
-        ax_b,
-        0.565,
-        0.04,
-        0.427,
-        0.25,
-        "Regime C: Severe OOD / High Misfit ($r_0 > 5.0$)",
-        "Audit exact disba fit & depth smoothness; flag deep\ncrustal oscillations or fall back to Classical Inversion.",
-        PALETTE["warn_tint"],
-        PALETTE["vermillion"],
-        title_color="#8C3800",
-        fontsize_title=6.6,
-        fontsize_body=5.8,
+    _draw_accent_card(
+        ax_b, rx, 0.060, rw, 0.245,
+        "Regime C: Severe OOD / Outlier",
+        "Audit exact disba fit & >10 km depth smoothness;\nflag deep oscillations or fall back to Classical Inv.",
+        PALETTE["vermillion"], "#FFF7ED", "Audit / Fallback"
     )
 
-    _draw_arrow(ax_b, 0.476, 0.61, 0.562, 0.77, color=PALETTE["teal"])
-    _draw_arrow(ax_b, 0.476, 0.49, 0.562, 0.47, color=PALETTE["blue"])
-    _draw_arrow(ax_b, 0.476, 0.36, 0.562, 0.165, color=PALETTE["vermillion"])
-
-    ax_b.text(0.514, 0.75, "Safe\nSkip", fontsize=5.8, color=PALETTE["teal"], ha="center", fontweight="bold")
-    ax_b.text(0.518, 0.515, "TTA", fontsize=5.8, color=PALETTE["blue"], ha="center", fontweight="bold")
-    ax_b.text(0.506, 0.105, "Audit /\nFallback", fontsize=5.7, color=PALETTE["vermillion"], ha="center", va="center", fontweight="bold")
+    branches = [
+        (0.585, 0.758, PALETTE["teal"], r"$r_0 < 1.5$–$2.0$", 0.528, 0.735, 0.10),
+        (0.455, 0.472, PALETTE["blue"], r"$2.0 \leq r_0 \leq 5.0$", 0.528, 0.505, 0.00),
+        (0.320, 0.182, PALETTE["vermillion"], r"$r_0 > 5.0$", 0.528, 0.205, -0.10),
+    ]
+    for y_start, y_end, col, lbl, tx_l, ty_l, rad in branches:
+        _draw_arrow(ax_b, mx + mw + 0.003, y_start, rx - 0.004, y_end, color=col, lw=1.25, rad=rad)
+        ax_b.text(
+            tx_l,
+            ty_l,
+            lbl,
+            ha="center",
+            va="center",
+            fontsize=5.1,
+            fontweight="bold",
+            color=col,
+            bbox=dict(boxstyle="round,pad=0.17", facecolor="white", edgecolor=col, lw=0.65, alpha=0.97),
+            zorder=6,
+        )
 
     return save_figure(fig, out_stem, formats=formats, dpi=dpi)
 
@@ -474,10 +729,9 @@ def make_fig02_benchmark_overview(
     formats: Sequence[str] = ("pdf", "png", "svg"),
     dpi: int = 600,
 ) -> Dict[str, Dict[str, object]]:
-    """Generate Figure 2: three-benchmark accuracy vs field held-out dispersion misfit."""
+    """Generate Figure 2: decluttered three-benchmark accuracy vs field held-out misfit."""
     apply_cg_style()
     bo = _load_json(summary_dir, "benchmark_overview.json")
-    rs = _load_json(summary_dir, "root_skipping_diagnostics.json")
     method_order = bo["method_order"]
 
     panels = [
@@ -486,33 +740,8 @@ def make_fig02_benchmark_overview(
         ("deep_benchmark", "csrm_report", "(c) Deep Benchmark", "CSRM (Report)"),
     ]
 
-    fig, axes = plt.subplots(1, 3, figsize=(DOUBLE_COL_IN, mm_to_in(80.0)))
-    plt.subplots_adjust(wspace=0.28, bottom=0.27, top=0.88, left=0.075, right=0.985)
-
-    # Smart non-overlapping annotation offsets (dx, dy in points) per panel for highlighted methods
-    annotate_offsets: List[Dict[str, Tuple[float, float]]] = [
-        {
-            "zero_shot_raw": (-6, -12),
-            "zero_shot_aligned": (7, -10),
-            "low_dof_adapter": (8, 8),
-            "output_refined_aligned": (16, 12),
-            "adapter_output_refined_aligned": (16, -6),
-        },
-        {
-            "zero_shot_raw": (-8, -11),
-            "zero_shot_aligned": (8, 8),
-            "low_dof_adapter": (7, -1),
-            "output_refined_aligned": (26, 26),
-            "adapter_output_refined_aligned": (6, -15),
-        },
-        {
-            "zero_shot_raw": (-8, -12),
-            "zero_shot_aligned": (8, 8),
-            "low_dof_adapter": (-6, 12),
-            "output_refined_aligned": (18, 9),
-            "adapter_output_refined_aligned": (16, 10),
-        },
-    ]
+    fig, axes = plt.subplots(1, 3, figsize=(DOUBLE_COL_IN, mm_to_in(82.0)))
+    plt.subplots_adjust(wspace=0.28, bottom=0.29, top=0.89, left=0.075, right=0.985)
 
     for idx, (syn_k, fld_k, title, fld_label) in enumerate(panels):
         ax = axes[idx]
@@ -531,7 +760,7 @@ def make_fig02_benchmark_overview(
             xs.append(xv)
             ys.append(yv)
             color, marker, _, _ = METHOD_STYLE[mk]
-            ms = 62 if mk == "adapter_output_refined_aligned" else (46 if mk == "zero_shot_aligned" else 34)
+            ms = 74 if mk == "adapter_output_refined_aligned" else (54 if mk in ("zero_shot_aligned", "output_refined_aligned", "low_dof_adapter") else 38)
             ax.scatter(
                 xv,
                 yv,
@@ -539,7 +768,7 @@ def make_fig02_benchmark_overview(
                 marker=marker,
                 s=ms,
                 edgecolors="white" if mk != "zero_shot_aligned" else "#111111",
-                linewidths=0.6,
+                linewidths=0.65,
                 zorder=5,
             )
 
@@ -547,11 +776,10 @@ def make_fig02_benchmark_overview(
         x_max = max(max(xs), x_cls)
         y_min, y_max = min(ys), max(ys)
         x_pad = (x_max - x_min) * 0.14
-        y_pad = (y_max - y_min) * 0.18
-        ax.set_xlim(max(0.0, x_min - x_pad * 0.7), x_max + x_pad * 1.15)
-        ax.set_ylim(max(0.0, y_min - y_pad * 1.1), y_max + y_pad * 1.15)
+        y_pad = (y_max - y_min) * 0.16
+        ax.set_xlim(max(0.0, x_min - x_pad * 0.7), x_max + x_pad * 1.05)
+        ax.set_ylim(max(0.0, y_min - y_pad * 1.0), y_max + y_pad * 1.05)
 
-        # Pareto improvement quadrant (better than Aligned Zero-Shot on BOTH axes)
         ax.fill_between(
             [ax.get_xlim()[0], x_aligned],
             ax.get_ylim()[0],
@@ -560,79 +788,16 @@ def make_fig02_benchmark_overview(
             alpha=0.55,
             zorder=1,
         )
-        ax.axvline(x_aligned, color="#555555", lw=0.75, ls="--", zorder=2)
-        ax.axhline(y_aligned, color="#555555", lw=0.75, ls="--", zorder=2)
-        ax.axvline(x_cls, color=PALETTE["purple"], lw=1.0, ls="-.", zorder=2)
-        ax.axvline(gt_nf, color=PALETTE["mid_gray"], lw=0.85, ls=":", zorder=2)
-
-        yl_top = ax.get_ylim()[1]
-        yl_bot = ax.get_ylim()[0]
-        xr = ax.get_xlim()[1] - ax.get_xlim()[0]
-        ax.text(
-            x_cls + 0.02 * xr,
-            yl_top - 0.03 * (yl_top - yl_bot),
-            f"Classical {x_cls:.2f}%",
-            color=PALETTE["purple"],
-            fontsize=5.5,
-            ha="left",
-            va="top",
-            fontweight="bold",
-        )
-        ax.text(
-            gt_nf + 0.015 * xr,
-            yl_top - 0.14 * (yl_top - yl_bot),
-            f"GT floor {gt_nf:.2f}%",
-            color="#555555",
-            fontsize=5.3,
-            ha="left",
-            va="top",
-            rotation=90,
-        )
-
-        short_ann = {
-            "zero_shot_raw": "ZS (Raw)",
-            "zero_shot_aligned": "ZS (Aligned)",
-            "low_dof_adapter": "Low-DOF Adp.",
-            "output_refined_aligned": "Output-Ref.",
-            "adapter_output_refined_aligned": "Adp.+Out.",
-        }
-        for mk, (dx, dy) in annotate_offsets[idx].items():
-            xv = fld_blk["methods"][mk]["ho_median_mean4_converged_dc"] * 100.0
-            yv = syn_blk["methods"][mk]["judged_mean_vs_rmse_res"]
-            use_arrow = abs(dx) >= 12 or abs(dy) >= 12
-            ax.annotate(
-                short_ann[mk],
-                xy=(xv, yv),
-                xytext=(dx, dy),
-                textcoords="offset points",
-                fontsize=5.6,
-                color=METHOD_STYLE[mk][0],
-                fontweight="bold" if mk in ("zero_shot_aligned", "output_refined_aligned", "adapter_output_refined_aligned") else "normal",
-                ha="left" if dx >= 0 else "right",
-                va="center",
-                arrowprops=dict(arrowstyle="-", color=METHOD_STYLE[mk][0], lw=0.6, alpha=0.8) if use_arrow else None,
-            )
-
-        # Converged-dc tail callout box in open bottom-right quadrant
-        t_out = rs["recomputed_domains"][syn_k]["output_refined_aligned"]["new_tail_pct"]
-        t_adp = rs["recomputed_domains"][syn_k]["adapter_output_refined_aligned"]["new_tail_pct"]
-        ax.text(
-            0.97,
-            0.04,
-            f"Conv.-dc tails (>20%):\nOut-Ref: {t_out:.2f}%\nAdp+Out: {t_adp:.2f}%",
-            transform=ax.transAxes,
-            ha="right",
-            va="bottom",
-            fontsize=5.3,
-            bbox=dict(boxstyle="round,pad=0.20", facecolor="white", edgecolor="#CCCCCC", alpha=0.92),
-        )
+        ax.axvline(x_aligned, color="#555555", lw=0.80, ls="--", zorder=2)
+        ax.axhline(y_aligned, color="#555555", lw=0.80, ls="--", zorder=2)
+        ax.axvline(x_cls, color=PALETTE["purple"], lw=1.05, ls="-.", zorder=2)
+        ax.axvline(gt_nf, color=PALETTE["mid_gray"], lw=0.95, ls=":", zorder=2)
 
         ax.set_title(title, fontsize=8.0, fontweight="bold")
         ax.set_xlabel(f"{fld_label} HO Misfit Median (%)", fontsize=7.2)
         if idx == 0:
             ax.set_ylabel("Resolvable-Depth $V_s$ RMSE (km/s)", fontsize=7.5)
 
-    # Unified legend beneath figure
     handles = [
         Line2D(
             [0],
@@ -641,18 +806,24 @@ def make_fig02_benchmark_overview(
             color="none",
             markerfacecolor=METHOD_STYLE[mk][0],
             markeredgecolor="white" if mk != "zero_shot_aligned" else "#111111",
-            markersize=6.5 if mk == "adapter_output_refined_aligned" else 5.2,
+            markersize=6.6 if mk == "adapter_output_refined_aligned" else 5.4,
             label=METHOD_STYLE[mk][3],
         )
         for mk in method_order
     ]
+    handles.extend([
+        Line2D([0], [0], color="#555555", lw=0.9, ls="--", label="Zero-Shot (Aligned) reference"),
+        Line2D([0], [0], color=PALETTE["purple"], lw=1.1, ls="-.", label="Classical Inversion median"),
+        Line2D([0], [0], color=PALETTE["mid_gray"], lw=1.0, ls=":", label="Ground-Truth noise floor"),
+        patches.Patch(facecolor=PALETTE["safe_tint"], edgecolor="#CCCCCC", alpha=0.75, label="Pareto gain quadrant"),
+    ])
     fig.legend(
         handles=handles,
         loc="lower center",
         ncol=5,
-        bbox_to_anchor=(0.52, 0.01),
-        fontsize=6.4,
-        columnspacing=1.0,
+        bbox_to_anchor=(0.515, 0.008),
+        fontsize=6.1,
+        columnspacing=0.95,
         handletextpad=0.35,
     )
     return save_figure(fig, out_stem, formats=formats, dpi=dpi)
@@ -731,20 +902,10 @@ def make_fig03_disba_root_skipping(
     ax.set_xlabel("Period (s)")
     ax.set_ylabel("Rayleigh Phase Velocity (km/s)")
     ax.set_title(f"Root-Skipping Example (#{ex0['sample_idx']}, {ex0['structure_type']})", fontsize=8.0)
-    ax.legend(loc="center right", bbox_to_anchor=(0.99, 0.43), fontsize=5.5, handlelength=1.5)
-    ax.annotate(
-        "Jumps onto Mode 1\nat coarse dc=5e-3",
-        xy=(T[np.nanargmax(c_m0_old - c_m0_new)], np.nanmax(c_m0_old)),
-        xytext=(0.14, 0.80),
-        textcoords="axes fraction",
-        fontsize=6.1,
-        color=PALETTE["vermillion"],
-        fontweight="bold",
-        arrowprops=dict(arrowstyle="->", color=PALETTE["vermillion"], lw=0.9),
-    )
+    ax.legend(loc="lower right", bbox_to_anchor=(0.99, 0.16), fontsize=5.6, handlelength=1.6, framealpha=0.95)
     add_panel_label(ax, "(b)", x=-0.12, y=1.04)
 
-    # Panel (c): Per-Regime Convergence & Single-Forward Timing
+    # Panel (c): Per-Regime Convergence & Single-Forward Timing (clean legend only)
     ax = axes[1, 0]
     sh_tm = sorted(conv["single_process_timing_ms"]["shallow_benchmark"].values(), key=lambda r: r["dc"], reverse=True)
     dp_tm = sorted(conv["single_process_timing_ms"]["deep_benchmark"].values(), key=lambda r: r["dc"], reverse=True)
@@ -762,42 +923,38 @@ def make_fig03_disba_root_skipping(
         color=PALETTE["orange"],
         label="Deep single-forward median",
     )
-    # Mark chosen converged step sizes
     sh_sel_t = conv["single_process_timing_ms"]["shallow_benchmark"]["2.5e-05"]["median_ms"]
     dp_sel_t = conv["single_process_timing_ms"]["deep_benchmark"]["0.005"]["median_ms"]
-    ax.scatter([2.5e-5], [sh_sel_t], s=95, marker="*", color=PALETTE["teal"], edgecolors="#111111", lw=0.6, zorder=6)
-    ax.scatter([5e-3], [dp_sel_t], s=95, marker="*", color=PALETTE["vermillion"], edgecolors="#111111", lw=0.6, zorder=6)
+    ax.scatter(
+        [2.5e-5],
+        [sh_sel_t],
+        s=95,
+        marker="*",
+        color=PALETTE["teal"],
+        edgecolors="#111111",
+        lw=0.6,
+        zorder=6,
+        label=f"Shallow selected (dc=2.5e-5, {sh_sel_t:.1f} ms)",
+    )
+    ax.scatter(
+        [5e-3],
+        [dp_sel_t],
+        s=95,
+        marker="*",
+        color=PALETTE["vermillion"],
+        edgecolors="#111111",
+        lw=0.6,
+        zorder=6,
+        label=f"Deep selected (dc=5e-3, {dp_sel_t:.1f} ms)",
+    )
     ax.set_xscale("log")
     ax.set_yscale("log")
     ax.invert_xaxis()
-    ax.set_ylim(5.5, 520.0)
+    ax.set_ylim(5.5, 780.0)
     ax.set_xlabel("disba Phase-Velocity Step dc (km/s, finer →)")
     ax.set_ylabel("Median Forward Runtime (ms / station)")
     ax.set_title("Per-Regime Convergence & Compute Cost", fontsize=8.0)
-
-    sh_ru = conv["shallow_residual_uncertainty"]
-    dp_ru = conv["deep_residual_uncertainty"]
-    ax.annotate(
-        f"Shallow selected: dc=2.5e-5\n({sh_sel_t:.1f} ms; Δ>0.1pp={sh_ru['pct_changed_gt_0p1pp']:.3f}%)",
-        xy=(2.5e-5, sh_sel_t),
-        xytext=(0.38, 0.56),
-        textcoords="axes fraction",
-        fontsize=5.8,
-        color="#005B42",
-        bbox=dict(boxstyle="round,pad=0.22", facecolor=PALETTE["safe_tint"], edgecolor=PALETTE["teal"], lw=0.7),
-        arrowprops=dict(arrowstyle="->", color=PALETTE["teal"], lw=0.9),
-    )
-    ax.annotate(
-        f"Deep selected: dc=5e-3\n({dp_sel_t:.1f} ms; Δ>0.1pp={dp_ru['pct_changed_gt_0p1pp']:.3f}%)",
-        xy=(5e-3, dp_sel_t),
-        xytext=(0.16, 0.25),
-        textcoords="axes fraction",
-        fontsize=5.8,
-        color="#8C3800",
-        bbox=dict(boxstyle="round,pad=0.22", facecolor=PALETTE["warn_tint"], edgecolor=PALETTE["vermillion"], lw=0.7),
-        arrowprops=dict(arrowstyle="->", color=PALETTE["vermillion"], lw=0.9),
-    )
-    ax.legend(loc="upper right", fontsize=5.8)
+    ax.legend(loc="upper left", fontsize=5.4, framealpha=0.95, handlelength=1.6)
     add_panel_label(ax, "(c)", x=-0.12, y=1.04)
 
     # Panel (d): Shallow Benchmark Tail Failure Rate Collapse (>20% HO Misfit)

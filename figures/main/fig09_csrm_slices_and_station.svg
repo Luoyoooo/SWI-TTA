@@ -2833,10 +2833,10 @@ L 253.415972 520.126978
    <g id="legend_1">
     <g id="patch_114">
      <path d="M 41.432801 385.836452 
-L 223.697645 385.836452 
-Q 224.697645 385.836452 224.697645 384.836452 
-L 224.697645 355.334889 
-Q 224.697645 354.334889 223.697645 354.334889 
+L 221.976551 385.836452 
+Q 222.976551 385.836452 222.976551 384.836452 
+L 222.976551 355.334889 
+Q 222.976551 354.334889 221.976551 354.334889 
 L 41.432801 354.334889 
 Q 40.432801 354.334889 40.432801 355.334889 
 L 40.432801 384.836452 
@@ -2912,7 +2912,7 @@ L 129.748426 380.88528
 " style="fill: none; stroke: #0072b2; stroke-width: 1.35; stroke-linecap: square"/>
     </g>
     <g id="text_88">
-     <text style="font-size: 5px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start" x="133.748426" y="382.63528" transform="rotate(-0 133.748426 382.63528)">Adapter + Output-Ref. (HO=0.82%)</text>
+     <text style="font-size: 5px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start" x="133.748426" y="382.63528" transform="rotate(-0 133.748426 382.63528)">Gated Adp.+Out.-Ref. (HO=0.82%)</text>
     </g>
    </g>
   </g>
@@ -3659,7 +3659,7 @@ L 318.202114 511.483619
 " style="fill: none; stroke: #0072b2; stroke-width: 1.35; stroke-linecap: square"/>
     </g>
     <g id="text_107">
-     <text style="font-size: 5.8px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start" x="322.842114" y="513.513619" transform="rotate(-0 322.842114 513.513619)">Adapter + Output-Ref.</text>
+     <text style="font-size: 5.8px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start" x="322.842114" y="513.513619" transform="rotate(-0 322.842114 513.513619)">Gated Adp.+Out.-Ref.</text>
     </g>
    </g>
   </g>

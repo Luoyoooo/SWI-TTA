@@ -14,4 +14,4 @@
 | Gated Adapter + Output-Refined | 0.0498 (-57.79%) | 0.0305 (-12.13%) | 0.1699 (+28.21%) | 0.01% | 0.83% (0.00%) | 1.04% (0.00%) | 5226.03 |
 | Classical Inversion (500-sta) | -- | -- | -- | -- | 0.66% (--) | 1.43% (--) | 908612.7 |
 
-*Synthetic RMSE reports judged-checkpoint mean Resolvable-Depth Vs RMSE (km/s) with relative change vs Input-Aligned Zero-Shot. Field columns report 4-checkpoint mean Held-Out Dispersion Misfit median (%) and tail failure rate (>20% HO) evaluated at converged disba step sizes (dc = 2.5e-5 km/s shallow, dc = 5e-3 km/s deep).*
+*Synthetic RMSE reports judged-checkpoint mean Resolvable-Depth Vs RMSE (km/s) across 4 shallow (3 clean seeds + 1 official) or 7 deep (6 clean seeds + 1 official) checkpoints, with relative change of domain-mean RMSE vs Input-Aligned Zero-Shot. Field columns report 4-checkpoint mean Held-Out Dispersion Misfit median (%) and tail failure rate (>20% HO) evaluated at converged disba step sizes (dc = 2.5e-5 km/s shallow, dc = 5e-3 km/s deep).*

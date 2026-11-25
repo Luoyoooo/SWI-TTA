@@ -1,18 +1,18 @@
 {
   "schema_version": "1.0",
   "n_tables": 6,
-  "total_size_bytes": 36187,
+  "total_size_bytes": 37118,
   "tables": {
     "table1_benchmark_comparison": {
       "md": {
         "relative_path": "table1_benchmark_comparison.md",
-        "size_bytes": 2064,
-        "sha256": "20b89b9f5194689e6b541a71dc041cb6ed8dea2d444f33974cad34e86c0fea73"
+        "size_bytes": 2182,
+        "sha256": "6e812ffa753fe021b86905d5f4e6f9f374793822e9a14a8d035a0731b93927d9"
       },
       "tex": {
         "relative_path": "table1_benchmark_comparison.tex",
-        "size_bytes": 2347,
-        "sha256": "f6869220131070acbb005d3ad8d80d440449aa7a2014eee62ba05b0d2fb00fbf"
+        "size_bytes": 2465,
+        "sha256": "7baedc1ebdd470fdb307e6501046ab15d823080da0ab4d5cfba419b8b3f4556e"
       }
     },
     "table2_referee_convergence_and_tails": {
@@ -30,25 +30,25 @@
     "table3_cross_backbone_diagnostics": {
       "md": {
         "relative_path": "table3_cross_backbone_diagnostics.md",
-        "size_bytes": 2487,
-        "sha256": "fb1844244624b833981bb3067b564c371aa7fd4bade47aed6c5ff2ca1a017955"
+        "size_bytes": 2582,
+        "sha256": "efcb0af46a1b70aa1740fbc7b3edc73f7d8d0cca3207075003b6b08b64802688"
       },
       "tex": {
         "relative_path": "table3_cross_backbone_diagnostics.tex",
-        "size_bytes": 2815,
-        "sha256": "a764241ea17f5d8da65f7ba1c5266da7d111c46785f2fa19f27dfc86b1733c1b"
+        "size_bytes": 2920,
+        "sha256": "2998085052906ea645d91ca9f796d516dc0f9ae4ede2d19e01f86a478f383994"
       }
     },
     "table4_safe_tta_validation_audit": {
       "md": {
         "relative_path": "table4_safe_tta_validation_audit.md",
-        "size_bytes": 1576,
-        "sha256": "879bce1f9671d0e493a26ebeabd602e354df635be3be3e8d91c5b5d80fb6dc52"
+        "size_bytes": 1659,
+        "sha256": "eba4db02cd18d89ea0f1996f6489a3b33e00996e462b027d182dc5496018ed13"
       },
       "tex": {
         "relative_path": "table4_safe_tta_validation_audit.tex",
-        "size_bytes": 1893,
-        "sha256": "dbeabf733f6a2ebdfeac5b4583d14ae3e0ae32fdcbe3e3fe98147626e225a791"
+        "size_bytes": 1985,
+        "sha256": "d9fd9887e9ba42bfcda1758448e21fda36e47e4ebdb3a8a76eb7910b12f76b1c"
       }
     },
     "tableS1_noise_floor_calibration": {
@@ -66,13 +66,13 @@
     "tableS2_signature_bins": {
       "md": {
         "relative_path": "tableS2_signature_bins.md",
-        "size_bytes": 7681,
-        "sha256": "c831d2d3995c8872bfd1ba07f32c51a2abfae9eed75eb94a779c953fd7a5100c"
+        "size_bytes": 7825,
+        "sha256": "57e5a3021ab3ec4a94fe4bc17f68a00802dac55587a2d6c9e01f6e92f0de335e"
       },
       "tex": {
         "relative_path": "tableS2_signature_bins.tex",
-        "size_bytes": 8074,
-        "sha256": "6d716f5d9e522c5e57d62e25136a7ccd6dee28d824e6ef92fa89d9aca4e3c27a"
+        "size_bytes": 8250,
+        "sha256": "e56adc9add6ff0ef346eb6ff77f02d78f112a752775792663d6390566e5252f7"
       }
     }
   }

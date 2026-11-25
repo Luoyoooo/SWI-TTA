@@ -501,22 +501,22 @@ def make_fig01_workflow_and_protocol(
     bar_x = mx + 0.018
     bar_w = mw - 0.036
     bar_y, bar_h = 0.275, 0.048
-    ax_b.add_patch(patches.Rectangle((bar_x, bar_y), bar_w * 0.32, bar_h, facecolor=PALETTE["teal"], alpha=0.85, lw=0, zorder=4))
-    ax_b.add_patch(patches.Rectangle((bar_x + bar_w * 0.32, bar_y), bar_w * 0.36, bar_h, facecolor=PALETTE["blue"], alpha=0.85, lw=0, zorder=4))
-    ax_b.add_patch(patches.Rectangle((bar_x + bar_w * 0.68, bar_y), bar_w * 0.32, bar_h, facecolor=PALETTE["vermillion"], alpha=0.85, lw=0, zorder=4))
-    ax_b.text(bar_x, bar_y - 0.018, "0", ha="center", va="top", fontsize=4.8, color="#475569", zorder=5)
-    ax_b.text(bar_x + bar_w * 0.32, bar_y - 0.018, "1.5–2", ha="center", va="top", fontsize=4.8, color="#475569", zorder=5)
-    ax_b.text(bar_x + bar_w * 0.68, bar_y - 0.018, "5.0", ha="center", va="top", fontsize=4.8, color="#475569", zorder=5)
-    ax_b.text(bar_x + bar_w, bar_y - 0.018, r"$\infty$", ha="center", va="top", fontsize=5.2, color="#475569", zorder=5)
-    ax_b.text(bar_x + bar_w * 0.16, bar_y + bar_h * 0.5, "A", ha="center", va="center", fontsize=5.2, fontweight="bold", color="white", zorder=5)
-    ax_b.text(bar_x + bar_w * 0.50, bar_y + bar_h * 0.5, "B", ha="center", va="center", fontsize=5.2, fontweight="bold", color="white", zorder=5)
-    ax_b.text(bar_x + bar_w * 0.84, bar_y + bar_h * 0.5, "C", ha="center", va="center", fontsize=5.2, fontweight="bold", color="white", zorder=5)
-    ax_b.text(mx + mw / 2.0, 0.212, "Separates noise vs. OOD shift", ha="center", va="center", fontsize=5.0, style="italic", color="#64748B", zorder=5)
+    ax_b.add_patch(patches.Rectangle((bar_x, bar_y), bar_w * 0.34, bar_h, facecolor=PALETTE["teal"], alpha=0.85, lw=0, zorder=4))
+    ax_b.add_patch(patches.Rectangle((bar_x + bar_w * 0.34, bar_y), bar_w * 0.36, bar_h, facecolor=PALETTE["blue"], alpha=0.85, lw=0, zorder=4))
+    ax_b.add_patch(patches.Rectangle((bar_x + bar_w * 0.70, bar_y), bar_w * 0.30, bar_h, facecolor=PALETTE["vermillion"], alpha=0.85, lw=0, zorder=4))
+    ax_b.text(bar_x, bar_y - 0.018, "0", ha="center", va="top", fontsize=4.6, color="#475569", zorder=5)
+    ax_b.text(bar_x + bar_w * 0.34, bar_y - 0.018, "2.0 / 1.25", ha="center", va="top", fontsize=4.4, color="#475569", zorder=5)
+    ax_b.text(bar_x + bar_w * 0.70, bar_y - 0.018, "3.0 (D)", ha="center", va="top", fontsize=4.4, color="#475569", zorder=5)
+    ax_b.text(bar_x + bar_w, bar_y - 0.018, r"$\infty$", ha="center", va="top", fontsize=5.0, color="#475569", zorder=5)
+    ax_b.text(bar_x + bar_w * 0.17, bar_y + bar_h * 0.5, "A", ha="center", va="center", fontsize=5.2, fontweight="bold", color="white", zorder=5)
+    ax_b.text(bar_x + bar_w * 0.52, bar_y + bar_h * 0.5, "B", ha="center", va="center", fontsize=5.2, fontweight="bold", color="white", zorder=5)
+    ax_b.text(bar_x + bar_w * 0.85, bar_y + bar_h * 0.5, "C", ha="center", va="center", fontsize=5.2, fontweight="bold", color="white", zorder=5)
+    ax_b.text(mx + mw / 2.0, 0.205, "Regime-aware Shallow (S) / Deep (D)", ha="center", va="center", fontsize=4.7, style="italic", color="#64748B", zorder=5)
 
     _draw_arrow(ax_b, lx + lw_col + 0.002, 0.660, mx - 0.003, 0.545, color="#475569", lw=1.1, rad=-0.08)
     _draw_arrow(ax_b, lx + lw_col + 0.002, 0.240, mx - 0.003, 0.355, color="#475569", lw=1.1, rad=0.08)
 
-    rx, rw = 0.580, 0.400
+    rx, rw = 0.585, 0.395
     _draw_accent_card(
         ax_b, rx, 0.640, rw, 0.235,
         "Regime A: Near / Below Floor",
@@ -525,21 +525,21 @@ def make_fig01_workflow_and_protocol(
     )
     _draw_accent_card(
         ax_b, rx, 0.350, rw, 0.245,
-        "Regime B: Moderate Shift",
-        "Step 4: Output-Space Refinement + Holdout ES.\nInternal 20% stop split; freeze $z > z_{\\mathrm{res}}$; disba check.",
+        "Regime B: Safe Shift Window",
+        "Step 4: Output-Space Refinement + Holdout ES.\n20% internal stop split; freeze $z > z_{\\mathrm{res}}$; exact disba check.",
         PALETTE["blue"], "#EFF6FF", "Step 4: TTA"
     )
     _draw_accent_card(
         ax_b, rx, 0.060, rw, 0.245,
-        "Regime C: Severe OOD / Outlier",
-        "Audit exact disba fit & >10 km depth smoothness;\nflag deep oscillations or fall back to Classical Inv.",
+        "Regime C: Deep Outliers Only",
+        "Deep $r_0 > 3.0$: audit exact fit & >10 km smoothness;\nretain zero-shot or fall back to Classical Inv.",
         PALETTE["vermillion"], "#FFF7ED", "Audit / Fallback"
     )
 
     branches = [
-        (0.585, 0.758, PALETTE["teal"], r"$r_0 < 1.5$–$2.0$", 0.528, 0.735, 0.10),
-        (0.455, 0.472, PALETTE["blue"], r"$2.0 \leq r_0 \leq 5.0$", 0.528, 0.505, 0.00),
-        (0.320, 0.182, PALETTE["vermillion"], r"$r_0 > 5.0$", 0.528, 0.205, -0.10),
+        (0.585, 0.758, PALETTE["teal"], "S: $r_0<2.0$\nD: $r_0<1.25$", 0.531, 0.735, 0.10),
+        (0.455, 0.472, PALETTE["blue"], "S: $r_0\\geq 2.0$\nD: $1.25\\leq r_0\\leq 3.0$", 0.531, 0.495, 0.00),
+        (0.320, 0.182, PALETTE["vermillion"], "D: $r_0>3.0$", 0.531, 0.205, -0.10),
     ]
     for y_start, y_end, col, lbl, tx_l, ty_l, rad in branches:
         _draw_arrow(ax_b, mx + mw + 0.003, y_start, rx - 0.004, y_end, color=col, lw=1.25, rad=rad)
@@ -605,7 +605,7 @@ def make_graphical_abstract(
     # Panel 1: Hidden Evaluation Pitfall (disba root-skipping collapse)
     ax1 = fig.add_subplot(gs[0])
     sh_rec = rs["recomputed_domains"]["shallow_benchmark"]
-    labels = ["Output-Ref.\n(50-step)", "Adapter +\nOutput-Ref.", "Ground\nTruth"]
+    labels = ["Output-Ref.\n(50-step)", "Gated Adp.+\nOut.-Ref.", "Ground\nTruth"]
     old_vals = [
         sh_rec["output_refined_aligned"]["old_tail_pct"],
         sh_rec["adapter_output_refined_aligned"]["old_tail_pct"],
@@ -643,18 +643,18 @@ def make_graphical_abstract(
     y_id = [b["methods"]["ideal_es"]["median_rel_change_pct"] for b in bins]
 
     ax2.axhspan(0, 185, color=PALETTE["warn_tint"], alpha=0.55, zorder=0)
-    ax2.axhspan(-75, 0, color=PALETTE["safe_tint"], alpha=0.55, zorder=0)
+    ax2.axhspan(-94, 0, color=PALETTE["safe_tint"], alpha=0.55, zorder=0)
     ax2.axhline(0.0, color="#333333", lw=0.8, ls="--")
     ax2.plot(bx, y_p3, "-o", color=PALETTE["vermillion"], lw=1.4, ms=3.5, label="Output-Refined (50-step)")
     ax2.plot(bx, y_ho, "-s", color=PALETTE["blue"], lw=1.4, ms=3.4, label="Holdout ES")
     ax2.plot(bx, y_id, "--^", color=PALETTE["teal"], lw=1.2, ms=3.2, label="Ideal ES")
     ax2.set_xticks(bx)
     ax2.set_xticklabels(blabs, fontsize=5.6, rotation=28, ha="right")
-    ax2.set_xlabel("Initial Misfit / Ground-Truth Noise Floor", fontsize=6.8)
+    ax2.set_xlabel(r"Initial Misfit / GT Noise Floor ($r_0^{\mathrm{GT}}$)", fontsize=6.6)
     ax2.set_ylabel("Median Δ Vs RMSE (%)", fontsize=7.0)
-    ax2.set_ylim(-68, 182)
+    ax2.set_ylim(-94, 182)
     ax2.text(1.12, 138, "Noise-fitting\ndegradation", fontsize=5.8, color="#9A2D00", fontweight="bold")
-    ax2.text(0.10, -56, "OOD inversion gain", fontsize=5.9, color="#00664B", fontweight="bold")
+    ax2.text(0.10, -80, "OOD inversion gain", fontsize=5.9, color="#00664B", fontweight="bold")
     ax2.set_title("2. Noise-Floor Regime Signature", fontsize=7.8, fontweight="bold", color=PALETTE["blue"])
     ax2.legend(loc="upper right", fontsize=5.7, handlelength=1.4)
 
@@ -680,12 +680,12 @@ def make_graphical_abstract(
         0.64,
         0.97,
         0.26,
-        "Below Floor ($r_0 < 1.5$–$2.0$)",
-        "Keep Input-Aligned Zero-Shot\n(avoid noise-floor overfitting)",
+        "Near Floor (S:$r_0<2$, D:$r_0<1.25$)",
+        "Keep Input-Aligned Zero-Shot\n(prevents +13% to +157% harm)",
         PALETTE["safe_tint"],
         PALETTE["teal"],
-        fontsize_title=6.1,
-        fontsize_body=5.6,
+        fontsize_title=5.6,
+        fontsize_body=5.5,
     )
     _draw_box(
         ax3,
@@ -693,12 +693,12 @@ def make_graphical_abstract(
         0.33,
         0.97,
         0.26,
-        r"Moderate OOD ($2.0 \leq r_0 \leq 5.0$)",
-        "Output-Space Refinement + Holdout ES\n(depth-resolvable regularization)",
+        "Safe Window (S:$r_0\\geq 2$, D:$1.25$–$3$)",
+        "Output-Space Refinement + Holdout ES\n(freeze $z>z_{\\mathrm{res}}$; exact disba check)",
         PALETTE["info_tint"],
         PALETTE["blue"],
-        fontsize_title=6.1,
-        fontsize_body=5.6,
+        fontsize_title=5.6,
+        fontsize_body=5.5,
     )
     _draw_box(
         ax3,
@@ -706,12 +706,12 @@ def make_graphical_abstract(
         0.02,
         0.97,
         0.26,
-        r"Severe Tail ($r_0 > 5.0$)",
-        "Audit exact disba & depth smoothness\nor fall back to Classical Inversion",
+        "Deep Outlier Tail (D:$r_0 > 3.0$)",
+        "Audit exact fit & >10 km smoothness\nor fall back to Classical Inversion",
         PALETTE["warn_tint"],
         PALETTE["vermillion"],
-        fontsize_title=6.1,
-        fontsize_body=5.6,
+        fontsize_title=5.8,
+        fontsize_body=5.5,
     )
 
     # Note: bbox_inches=None preserves the exact 5:2 canvas dimensions (2700 x 1080 px)
@@ -732,18 +732,20 @@ def make_fig02_benchmark_overview(
     """Generate Figure 2: decluttered three-benchmark accuracy vs field held-out misfit."""
     apply_cg_style()
     bo = _load_json(summary_dir, "benchmark_overview.json")
+    cal = _load_json(summary_dir, "calibration_and_domains.json")
+    cnf = cal["calibrated_noise_floors"]
     method_order = bo["method_order"]
 
     panels = [
-        ("longbeach_matched_shallow", "longbeach_report", "(a) LongBeach-Matched Shallow", "LongBeach (Report 70%)"),
-        ("shallow_benchmark", "longbeach_report", "(b) Shallow Benchmark", "LongBeach (Report 70%)"),
-        ("deep_benchmark", "csrm_report", "(c) Deep Benchmark", "CSRM (Report)"),
+        ("longbeach_matched_shallow", "longbeach_report", "longbeach_tuning", "(a) LongBeach-Matched Shallow", "LongBeach (Report 70%)"),
+        ("shallow_benchmark", "longbeach_report", "longbeach_tuning", "(b) Shallow Benchmark", "LongBeach (Report 70%)"),
+        ("deep_benchmark", "csrm_report", "csrm_validation", "(c) Deep Benchmark", "CSRM (Report)"),
     ]
 
     fig, axes = plt.subplots(1, 3, figsize=(DOUBLE_COL_IN, mm_to_in(82.0)))
     plt.subplots_adjust(wspace=0.28, bottom=0.29, top=0.89, left=0.075, right=0.985)
 
-    for idx, (syn_k, fld_k, title, fld_label) in enumerate(panels):
+    for idx, (syn_k, fld_k, cal_k, title, fld_label) in enumerate(panels):
         ax = axes[idx]
         syn_blk = bo["synthetic_benchmarks"][syn_k]
         fld_blk = bo["field_report"][fld_k]
@@ -751,7 +753,7 @@ def make_fig02_benchmark_overview(
         x_aligned = fld_blk["methods"]["zero_shot_aligned"]["ho_median_mean4_converged_dc"] * 100.0
         y_aligned = syn_blk["methods"]["zero_shot_aligned"]["judged_mean_vs_rmse_res"]
         x_cls = fld_blk["classical_inversion"]["ho_median"] * 100.0
-        gt_nf = syn_blk["gt_noise_floor"]["obs_median_converged_dc"] * 100.0
+        fld_nf = cnf[cal_k]["sigma_hat_d"] * 100.0
 
         xs, ys = [], []
         for mk in method_order:
@@ -772,8 +774,8 @@ def make_fig02_benchmark_overview(
                 zorder=5,
             )
 
-        x_min = min(min(xs), x_cls, gt_nf)
-        x_max = max(max(xs), x_cls)
+        x_min = min(min(xs), x_cls, fld_nf)
+        x_max = max(max(xs), x_cls, fld_nf)
         y_min, y_max = min(ys), max(ys)
         x_pad = (x_max - x_min) * 0.14
         y_pad = (y_max - y_min) * 0.16
@@ -791,7 +793,7 @@ def make_fig02_benchmark_overview(
         ax.axvline(x_aligned, color="#555555", lw=0.80, ls="--", zorder=2)
         ax.axhline(y_aligned, color="#555555", lw=0.80, ls="--", zorder=2)
         ax.axvline(x_cls, color=PALETTE["purple"], lw=1.05, ls="-.", zorder=2)
-        ax.axvline(gt_nf, color=PALETTE["mid_gray"], lw=0.95, ls=":", zorder=2)
+        ax.axvline(fld_nf, color=PALETTE["mid_gray"], lw=0.95, ls=":", zorder=2)
 
         ax.set_title(title, fontsize=8.0, fontweight="bold")
         ax.set_xlabel(f"{fld_label} HO Misfit Median (%)", fontsize=7.2)
@@ -814,7 +816,7 @@ def make_fig02_benchmark_overview(
     handles.extend([
         Line2D([0], [0], color="#555555", lw=0.9, ls="--", label="Zero-Shot (Aligned) reference"),
         Line2D([0], [0], color=PALETTE["purple"], lw=1.1, ls="-.", label="Classical Inversion median"),
-        Line2D([0], [0], color=PALETTE["mid_gray"], lw=1.0, ls=":", label="Ground-Truth noise floor"),
+        Line2D([0], [0], color=PALETTE["mid_gray"], lw=1.0, ls=":", label=r"Calibrated field floor ($\hat{\sigma}_D$)"),
         patches.Patch(facecolor=PALETTE["safe_tint"], edgecolor="#CCCCCC", alpha=0.75, label="Pareto gain quadrant"),
     ])
     fig.legend(
@@ -966,7 +968,7 @@ def make_fig03_disba_root_skipping(
         ("Output-Ref.\n(Raw)", sh_d["output_refined_raw"]["old_tail_pct"], sh_d["output_refined_raw"]["new_tail_pct"]),
         ("Output-Ref.\n(50-step)", sh_d["output_refined_aligned"]["old_tail_pct"], sh_d["output_refined_aligned"]["new_tail_pct"]),
         ("Low-DOF\nAdapter", sh_d["low_dof_adapter"]["old_tail_pct"], sh_d["low_dof_adapter"]["new_tail_pct"]),
-        ("Adapter +\nOutput-Ref.", sh_d["adapter_output_refined_aligned"]["old_tail_pct"], sh_d["adapter_output_refined_aligned"]["new_tail_pct"]),
+        ("Gated Adp.+\nOut.-Ref.", sh_d["adapter_output_refined_aligned"]["old_tail_pct"], sh_d["adapter_output_refined_aligned"]["new_tail_pct"]),
         ("Ground\nTruth", gt_sh["ho_old_tail_pct"], gt_sh["ho_new_tail_pct"]),
     ]
     x = np.arange(len(items))
@@ -1050,27 +1052,27 @@ def make_fig04_openswi_signature_curves(
         y_lo = min(-55.0, min(all_meds) - 18.0)
         y_hi = max(80.0, max(all_meds) * 1.28)
         if dk == "deep_lithospheric":
-            y_lo, y_hi = -65.0, 55.0
+            y_lo, y_hi = -42.0, 160.0
         elif dk == "shallow_prior_shift":
-            y_lo, y_hi = -75.0, 145.0
+            y_lo, y_hi = -92.0, 145.0
         else:
-            y_lo, y_hi = -72.0, 185.0
+            y_lo, y_hi = -92.0, 185.0
         ax_top.set_ylim(y_lo, y_hi)
         ax_top.axhspan(0.0, y_hi, color=PALETTE["warn_tint"], alpha=0.35, zorder=0)
         ax_top.axhspan(y_lo, 0.0, color=PALETTE["safe_tint"], alpha=0.35, zorder=0)
 
-        # Annotate overall mean Δ Vs RMSE for the 3 methods (bottom-left on Deep to clear curve)
+        # Annotate overall mean Δ Vs RMSE for the 3 methods (top-left on Deep to clear rising right tail)
         o50_ov = osw["output_refined_50"]["mean_rel_change_vs_aligned_pct"]
         hes_ov = osw["holdout_es"]["mean_rel_change_vs_aligned_pct"]
         ies_ov = osw["ideal_es"]["mean_rel_change_vs_aligned_pct"]
         is_deep = dk == "deep_lithospheric"
         ax_top.text(
             0.04 if is_deep else 0.97,
-            0.05 if is_deep else 0.96,
+            0.96,
             f"Overall ΔRMSE:\n50-step: {o50_ov:+.1f}%\nHoldout ES: {hes_ov:+.1f}%\nIdeal ES: {ies_ov:+.1f}%",
             transform=ax_top.transAxes,
             ha="left" if is_deep else "right",
-            va="bottom" if is_deep else "top",
+            va="top",
             fontsize=5.6,
             bbox=dict(boxstyle="round,pad=0.22", facecolor="white", edgecolor="#CCCCCC", alpha=0.92),
         )
@@ -1080,15 +1082,16 @@ def make_fig04_openswi_signature_curves(
         if col == 0:
             ax_top.set_ylabel("Per-Sample Δ $V_s$ RMSE (%)\n(median & IQR)", fontsize=7.3)
 
-        # Bottom histogram: sample share per bin
+        # Bottom histogram: sample share per bin (including <1% bins such as 0.5%)
         ax_bot.bar(bx, fracs, width=0.68, color=PALETTE["sky"], edgecolor=PALETTE["blue"], linewidth=0.5)
         for xi, fv in zip(bx, fracs):
-            if fv >= 1.0:
-                ax_bot.text(xi, fv + 1.2, f"{fv:.0f}", ha="center", va="bottom", fontsize=5.2, color="#333333")
-        ax_bot.set_ylim(0, max(fracs) * 1.32)
+            if fv >= 0.3:
+                lbl_f = f"{fv:.1f}" if fv < 1.0 else f"{fv:.0f}"
+                ax_bot.text(xi, fv + 1.2, lbl_f, ha="center", va="bottom", fontsize=5.0, color="#333333")
+        ax_bot.set_ylim(0, max(fracs) * 1.34)
         ax_bot.set_xticks(bx)
         ax_bot.set_xticklabels(blabs, rotation=32, ha="right", fontsize=6.0)
-        ax_bot.set_xlabel("Initial Misfit / GT Noise Floor", fontsize=6.8)
+        ax_bot.set_xlabel(r"Initial Misfit / GT Noise Floor ($r_0^{\mathrm{GT}}$)", fontsize=6.6)
         if col == 0:
             ax_bot.set_ylabel("Share (%)", fontsize=6.8)
 
@@ -1167,20 +1170,20 @@ def make_fig05_cross_backbone_signatures(
             ax_top.annotate(
                 f"Retrained-only [0, 1):\nOpenSWI {osw_ret_v:+.2f}%\nDispFormer {dsp_ret_v:+.2f}%\n(All-ckpt DF: {dsp_all_v:+.2f}%)",
                 xy=(0.0, dsp_ret_v),
-                xytext=(0.14, 0.95),
+                xytext=(0.06, 0.96),
                 textcoords="axes fraction",
                 ha="left",
                 va="top",
-                fontsize=5.5,
+                fontsize=5.4,
                 bbox=dict(boxstyle="round,pad=0.20", facecolor="#FFF8E1", edgecolor=PALETTE["orange"], lw=0.8),
                 arrowprops=dict(arrowstyle="->", color=PALETTE["blue"], lw=0.85),
                 zorder=8,
             )
-            ax_top.set_ylim(-58.0, 68.0)
+            ax_top.set_ylim(-42.0, 162.0)
         elif dk == "shallow_prior_shift":
-            ax_top.set_ylim(-70.0, 125.0)
+            ax_top.set_ylim(-92.0, 125.0)
         else:
-            ax_top.set_ylim(-68.0, 180.0)
+            ax_top.set_ylim(-92.0, 180.0)
 
         yl0, yl1 = ax_top.get_ylim()
         ax_top.axhspan(0.0, yl1, color=PALETTE["warn_tint"], alpha=0.30, zorder=0)
@@ -1199,7 +1202,7 @@ def make_fig05_cross_backbone_signatures(
         ax_bot.set_ylim(0, max(max(f_osw), max(f_dsp)) * 1.25)
         ax_bot.set_xticks(bx)
         ax_bot.set_xticklabels(blabs, rotation=32, ha="right", fontsize=6.0)
-        ax_bot.set_xlabel("Initial Misfit / GT Noise Floor", fontsize=6.8)
+        ax_bot.set_xlabel(r"Initial Misfit / GT Noise Floor ($r_0^{\mathrm{GT}}$)", fontsize=6.6)
         if col == 0:
             ax_bot.set_ylabel("Bin Share (%)", fontsize=6.8)
             ax_bot.legend(loc="upper right", fontsize=5.5, handlelength=1.1)
@@ -1244,8 +1247,9 @@ def make_fig06_noise_amplitude_scan(
     # Panel (a): Δ Resolvable-Depth Vs RMSE (%) vs Noise Multiplier with 95% CIs
     curves = [
         ("step5", "Output-Refined (5-step)", PALETTE["orange"], "s", "-"),
-        ("step20", "Output-Refined (20-step)", PALETTE["blue"], "D", "-"),
+        ("step20", "Output-Refined (20-step)", PALETTE["sky"], "D", "-"),
         ("step50", "Output-Refined (50-step)", PALETTE["vermillion"], "o", "-"),
+        ("holdout_es", "Holdout ES", PALETTE["blue"], "P", "-"),
         ("ideal_es", "Ideal ES (oracle bound)", PALETTE["teal"], "^", "--"),
     ]
     ax1.axhline(0.0, color="#333333", lw=0.8, ls="--")
@@ -1256,11 +1260,16 @@ def make_fig06_noise_amplitude_scan(
             osw = ns[k]["openswi"]["all_judged_ckpts"]
             if ck == "ideal_es":
                 ent = osw["ideal_es"]
+            elif ck == "holdout_es":
+                ent = osw.get("holdout_es")
             elif ck == "step50":
                 ent = osw["output_refined_50"]
             else:
                 st_num = ck.replace("step", "")
                 ent = osw["output_refined_by_step"][st_num]
+            if ent is None:
+                has_ci = False
+                break
             pt = float(ent["mean_rel_change_vs_aligned_pct"])
             pts.append(pt)
             if "cluster_bootstrap" in ent:
@@ -1269,6 +1278,8 @@ def make_fig06_noise_amplitude_scan(
                 hi_err.append(max(0.0, float(ci[1]) - pt))
             else:
                 has_ci = False
+        if len(pts) != len(order):
+            continue
         if has_ci:
             ax1.errorbar(
                 scales,
@@ -1294,7 +1305,7 @@ def make_fig06_noise_amplitude_scan(
     ax1.axhspan(0, 62, color=PALETTE["warn_tint"], alpha=0.35, zorder=0)
     ax1.axhspan(-45, 0, color=PALETTE["safe_tint"], alpha=0.35, zorder=0)
     ax1.set_ylim(-43, 58)
-    ax1.legend(loc="upper left", fontsize=6.4)
+    ax1.legend(loc="upper left", fontsize=5.8)
     add_panel_label(ax1, "(a)", x=-0.12, y=1.04)
 
     # Panel (b): Calibrated sigma_hat_D vs Ground-Truth Noise Floor linear tracking
@@ -1696,7 +1707,7 @@ def make_fig09_csrm_slices_and_station(
     st_methods = [
         ("zero_shot_aligned", "ZS (Aligned)", PALETTE["black"], "--"),
         ("low_dof_adapter", "Low-DOF Adapter", PALETTE["teal"], "-."),
-        ("adapter_output_refined_aligned", "Adapter + Output-Ref.", PALETTE["blue"], "-"),
+        ("adapter_output_refined_aligned", "Gated Adp.+Out.-Ref.", PALETTE["blue"], "-"),
     ]
     for mk, lbl, col, ls in st_methods:
         fp = z[f"station_1__fwd_phase_{mk}"]

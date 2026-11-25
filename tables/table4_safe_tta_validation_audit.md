@@ -12,4 +12,4 @@
 | α=1.25 Group: Reverted | +0.00% (0.0% sta) | +0.00% (9.1% sta) | +0.00% (0.3% sta) | -- | -- |
 | Deep >5σ̂_D Attribution (7 ckpts) | Aligned misfit: 19.0–38.2% | GT misfit: 1.33–1.40% | Full GT: 1.35% | >10 km ΔSqErr: 80–153% | Model Failure |
 
-*Pre-registered validation truth gate requires ΔResolvable-Depth Vs RMSE ≤ +2.0% on all three validation benchmarks simultaneously. No α passed (0/4); α = 1.25 is audited in detail as the closest candidate.*
+*Pre-registered validation truth gate requires ΔResolvable-Depth Vs RMSE ≤ +2.0% on all three validation benchmarks simultaneously. No α passed (0/4); α = 1.5 came closest to the +2.0% threshold (+2.78% shallow, +2.85% deep), while pre-registered default α = 1.25 is decomposed in detail.*

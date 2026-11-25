@@ -24,7 +24,9 @@ from typing import Any, Dict, Optional, Tuple
 import numpy as np
 from disba import GroupDispersion, PhaseDispersion
 
-from swi_tta.evaluation.metrics import disba_misfit, disba_misfit_per_sample
+def _get_disba_misfit_fns():
+    from swi_tta.evaluation.metrics import disba_misfit, disba_misfit_per_sample
+    return disba_misfit, disba_misfit_per_sample
 
 DEFAULT_SHALLOW_DC_KM_S: float = 0.000025
 DEFAULT_DEEP_DC_KM_S: float = 0.005
@@ -701,6 +703,7 @@ def compute_masked_misfits_diag(
             return m > 0.5
         return np.stack([m[:, :, 0] > 0.5, np.zeros_like(m[:, :, 0], dtype=bool)], axis=-1)
 
+    disba_misfit, disba_misfit_per_sample = _get_disba_misfit_fns()
     m_obs2 = _mask2(obs_mask)
     out: Dict[str, Any] = {
         "obs_pooled": float(disba_misfit(d_fwd, d_obs, mask=m_obs2)),

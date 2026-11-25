@@ -156,7 +156,8 @@ def make_table1_benchmark_comparison(summary_dir: str, out_dir: str) -> Dict[str
     )
 
     notes = (
-        "Synthetic RMSE reports judged-checkpoint mean Resolvable-Depth Vs RMSE (km/s) with relative change vs Input-Aligned Zero-Shot. "
+        "Synthetic RMSE reports judged-checkpoint mean Resolvable-Depth Vs RMSE (km/s) across 4 shallow (3 clean seeds + 1 official) or 7 deep (6 clean seeds + 1 official) checkpoints, "
+        "with relative change of domain-mean RMSE vs Input-Aligned Zero-Shot. "
         "Field columns report 4-checkpoint mean Held-Out Dispersion Misfit median (%) and tail failure rate (>20% HO) evaluated at converged disba step sizes "
         "(dc = 2.5e-5 km/s shallow, dc = 5e-3 km/s deep)."
     )
@@ -363,6 +364,11 @@ def make_table3_cross_backbone_diagnostics(summary_dir: str, out_dir: str) -> Di
         p3 = osw["output_refined_50"]
         p3_ci = p3["cluster_bootstrap"]["ci95_rel_change_pct"]
         ies = osw["ideal_es"]["mean_rel_change_vs_aligned_pct"]
+        hes_ns = (
+            f"{osw['holdout_es']['mean_rel_change_vs_aligned_pct']:+.2f}%"
+            if osw.get("holdout_es") is not None
+            else "--"
+        )
         trk = e["sigma_hat_d_vs_gt_tracking"]
         rows.append(
             [
@@ -370,7 +376,7 @@ def make_table3_cross_backbone_diagnostics(summary_dir: str, out_dir: str) -> Di
                 "OpenSWI (All ckpts)",
                 f"{osw['zero_shot_aligned']['vs_rmse_res_mean']:.4f}",
                 f"{p3['mean_rel_change_vs_aligned_pct']:+.2f}% [{p3_ci[0]:+.2f}, {p3_ci[1]:+.2f}]",
-                "--",
+                hes_ns,
                 f"{ies:+.2f}%",
                 f"{p3['ho_misfit_median']*100:.2f}%",
                 f"{trk['sigma_hat_D_over_gt_test']:.3f}×",
@@ -379,7 +385,7 @@ def make_table3_cross_backbone_diagnostics(summary_dir: str, out_dir: str) -> Di
 
     notes = (
         "95% CIs are paired cluster-bootstrap intervals resampled by unique subsurface profile ID. "
-        "Holdout ES is evaluated on OpenSWI across all three held-out synthetic domains."
+        "Holdout ES is evaluated across OpenSWI, DispFormer, and controlled noise-amplitude scans using identical frozen hyperparameters."
     )
     md = _render_markdown_table("Table 3. Held-Out Cross-Backbone Diagnostics, Subgroup Breakdown, and Noise-Amplitude Scan", headers, rows, notes)
     tex = _render_latex_table(
@@ -463,7 +469,7 @@ def make_table4_safe_tta_validation_audit(summary_dir: str, out_dir: str) -> Dic
 
     notes = (
         "Pre-registered validation truth gate requires ΔResolvable-Depth Vs RMSE ≤ +2.0% on all three validation benchmarks simultaneously. "
-        "No α passed (0/4); α = 1.25 is audited in detail as the closest candidate."
+        "No α passed (0/4); α = 1.5 came closest to the +2.0% threshold (+2.78% shallow, +2.85% deep), while pre-registered default α = 1.25 is decomposed in detail."
     )
     md = _render_markdown_table("Table 4. Pre-Registered Safe-TTA Validation Audit, Outcome-Group Decomposition, and Deep >5σ̂_D Attribution", headers, rows, notes)
     tex = _render_latex_table(
@@ -559,7 +565,7 @@ def make_tableS2_signature_bins(summary_dir: str, out_dir: str) -> Dict[str, Dic
 
     headers = [
         "Domain & Backbone",
-        "Misfit / GT Bin",
+        "r0^GT Bin",
         "N (Share %)",
         "50-step Med ΔRMSE (IQR)",
         "Holdout ES Med ΔRMSE",

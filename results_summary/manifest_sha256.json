@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "total_size_bytes": 5240998,
-  "total_size_mb": 4.9982,
+  "total_size_bytes": 5289141,
+  "total_size_mb": 5.0441,
   "files": {
     "benchmark_overview.json": {
       "size_bytes": 127646,
@@ -12,8 +12,8 @@
       "sha256": "3a61ac0da38429dc871f7fa0951208a46e9ff24e6653e58d85058c02209f2569"
     },
     "cross_backbone_diagnostics.json": {
-      "size_bytes": 1636263,
-      "sha256": "2b9af61e72bcafafd05c3b61786d745b454c26e656f79752761f01ddba0a755a"
+      "size_bytes": 1684406,
+      "sha256": "3a6decf48d8d3498bf91a3ecfdc3becbc7eb137c53381c4c3ce150d6cba8bcf9"
     },
     "field_slices_csrm.npz": {
       "size_bytes": 616431,

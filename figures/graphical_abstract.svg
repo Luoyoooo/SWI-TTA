@@ -102,8 +102,8 @@ L 0 3
       </g>
      </g>
      <g id="text_1">
-      <text style="font-size: 6.8px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif" transform="translate(36.892158 185.14707)">Out.-Space</text>
-      <text style="font-size: 6.8px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif" transform="translate(49.393533 193.30893)">Ref.</text>
+      <text style="font-size: 6.8px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', 'DejaVu Sans', sans-serif" transform="translate(38.52894 184.764105)">Out.-Space</text>
+      <text style="font-size: 6.8px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', 'DejaVu Sans', sans-serif" transform="translate(49.490221 192.165082)">Ref.</text>
      </g>
     </g>
     <g id="xtick_2">
@@ -118,8 +118,8 @@ L 99.23922 36.72
       </g>
      </g>
      <g id="text_2">
-      <text style="font-size: 6.8px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif" transform="translate(80.193376 185.147602)">Gated Adp.</text>
-      <text style="font-size: 6.8px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif" transform="translate(80.506282 193.309461)">+ Out.-Ref.</text>
+      <text style="font-size: 6.8px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', 'DejaVu Sans', sans-serif" transform="translate(82.227001 184.760254)">Gated Adp.</text>
+      <text style="font-size: 6.8px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', 'DejaVu Sans', sans-serif" transform="translate(82.517064 192.165082)">+ Out.-Ref.</text>
      </g>
     </g>
     <g id="xtick_3">
@@ -134,8 +134,8 @@ L 142.752938 36.72
       </g>
      </g>
      <g id="text_3">
-      <text style="font-size: 6.8px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif" transform="translate(130.247313 185.147602)">Ground</text>
-      <text style="font-size: 6.8px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif" transform="translate(134.136063 193.309461)">Truth</text>
+      <text style="font-size: 6.8px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', 'DejaVu Sans', sans-serif" transform="translate(131.413406 184.760254)">Ground</text>
+      <text style="font-size: 6.8px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', 'DejaVu Sans', sans-serif" transform="translate(134.944094 192.16123)">Truth</text>
      </g>
     </g>
    </g>
@@ -157,7 +157,7 @@ L -3 0
       </g>
      </g>
      <g id="text_4">
-      <text style="font-size: 6.8px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: end" x="28.6" y="175.383203" transform="rotate(-0 28.6 175.383203)">0</text>
+      <text style="font-size: 6.8px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', 'DejaVu Sans', sans-serif; text-anchor: end" x="28.6" y="175.275293" transform="rotate(-0 28.6 175.275293)">0</text>
      </g>
     </g>
     <g id="ytick_2">
@@ -172,7 +172,7 @@ L 163.37844 149.735593
       </g>
      </g>
      <g id="text_5">
-      <text style="font-size: 6.8px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: end" x="28.6" y="152.318796" transform="rotate(-0 28.6 152.318796)">2</text>
+      <text style="font-size: 6.8px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', 'DejaVu Sans', sans-serif; text-anchor: end" x="28.6" y="152.210886" transform="rotate(-0 28.6 152.210886)">2</text>
      </g>
     </g>
     <g id="ytick_3">
@@ -187,7 +187,7 @@ L 163.37844 126.671186
       </g>
      </g>
      <g id="text_6">
-      <text style="font-size: 6.8px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: end" x="28.6" y="129.25439" transform="rotate(-0 28.6 129.25439)">4</text>
+      <text style="font-size: 6.8px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', 'DejaVu Sans', sans-serif; text-anchor: end" x="28.6" y="129.146479" transform="rotate(-0 28.6 129.146479)">4</text>
      </g>
     </g>
     <g id="ytick_4">
@@ -202,7 +202,7 @@ L 163.37844 103.60678
       </g>
      </g>
      <g id="text_7">
-      <text style="font-size: 6.8px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: end" x="28.6" y="106.189983" transform="rotate(-0 28.6 106.189983)">6</text>
+      <text style="font-size: 6.8px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', 'DejaVu Sans', sans-serif; text-anchor: end" x="28.6" y="106.082073" transform="rotate(-0 28.6 106.082073)">6</text>
      </g>
     </g>
     <g id="ytick_5">
@@ -217,7 +217,7 @@ L 163.37844 80.542373
       </g>
      </g>
      <g id="text_8">
-      <text style="font-size: 6.8px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: end" x="28.6" y="83.125576" transform="rotate(-0 28.6 83.125576)">8</text>
+      <text style="font-size: 6.8px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', 'DejaVu Sans', sans-serif; text-anchor: end" x="28.6" y="83.017666" transform="rotate(-0 28.6 83.017666)">8</text>
      </g>
     </g>
     <g id="ytick_6">
@@ -232,11 +232,11 @@ L 163.37844 57.477966
       </g>
      </g>
      <g id="text_9">
-      <text style="font-size: 6.8px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: end" x="28.6" y="60.061169" transform="rotate(-0 28.6 60.061169)">10</text>
+      <text style="font-size: 6.8px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', 'DejaVu Sans', sans-serif; text-anchor: end" x="28.6" y="59.953259" transform="rotate(-0 28.6 59.953259)">10</text>
      </g>
     </g>
     <g id="text_10">
-     <text style="font-size: 7.4px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #1a1a1a" x="14.169266" y="104.76" transform="rotate(-90 14.169266 104.76)">Tail Rate (&gt;20% HO, %)</text>
+     <text style="font-size: 7.4px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #1a1a1a" x="15.479656" y="104.76" transform="rotate(-90 15.479656 104.76)">Tail Rate (&gt;20% HO, %)</text>
     </g>
    </g>
    <g id="patch_9">
@@ -250,101 +250,101 @@ L 163.37844 172.8
 " style="fill: none; stroke: #333333; stroke-width: 0.75; stroke-linejoin: miter; stroke-linecap: square"/>
    </g>
    <g id="text_11">
-    <text style="font-size: 6.3px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle" x="48.32817" y="60.542536" transform="rotate(-0 48.32817 60.542536)">9.35%</text>
+    <text style="font-size: 6.3px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', 'DejaVu Sans', sans-serif; text-anchor: middle" x="48.32817" y="60.730183" transform="rotate(-0 48.32817 60.730183)">9.35%</text>
    </g>
    <g id="text_12">
-    <text style="font-size: 6.3px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle" x="91.841888" y="72.641977" transform="rotate(-0 91.841888 72.641977)">8.30%</text>
+    <text style="font-size: 6.3px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', 'DejaVu Sans', sans-serif; text-anchor: middle" x="91.841888" y="72.829623" transform="rotate(-0 91.841888 72.829623)">8.30%</text>
    </g>
    <g id="text_13">
-    <text style="font-size: 6.3px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle" x="131.439371" y="166.577142" transform="rotate(-0 131.439371 166.577142)">0.16%</text>
+    <text style="font-size: 6.3px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', 'DejaVu Sans', sans-serif; text-anchor: middle" x="131.439371" y="166.764788" transform="rotate(-0 131.439371 166.764788)">0.16%</text>
    </g>
    <g id="text_14">
-    <text style="font-size: 6.3px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle" x="63.122834" y="152.6648" transform="rotate(-0 63.122834 152.6648)">1.36%</text>
+    <text style="font-size: 6.3px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', 'DejaVu Sans', sans-serif; text-anchor: middle" x="65.733657" y="152.852447" transform="rotate(-0 65.733657 152.852447)">1.36%</text>
    </g>
    <g id="text_15">
-    <text style="font-size: 6.3px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle" x="106.636552" y="168.282612" transform="rotate(-0 106.636552 168.282612)">0.01%</text>
+    <text style="font-size: 6.3px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', 'DejaVu Sans', sans-serif; text-anchor: middle" x="106.636552" y="168.470259" transform="rotate(-0 106.636552 168.470259)">0.01%</text>
    </g>
    <g id="text_16">
-    <text style="font-size: 6.3px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle" x="154.936779" y="168.403473" transform="rotate(-0 154.936779 168.403473)">0.00%</text>
+    <text style="font-size: 6.3px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', 'DejaVu Sans', sans-serif; text-anchor: middle" x="154.936779" y="168.591119" transform="rotate(-0 154.936779 168.591119)">0.00%</text>
    </g>
    <g id="text_17">
-    <text style="font-weight: 700; font-size: 8px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #d55e00" x="99.23922" y="30.72" transform="rotate(-0 99.23922 30.72)">1. Fix disba Root-Skipping</text>
+    <text style="font-weight: 700; font-size: 8px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #d55e00" x="99.23922" y="30.72" transform="rotate(-0 99.23922 30.72)">1. Fix disba Root-Skipping</text>
    </g>
    <g id="legend_1">
     <g id="patch_11">
-     <path d="M 76.94244 62.867953 
-L 158.96844 62.867953 
-Q 160.22844 62.867953 160.22844 61.607953 
+     <path d="M 86.77044 61.61066 
+L 158.96844 61.61066 
+Q 160.22844 61.61066 160.22844 60.35066 
 L 160.22844 41.13 
 Q 160.22844 39.87 158.96844 39.87 
-L 76.94244 39.87 
-Q 75.68244 39.87 75.68244 41.13 
-L 75.68244 61.607953 
-Q 75.68244 62.867953 76.94244 62.867953 
+L 86.77044 39.87 
+Q 85.51044 39.87 85.51044 41.13 
+L 85.51044 60.35066 
+Q 85.51044 61.61066 86.77044 61.61066 
 z
 " style="fill: #ffffff; opacity: 0.92; stroke: #cccccc; stroke-linejoin: miter"/>
     </g>
     <g id="patch_12">
-     <path d="M 78.20244 48.312 
-L 85.13244 48.312 
-L 85.13244 43.902 
-L 78.20244 43.902 
+     <path d="M 88.03044 47.871 
+L 94.96044 47.871 
+L 94.96044 43.461 
+L 88.03044 43.461 
 z
 " style="fill: #d55e00"/>
     </g>
     <g id="text_18">
      <!-- Default $\Delta c=5\times 10^{-3}$ -->
-     <g transform="translate(90.17244 48.312)">
+     <g transform="translate(100.00044 47.871)">
       <text>
-       <tspan x="0" y="-0.127788" style="font-size: 6.3px; font-family: 'DejaVu Sans'">D</tspan>
-       <tspan x="4.848724" y="-0.127788" style="font-size: 6.3px; font-family: 'DejaVu Sans'">e</tspan>
-       <tspan x="8.722778" y="-0.127788" style="font-size: 6.3px; font-family: 'DejaVu Sans'">f</tspan>
-       <tspan x="10.939606" y="-0.127788" style="font-size: 6.3px; font-family: 'DejaVu Sans'">a</tspan>
-       <tspan x="14.798294" y="-0.127788" style="font-size: 6.3px; font-family: 'DejaVu Sans'">u</tspan>
-       <tspan x="18.789185" y="-0.127788" style="font-size: 6.3px; font-family: 'DejaVu Sans'">l</tspan>
-       <tspan x="20.538666" y="-0.127788" style="font-size: 6.3px; font-family: 'DejaVu Sans'">t</tspan>
-       <tspan x="23.007614" y="-0.127788" style="font-size: 6.3px; font-family: 'DejaVu Sans'"> </tspan>
-       <tspan x="25.009216" y="-0.127788" style="font-size: 6.3px; font-family: 'DejaVu Sans'">Δ</tspan>
-       <tspan x="34.00564" y="-0.127788" style="font-size: 6.3px; font-family: 'DejaVu Sans'">=</tspan>
-       <tspan x="40.508517" y="-0.127788" style="font-size: 6.3px; font-family: 'DejaVu Sans'">5</tspan>
-       <tspan x="45.741574" y="-0.127788" style="font-size: 6.3px; font-family: 'DejaVu Sans'">×</tspan>
-       <tspan x="52.244452" y="-0.127788" style="font-size: 6.3px; font-family: 'DejaVu Sans'">1</tspan>
-       <tspan x="56.250723" y="-0.127788" style="font-size: 6.3px; font-family: 'DejaVu Sans'">0</tspan>
-       <tspan x="29.316803" y="-0.127788" style="font-style: oblique; font-size: 6.3px; font-family: 'DejaVu Sans'">c</tspan>
-       <tspan x="60.317288" y="-2.729688" style="font-size: 4.41px; font-family: 'DejaVu Sans'">−</tspan>
-       <tspan x="64.010552" y="-2.729688" style="font-size: 4.41px; font-family: 'DejaVu Sans'">3</tspan>
+       <tspan x="0" y="-0.542188" style="font-size: 6.3px; font-family: 'Arial'">D</tspan>
+       <tspan x="4.547409" y="-0.542188" style="font-size: 6.3px; font-family: 'Arial'">e</tspan>
+       <tspan x="8.049438" y="-0.542188" style="font-size: 6.3px; font-family: 'Arial'">f</tspan>
+       <tspan x="9.79892" y="-0.542188" style="font-size: 6.3px; font-family: 'Arial'">a</tspan>
+       <tspan x="13.300949" y="-0.542188" style="font-size: 6.3px; font-family: 'Arial'">u</tspan>
+       <tspan x="16.802979" y="-0.542188" style="font-size: 6.3px; font-family: 'Arial'">l</tspan>
+       <tspan x="18.20195" y="-0.542188" style="font-size: 6.3px; font-family: 'Arial'">t</tspan>
+       <tspan x="19.951431" y="-0.542188" style="font-size: 6.3px; font-family: 'Arial'"> </tspan>
+       <tspan x="21.700912" y="-0.542188" style="font-size: 6.3px; font-family: 'Arial'">Δ</tspan>
+       <tspan x="30.104535" y="-0.542188" style="font-size: 6.3px; font-family: 'Arial'">=</tspan>
+       <tspan x="34.830881" y="-0.542188" style="font-size: 6.3px; font-family: 'Arial'">5</tspan>
+       <tspan x="39.381979" y="-0.542188" style="font-size: 6.3px; font-family: 'Arial'">×</tspan>
+       <tspan x="44.108325" y="-0.542188" style="font-size: 6.3px; font-family: 'Arial'">1</tspan>
+       <tspan x="47.610355" y="-0.542188" style="font-size: 6.3px; font-family: 'Arial'">0</tspan>
+       <tspan x="25.907028" y="-0.542188" style="font-style: italic; font-size: 6.3px; font-family: 'Arial'">c</tspan>
+       <tspan x="51.169532" y="-2.828125" style="font-size: 4.41px; font-family: 'Arial'">−</tspan>
+       <tspan x="53.743626" y="-2.828125" style="font-size: 4.41px; font-family: 'Arial'">3</tspan>
       </text>
      </g>
     </g>
     <g id="patch_13">
-     <path d="M 78.20244 58.834477 
-L 85.13244 58.834477 
-L 85.13244 54.424477 
-L 78.20244 54.424477 
+     <path d="M 88.03044 57.76483 
+L 94.96044 57.76483 
+L 94.96044 53.35483 
+L 88.03044 53.35483 
 z
 " style="fill: #009e73"/>
     </g>
     <g id="text_19">
      <!-- Conv. $\Delta c=2.5\times 10^{-5}$ -->
-     <g transform="translate(90.17244 58.834477)">
+     <g transform="translate(100.00044 57.76483)">
       <text>
-       <tspan x="0" y="-0.182475" style="font-size: 6.3px; font-family: 'DejaVu Sans'">C</tspan>
-       <tspan x="4.396744" y="-0.182475" style="font-size: 6.3px; font-family: 'DejaVu Sans'">o</tspan>
-       <tspan x="8.249283" y="-0.182475" style="font-size: 6.3px; font-family: 'DejaVu Sans'">n</tspan>
-       <tspan x="12.240173" y="-0.182475" style="font-size: 6.3px; font-family: 'DejaVu Sans'">v</tspan>
-       <tspan x="15.966644" y="-0.182475" style="font-size: 6.3px; font-family: 'DejaVu Sans'">.</tspan>
-       <tspan x="17.968246" y="-0.182475" style="font-size: 6.3px; font-family: 'DejaVu Sans'"> </tspan>
-       <tspan x="19.969849" y="-0.182475" style="font-size: 6.3px; font-family: 'DejaVu Sans'">Δ</tspan>
-       <tspan x="28.966272" y="-0.182475" style="font-size: 6.3px; font-family: 'DejaVu Sans'">=</tspan>
-       <tspan x="35.46915" y="-0.182475" style="font-size: 6.3px; font-family: 'DejaVu Sans'">2</tspan>
-       <tspan x="39.475421" y="-0.182475" style="font-size: 6.3px; font-family: 'DejaVu Sans'">.</tspan>
-       <tspan x="41.477023" y="-0.182475" style="font-size: 6.3px; font-family: 'DejaVu Sans'">5</tspan>
-       <tspan x="46.71008" y="-0.182475" style="font-size: 6.3px; font-family: 'DejaVu Sans'">×</tspan>
-       <tspan x="53.212958" y="-0.182475" style="font-size: 6.3px; font-family: 'DejaVu Sans'">1</tspan>
-       <tspan x="57.219229" y="-0.182475" style="font-size: 6.3px; font-family: 'DejaVu Sans'">0</tspan>
-       <tspan x="24.277435" y="-0.182475" style="font-style: oblique; font-size: 6.3px; font-family: 'DejaVu Sans'">c</tspan>
-       <tspan x="61.285793" y="-2.784375" style="font-size: 4.41px; font-family: 'DejaVu Sans'">−</tspan>
-       <tspan x="64.979058" y="-2.784375" style="font-size: 4.41px; font-family: 'DejaVu Sans'">5</tspan>
+       <tspan x="0" y="-0.596875" style="font-size: 6.3px; font-family: 'Arial'">C</tspan>
+       <tspan x="4.547409" y="-0.596875" style="font-size: 6.3px; font-family: 'Arial'">o</tspan>
+       <tspan x="8.049438" y="-0.596875" style="font-size: 6.3px; font-family: 'Arial'">n</tspan>
+       <tspan x="11.551468" y="-0.596875" style="font-size: 6.3px; font-family: 'Arial'">v</tspan>
+       <tspan x="14.699905" y="-0.596875" style="font-size: 6.3px; font-family: 'Arial'">.</tspan>
+       <tspan x="16.449387" y="-0.596875" style="font-size: 6.3px; font-family: 'Arial'"> </tspan>
+       <tspan x="18.198868" y="-0.596875" style="font-size: 6.3px; font-family: 'Arial'">Δ</tspan>
+       <tspan x="26.60249" y="-0.596875" style="font-size: 6.3px; font-family: 'Arial'">=</tspan>
+       <tspan x="31.328836" y="-0.596875" style="font-size: 6.3px; font-family: 'Arial'">2</tspan>
+       <tspan x="34.830865" y="-0.596875" style="font-size: 6.3px; font-family: 'Arial'">.</tspan>
+       <tspan x="36.580347" y="-0.596875" style="font-size: 6.3px; font-family: 'Arial'">5</tspan>
+       <tspan x="41.131445" y="-0.596875" style="font-size: 6.3px; font-family: 'Arial'">×</tspan>
+       <tspan x="45.857791" y="-0.596875" style="font-size: 6.3px; font-family: 'Arial'">1</tspan>
+       <tspan x="49.359821" y="-0.596875" style="font-size: 6.3px; font-family: 'Arial'">0</tspan>
+       <tspan x="22.404984" y="-0.596875" style="font-style: italic; font-size: 6.3px; font-family: 'Arial'">c</tspan>
+       <tspan x="52.918998" y="-2.882813" style="font-size: 4.41px; font-family: 'Arial'">−</tspan>
+       <tspan x="55.493092" y="-2.882813" style="font-size: 4.41px; font-family: 'Arial'">5</tspan>
       </text>
      </g>
     </g>
@@ -388,7 +388,7 @@ L 213.252283 36.72
       </g>
      </g>
      <g id="text_20">
-      <text style="font-size: 6.4px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif" transform="translate(197.338474 191.671502) rotate(-28)">[0, 1)</text>
+      <text style="font-size: 6.4px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', 'DejaVu Sans', sans-serif" transform="translate(199.74388 190.260288) rotate(-28)">[0, 1)</text>
      </g>
     </g>
     <g id="xtick_5">
@@ -403,7 +403,7 @@ L 234.195702 36.72
       </g>
      </g>
      <g id="text_21">
-      <text style="font-size: 6.4px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif" transform="translate(212.890615 194.538095) rotate(-28)">[1, 1.5)</text>
+      <text style="font-size: 6.4px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', 'DejaVu Sans', sans-serif" transform="translate(215.975007 192.765857) rotate(-28)">[1, 1.5)</text>
      </g>
     </g>
     <g id="xtick_6">
@@ -418,7 +418,7 @@ L 255.13912 36.72
       </g>
      </g>
      <g id="text_22">
-      <text style="font-size: 6.4px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif" transform="translate(233.834034 194.538095) rotate(-28)">[1.5, 2)</text>
+      <text style="font-size: 6.4px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', 'DejaVu Sans', sans-serif" transform="translate(236.918426 192.765857) rotate(-28)">[1.5, 2)</text>
      </g>
     </g>
     <g id="xtick_7">
@@ -433,7 +433,7 @@ L 276.082539 36.72
       </g>
      </g>
      <g id="text_23">
-      <text style="font-size: 6.4px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif" transform="translate(260.16873 191.671502) rotate(-28)">[2, 3)</text>
+      <text style="font-size: 6.4px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', 'DejaVu Sans', sans-serif" transform="translate(262.574136 190.260288) rotate(-28)">[2, 3)</text>
      </g>
     </g>
     <g id="xtick_8">
@@ -448,7 +448,7 @@ L 297.025958 36.72
       </g>
      </g>
      <g id="text_24">
-      <text style="font-size: 6.4px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif" transform="translate(281.112149 191.671502) rotate(-28)">[3, 5)</text>
+      <text style="font-size: 6.4px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', 'DejaVu Sans', sans-serif" transform="translate(283.517555 190.260288) rotate(-28)">[3, 5)</text>
      </g>
     </g>
     <g id="xtick_9">
@@ -463,7 +463,7 @@ L 317.969377 36.72
       </g>
      </g>
      <g id="text_25">
-      <text style="font-size: 6.4px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif" transform="translate(298.460205 193.58319) rotate(-28)">[5, 10)</text>
+      <text style="font-size: 6.4px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', 'DejaVu Sans', sans-serif" transform="translate(301.318563 191.931137) rotate(-28)">[5, 10)</text>
      </g>
     </g>
     <g id="xtick_10">
@@ -478,7 +478,7 @@ L 338.912795 36.72
       </g>
      </g>
      <g id="text_26">
-      <text style="font-size: 6.4px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif" transform="translate(315.808261 195.494878) rotate(-28)">[10, 20)</text>
+      <text style="font-size: 6.4px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', 'DejaVu Sans', sans-serif" transform="translate(319.119572 193.601986) rotate(-28)">[10, 20)</text>
      </g>
     </g>
     <g id="xtick_11">
@@ -493,45 +493,45 @@ L 359.856214 36.72
       </g>
      </g>
      <g id="text_27">
-      <text style="font-size: 6.4px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif" transform="translate(339.235412 194.174255) rotate(-28)">[20, ∞)</text>
+      <text style="font-size: 6.4px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', 'DejaVu Sans', sans-serif" transform="translate(342.318921 192.402486) rotate(-28)">[20, ∞)</text>
      </g>
     </g>
     <g id="text_28">
      <!-- Initial Misfit / GT Noise ($r_0^{\mathrm{GT}}$) -->
-     <g style="fill: #1a1a1a" transform="translate(237.198249 207.83641)">
+     <g style="fill: #1a1a1a" transform="translate(242.238249 205.559317)">
       <text>
-       <tspan x="0" y="-0.04375" style="font-size: 7.2px; font-family: 'DejaVu Sans'; fill: #1a1a1a">I</tspan>
-       <tspan x="2.119751" y="-0.04375" style="font-size: 7.2px; font-family: 'DejaVu Sans'; fill: #1a1a1a">n</tspan>
-       <tspan x="6.67511" y="-0.04375" style="font-size: 7.2px; font-family: 'DejaVu Sans'; fill: #1a1a1a">i</tspan>
-       <tspan x="8.672028" y="-0.04375" style="font-size: 7.2px; font-family: 'DejaVu Sans'; fill: #1a1a1a">t</tspan>
-       <tspan x="11.490173" y="-0.04375" style="font-size: 7.2px; font-family: 'DejaVu Sans'; fill: #1a1a1a">i</tspan>
-       <tspan x="13.487091" y="-0.04375" style="font-size: 7.2px; font-family: 'DejaVu Sans'; fill: #1a1a1a">a</tspan>
-       <tspan x="17.891541" y="-0.04375" style="font-size: 7.2px; font-family: 'DejaVu Sans'; fill: #1a1a1a">l</tspan>
-       <tspan x="19.888458" y="-0.04375" style="font-size: 7.2px; font-family: 'DejaVu Sans'; fill: #1a1a1a"> </tspan>
-       <tspan x="22.173157" y="-0.04375" style="font-size: 7.2px; font-family: 'DejaVu Sans'; fill: #1a1a1a">M</tspan>
-       <tspan x="28.374481" y="-0.04375" style="font-size: 7.2px; font-family: 'DejaVu Sans'; fill: #1a1a1a">i</tspan>
-       <tspan x="30.371399" y="-0.04375" style="font-size: 7.2px; font-family: 'DejaVu Sans'; fill: #1a1a1a">s</tspan>
-       <tspan x="34.116058" y="-0.04375" style="font-size: 7.2px; font-family: 'DejaVu Sans'; fill: #1a1a1a">f</tspan>
-       <tspan x="36.646423" y="-0.04375" style="font-size: 7.2px; font-family: 'DejaVu Sans'; fill: #1a1a1a">i</tspan>
-       <tspan x="38.643341" y="-0.04375" style="font-size: 7.2px; font-family: 'DejaVu Sans'; fill: #1a1a1a">t</tspan>
-       <tspan x="41.461487" y="-0.04375" style="font-size: 7.2px; font-family: 'DejaVu Sans'; fill: #1a1a1a"> </tspan>
-       <tspan x="43.746185" y="-0.04375" style="font-size: 7.2px; font-family: 'DejaVu Sans'; fill: #1a1a1a">/</tspan>
-       <tspan x="46.167755" y="-0.04375" style="font-size: 7.2px; font-family: 'DejaVu Sans'; fill: #1a1a1a"> </tspan>
-       <tspan x="48.452454" y="-0.04375" style="font-size: 7.2px; font-family: 'DejaVu Sans'; fill: #1a1a1a">G</tspan>
-       <tspan x="54.022064" y="-0.04375" style="font-size: 7.2px; font-family: 'DejaVu Sans'; fill: #1a1a1a">T</tspan>
-       <tspan x="58.412476" y="-0.04375" style="font-size: 7.2px; font-family: 'DejaVu Sans'; fill: #1a1a1a"> </tspan>
-       <tspan x="60.697174" y="-0.04375" style="font-size: 7.2px; font-family: 'DejaVu Sans'; fill: #1a1a1a">N</tspan>
-       <tspan x="66.073761" y="-0.04375" style="font-size: 7.2px; font-family: 'DejaVu Sans'; fill: #1a1a1a">o</tspan>
-       <tspan x="70.471191" y="-0.04375" style="font-size: 7.2px; font-family: 'DejaVu Sans'; fill: #1a1a1a">i</tspan>
-       <tspan x="72.468109" y="-0.04375" style="font-size: 7.2px; font-family: 'DejaVu Sans'; fill: #1a1a1a">s</tspan>
-       <tspan x="76.212769" y="-0.04375" style="font-size: 7.2px; font-family: 'DejaVu Sans'; fill: #1a1a1a">e</tspan>
-       <tspan x="80.634766" y="-0.04375" style="font-size: 7.2px; font-family: 'DejaVu Sans'; fill: #1a1a1a"> </tspan>
-       <tspan x="82.919464" y="-0.04375" style="font-size: 7.2px; font-family: 'DejaVu Sans'; fill: #1a1a1a">(</tspan>
-       <tspan x="96.182167" y="-0.04375" style="font-size: 7.2px; font-family: 'DejaVu Sans'; fill: #1a1a1a">)</tspan>
-       <tspan x="85.723572" y="-0.04375" style="font-style: oblique; font-size: 7.2px; font-family: 'DejaVu Sans'; fill: #1a1a1a">r</tspan>
-       <tspan x="88.678589" y="2.335938" style="font-size: 5.04px; font-family: 'DejaVu Sans'; fill: #1a1a1a">0</tspan>
-       <tspan x="89.013276" y="-3.270313" style="font-size: 5.04px; font-family: 'DejaVu Sans'; fill: #1a1a1a">G</tspan>
-       <tspan x="92.912004" y="-3.270313" style="font-size: 5.04px; font-family: 'DejaVu Sans'; fill: #1a1a1a">T</tspan>
+       <tspan x="0" y="-0.282813" style="font-size: 7.2px; font-family: 'Arial'; fill: #1a1a1a">I</tspan>
+       <tspan x="1.996918" y="-0.282813" style="font-size: 7.2px; font-family: 'Arial'; fill: #1a1a1a">n</tspan>
+       <tspan x="5.994263" y="-0.282813" style="font-size: 7.2px; font-family: 'Arial'; fill: #1a1a1a">i</tspan>
+       <tspan x="7.591095" y="-0.282813" style="font-size: 7.2px; font-family: 'Arial'; fill: #1a1a1a">t</tspan>
+       <tspan x="9.588013" y="-0.282813" style="font-size: 7.2px; font-family: 'Arial'; fill: #1a1a1a">i</tspan>
+       <tspan x="11.184845" y="-0.282813" style="font-size: 7.2px; font-family: 'Arial'; fill: #1a1a1a">a</tspan>
+       <tspan x="15.18219" y="-0.282813" style="font-size: 7.2px; font-family: 'Arial'; fill: #1a1a1a">l</tspan>
+       <tspan x="16.779022" y="-0.282813" style="font-size: 7.2px; font-family: 'Arial'; fill: #1a1a1a"> </tspan>
+       <tspan x="18.77594" y="-0.282813" style="font-size: 7.2px; font-family: 'Arial'; fill: #1a1a1a">M</tspan>
+       <tspan x="24.763184" y="-0.282813" style="font-size: 7.2px; font-family: 'Arial'; fill: #1a1a1a">i</tspan>
+       <tspan x="26.360016" y="-0.282813" style="font-size: 7.2px; font-family: 'Arial'; fill: #1a1a1a">s</tspan>
+       <tspan x="29.953766" y="-0.282813" style="font-size: 7.2px; font-family: 'Arial'; fill: #1a1a1a">f</tspan>
+       <tspan x="31.950684" y="-0.282813" style="font-size: 7.2px; font-family: 'Arial'; fill: #1a1a1a">i</tspan>
+       <tspan x="33.547516" y="-0.282813" style="font-size: 7.2px; font-family: 'Arial'; fill: #1a1a1a">t</tspan>
+       <tspan x="35.544434" y="-0.282813" style="font-size: 7.2px; font-family: 'Arial'; fill: #1a1a1a"> </tspan>
+       <tspan x="37.541351" y="-0.282813" style="font-size: 7.2px; font-family: 'Arial'; fill: #1a1a1a">/</tspan>
+       <tspan x="39.538269" y="-0.282813" style="font-size: 7.2px; font-family: 'Arial'; fill: #1a1a1a"> </tspan>
+       <tspan x="41.535187" y="-0.282813" style="font-size: 7.2px; font-family: 'Arial'; fill: #1a1a1a">G</tspan>
+       <tspan x="47.125854" y="-0.282813" style="font-size: 7.2px; font-family: 'Arial'; fill: #1a1a1a">T</tspan>
+       <tspan x="51.516266" y="-0.282813" style="font-size: 7.2px; font-family: 'Arial'; fill: #1a1a1a"> </tspan>
+       <tspan x="53.513184" y="-0.282813" style="font-size: 7.2px; font-family: 'Arial'; fill: #1a1a1a">N</tspan>
+       <tspan x="58.703766" y="-0.282813" style="font-size: 7.2px; font-family: 'Arial'; fill: #1a1a1a">o</tspan>
+       <tspan x="62.701111" y="-0.282813" style="font-size: 7.2px; font-family: 'Arial'; fill: #1a1a1a">i</tspan>
+       <tspan x="64.297943" y="-0.282813" style="font-size: 7.2px; font-family: 'Arial'; fill: #1a1a1a">s</tspan>
+       <tspan x="67.891693" y="-0.282813" style="font-size: 7.2px; font-family: 'Arial'; fill: #1a1a1a">e</tspan>
+       <tspan x="71.889038" y="-0.282813" style="font-size: 7.2px; font-family: 'Arial'; fill: #1a1a1a"> </tspan>
+       <tspan x="73.885956" y="-0.282813" style="font-size: 7.2px; font-family: 'Arial'; fill: #1a1a1a">(</tspan>
+       <tspan x="86.162329" y="-0.282813" style="font-size: 7.2px; font-family: 'Arial'; fill: #1a1a1a">)</tspan>
+       <tspan x="76.279449" y="-0.282813" style="font-style: italic; font-size: 7.2px; font-family: 'Arial'; fill: #1a1a1a">r</tspan>
+       <tspan x="78.672943" y="2.15" style="font-size: 5.04px; font-family: 'Arial'; fill: #1a1a1a">0</tspan>
+       <tspan x="78.988855" y="-3.335938" style="font-size: 5.04px; font-family: 'Arial'; fill: #1a1a1a">G</tspan>
+       <tspan x="82.902322" y="-3.335938" style="font-size: 5.04px; font-family: 'Arial'; fill: #1a1a1a">T</tspan>
       </text>
      </g>
     </g>
@@ -549,7 +549,7 @@ L 367.186411 151.339355
       </g>
      </g>
      <g id="text_29">
-      <text style="font-size: 6.8px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: end" x="199.422086" y="153.922558" transform="rotate(-0 199.422086 153.922558)">−50</text>
+      <text style="font-size: 6.8px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', 'DejaVu Sans', sans-serif; text-anchor: end" x="199.422086" y="153.814648" transform="rotate(-0 199.422086 153.814648)">−50</text>
      </g>
     </g>
     <g id="ytick_8">
@@ -564,7 +564,7 @@ L 367.186411 126.952258
       </g>
      </g>
      <g id="text_30">
-      <text style="font-size: 6.8px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: end" x="199.422086" y="129.535461" transform="rotate(-0 199.422086 129.535461)">0</text>
+      <text style="font-size: 6.8px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', 'DejaVu Sans', sans-serif; text-anchor: end" x="199.422086" y="129.427551" transform="rotate(-0 199.422086 129.427551)">0</text>
      </g>
     </g>
     <g id="ytick_9">
@@ -579,7 +579,7 @@ L 367.186411 102.565161
       </g>
      </g>
      <g id="text_31">
-      <text style="font-size: 6.8px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: end" x="199.422086" y="105.148364" transform="rotate(-0 199.422086 105.148364)">50</text>
+      <text style="font-size: 6.8px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', 'DejaVu Sans', sans-serif; text-anchor: end" x="199.422086" y="105.040454" transform="rotate(-0 199.422086 105.040454)">50</text>
      </g>
     </g>
     <g id="ytick_10">
@@ -594,7 +594,7 @@ L 367.186411 78.178065
       </g>
      </g>
      <g id="text_32">
-      <text style="font-size: 6.8px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: end" x="199.422086" y="80.761268" transform="rotate(-0 199.422086 80.761268)">100</text>
+      <text style="font-size: 6.8px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', 'DejaVu Sans', sans-serif; text-anchor: end" x="199.422086" y="80.653357" transform="rotate(-0 199.422086 80.653357)">100</text>
      </g>
     </g>
     <g id="ytick_11">
@@ -609,33 +609,33 @@ L 367.186411 53.790968
       </g>
      </g>
      <g id="text_33">
-      <text style="font-size: 6.8px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: end" x="199.422086" y="56.374171" transform="rotate(-0 199.422086 56.374171)">150</text>
+      <text style="font-size: 6.8px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', 'DejaVu Sans', sans-serif; text-anchor: end" x="199.422086" y="56.266261" transform="rotate(-0 199.422086 56.266261)">150</text>
      </g>
     </g>
     <g id="text_34">
      <!-- Median Δ $V_s$ RMSE (%) -->
-     <g style="fill: #1a1a1a" transform="translate(179.293164 146.311) rotate(-90)">
+     <g style="fill: #1a1a1a" transform="translate(182.259586 143.351) rotate(-90)">
       <text>
-       <tspan x="0" y="-0.390625" style="font-size: 7.4px; font-family: 'DejaVu Sans'; fill: #1a1a1a">M</tspan>
-       <tspan x="6.376587" y="-0.390625" style="font-size: 7.4px; font-family: 'DejaVu Sans'; fill: #1a1a1a">e</tspan>
-       <tspan x="10.923553" y="-0.390625" style="font-size: 7.4px; font-family: 'DejaVu Sans'; fill: #1a1a1a">d</tspan>
-       <tspan x="15.614868" y="-0.390625" style="font-size: 7.4px; font-family: 'DejaVu Sans'; fill: #1a1a1a">i</tspan>
-       <tspan x="17.668228" y="-0.390625" style="font-size: 7.4px; font-family: 'DejaVu Sans'; fill: #1a1a1a">a</tspan>
-       <tspan x="22.197159" y="-0.390625" style="font-size: 7.4px; font-family: 'DejaVu Sans'; fill: #1a1a1a">n</tspan>
-       <tspan x="26.881256" y="-0.390625" style="font-size: 7.4px; font-family: 'DejaVu Sans'; fill: #1a1a1a"> </tspan>
-       <tspan x="29.23053" y="-0.390625" style="font-size: 7.4px; font-family: 'DejaVu Sans'; fill: #1a1a1a">Δ</tspan>
-       <tspan x="34.286331" y="-0.390625" style="font-size: 7.4px; font-family: 'DejaVu Sans'; fill: #1a1a1a"> </tspan>
-       <tspan x="44.589096" y="-0.390625" style="font-size: 7.4px; font-family: 'DejaVu Sans'; fill: #1a1a1a"> </tspan>
-       <tspan x="46.93837" y="-0.390625" style="font-size: 7.4px; font-family: 'DejaVu Sans'; fill: #1a1a1a">R</tspan>
-       <tspan x="52.073563" y="-0.390625" style="font-size: 7.4px; font-family: 'DejaVu Sans'; fill: #1a1a1a">M</tspan>
-       <tspan x="58.45015" y="-0.390625" style="font-size: 7.4px; font-family: 'DejaVu Sans'; fill: #1a1a1a">S</tspan>
-       <tspan x="63.141464" y="-0.390625" style="font-size: 7.4px; font-family: 'DejaVu Sans'; fill: #1a1a1a">E</tspan>
-       <tspan x="67.811127" y="-0.390625" style="font-size: 7.4px; font-family: 'DejaVu Sans'; fill: #1a1a1a"> </tspan>
-       <tspan x="70.1604" y="-0.390625" style="font-size: 7.4px; font-family: 'DejaVu Sans'; fill: #1a1a1a">(</tspan>
-       <tspan x="73.043762" y="-0.390625" style="font-size: 7.4px; font-family: 'DejaVu Sans'; fill: #1a1a1a">%</tspan>
-       <tspan x="80.066299" y="-0.390625" style="font-size: 7.4px; font-family: 'DejaVu Sans'; fill: #1a1a1a">)</tspan>
-       <tspan x="36.635605" y="-0.390625" style="font-style: oblique; font-size: 7.4px; font-family: 'DejaVu Sans'; fill: #1a1a1a">V</tspan>
-       <tspan x="41.691406" y="0.719371" style="font-style: oblique; font-size: 5.18px; font-family: 'DejaVu Sans'; fill: #1a1a1a">s</tspan>
+       <tspan x="0" y="-0.625" style="font-size: 7.4px; font-family: 'Arial'; fill: #1a1a1a">M</tspan>
+       <tspan x="6.156448" y="-0.625" style="font-size: 7.4px; font-family: 'Arial'; fill: #1a1a1a">e</tspan>
+       <tspan x="10.266769" y="-0.625" style="font-size: 7.4px; font-family: 'Arial'; fill: #1a1a1a">d</tspan>
+       <tspan x="14.37709" y="-0.625" style="font-size: 7.4px; font-family: 'Arial'; fill: #1a1a1a">i</tspan>
+       <tspan x="16.019058" y="-0.625" style="font-size: 7.4px; font-family: 'Arial'; fill: #1a1a1a">a</tspan>
+       <tspan x="20.129379" y="-0.625" style="font-size: 7.4px; font-family: 'Arial'; fill: #1a1a1a">n</tspan>
+       <tspan x="24.2397" y="-0.625" style="font-size: 7.4px; font-family: 'Arial'; fill: #1a1a1a"> </tspan>
+       <tspan x="26.29306" y="-0.625" style="font-size: 7.4px; font-family: 'Arial'; fill: #1a1a1a">Δ</tspan>
+       <tspan x="31.229767" y="-0.625" style="font-size: 7.4px; font-family: 'Arial'; fill: #1a1a1a"> </tspan>
+       <tspan x="40.990741" y="-0.625" style="font-size: 7.4px; font-family: 'Arial'; fill: #1a1a1a"> </tspan>
+       <tspan x="43.044101" y="-0.625" style="font-size: 7.4px; font-family: 'Arial'; fill: #1a1a1a">R</tspan>
+       <tspan x="48.381381" y="-0.625" style="font-size: 7.4px; font-family: 'Arial'; fill: #1a1a1a">M</tspan>
+       <tspan x="54.53783" y="-0.625" style="font-size: 7.4px; font-family: 'Arial'; fill: #1a1a1a">S</tspan>
+       <tspan x="59.467319" y="-0.625" style="font-size: 7.4px; font-family: 'Arial'; fill: #1a1a1a">E</tspan>
+       <tspan x="64.396808" y="-0.625" style="font-size: 7.4px; font-family: 'Arial'; fill: #1a1a1a"> </tspan>
+       <tspan x="66.450168" y="-0.625" style="font-size: 7.4px; font-family: 'Arial'; fill: #1a1a1a">(</tspan>
+       <tspan x="68.911304" y="-0.625" style="font-size: 7.4px; font-family: 'Arial'; fill: #1a1a1a">%</tspan>
+       <tspan x="75.482761" y="-0.625" style="font-size: 7.4px; font-family: 'Arial'; fill: #1a1a1a">)</tspan>
+       <tspan x="33.283127" y="-0.625" style="font-style: italic; font-size: 7.4px; font-family: 'Arial'; fill: #1a1a1a">V</tspan>
+       <tspan x="38.212616" y="0.523438" style="font-style: italic; font-size: 5.18px; font-family: 'Arial'; fill: #1a1a1a">s</tspan>
       </text>
      </g>
     </g>
@@ -747,64 +747,64 @@ L 367.186411 172.8
 " style="fill: none; stroke: #333333; stroke-width: 0.75; stroke-linejoin: miter; stroke-linecap: square"/>
    </g>
    <g id="text_35">
-    <text style="font-weight: 700; font-size: 6.5px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #9a2d00" transform="translate(236.290044 51.842094)">Noise-fitting</text>
-    <text style="font-weight: 700; font-size: 6.5px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #9a2d00" transform="translate(236.290044 59.643871)">degradation</text>
+    <text style="font-weight: 700; font-size: 6.5px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', 'DejaVu Sans', sans-serif; fill: #9a2d00" transform="translate(236.290044 52.569281)">Noise-fitting</text>
+    <text style="font-weight: 700; font-size: 6.5px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', 'DejaVu Sans', sans-serif; fill: #9a2d00" transform="translate(236.290044 59.643871)">degradation</text>
    </g>
    <g id="text_36">
-    <text style="font-weight: 700; font-size: 6.5px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #00664b" x="215.346625" y="166.947097" transform="rotate(-0 215.346625 166.947097)">Shift recovery</text>
+    <text style="font-weight: 700; font-size: 6.5px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #00664b" x="215.346625" y="166.947097" transform="rotate(-0 215.346625 166.947097)">Shift recovery</text>
    </g>
    <g id="text_37">
-    <text style="font-weight: 700; font-size: 8px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #0072b2" x="286.554249" y="30.72" transform="rotate(-0 286.554249 30.72)">2. Noise-Floor Regime Signature</text>
+    <text style="font-weight: 700; font-size: 8px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #0072b2" x="286.554249" y="30.72" transform="rotate(-0 286.554249 30.72)">2. Noise-Floor Regime Signature</text>
    </g>
    <g id="legend_2">
     <g id="patch_19">
-     <path d="M 309.286458 70.111477 
-L 362.776411 70.111477 
-Q 364.036411 70.111477 364.036411 68.851477 
+     <path d="M 312.288801 68.947207 
+L 362.776411 68.947207 
+Q 364.036411 68.947207 364.036411 67.687207 
 L 364.036411 41.13 
 Q 364.036411 39.87 362.776411 39.87 
-L 309.286458 39.87 
-Q 308.026458 39.87 308.026458 41.13 
-L 308.026458 68.851477 
-Q 308.026458 70.111477 309.286458 70.111477 
+L 312.288801 39.87 
+Q 311.028801 39.87 311.028801 41.13 
+L 311.028801 67.687207 
+Q 311.028801 68.947207 312.288801 68.947207 
 z
 " style="fill: #ffffff; opacity: 0.92; stroke: #cccccc; stroke-linejoin: miter"/>
     </g>
     <g id="line2d_49">
-     <path d="M 310.546458 44.972016 
-L 314.326458 44.972016 
-L 318.106458 44.972016 
+     <path d="M 313.548801 44.771572 
+L 317.328801 44.771572 
+L 321.108801 44.771572 
 " style="fill: none; stroke: #d55e00; stroke-width: 1.4; stroke-linecap: square"/>
      <g>
-      <use xlink:href="#m7f8f7a0424" x="314.326458" y="44.972016" style="fill: #d55e00; stroke: #d55e00"/>
+      <use xlink:href="#m7f8f7a0424" x="317.328801" y="44.771572" style="fill: #d55e00; stroke: #d55e00"/>
      </g>
     </g>
     <g id="text_38">
-     <text style="font-size: 6.3px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start" x="323.146458" y="47.177016" transform="rotate(-0 323.146458 47.177016)">50-Step Ref.</text>
+     <text style="font-size: 6.3px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', 'DejaVu Sans', sans-serif; text-anchor: start" x="326.148801" y="46.976572" transform="rotate(-0 326.148801 46.976572)">50-Step Ref.</text>
     </g>
     <g id="line2d_50">
-     <path d="M 310.546458 54.422508 
-L 314.326458 54.422508 
-L 318.106458 54.422508 
+     <path d="M 313.548801 53.833975 
+L 317.328801 53.833975 
+L 321.108801 53.833975 
 " style="fill: none; stroke: #0072b2; stroke-width: 1.4; stroke-linecap: square"/>
      <g>
-      <use xlink:href="#mb03b03671b" x="314.326458" y="54.422508" style="fill: #0072b2; stroke: #0072b2; stroke-linejoin: miter"/>
+      <use xlink:href="#mb03b03671b" x="317.328801" y="53.833975" style="fill: #0072b2; stroke: #0072b2; stroke-linejoin: miter"/>
      </g>
     </g>
     <g id="text_39">
-     <text style="font-size: 6.3px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start" x="323.146458" y="56.627508" transform="rotate(-0 323.146458 56.627508)">Holdout ES</text>
+     <text style="font-size: 6.3px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', 'DejaVu Sans', sans-serif; text-anchor: start" x="326.148801" y="56.038975" transform="rotate(-0 326.148801 56.038975)">Holdout ES</text>
     </g>
     <g id="line2d_51">
-     <path d="M 310.546458 63.873 
-L 314.326458 63.873 
-L 318.106458 63.873 
+     <path d="M 313.548801 62.896377 
+L 317.328801 62.896377 
+L 321.108801 62.896377 
 " style="fill: none; stroke-dasharray: 4.44,1.92; stroke-dashoffset: 0; stroke: #009e73; stroke-width: 1.2"/>
      <g>
-      <use xlink:href="#m3716d64ca4" x="314.326458" y="63.873" style="fill: #009e73; stroke: #009e73; stroke-linejoin: miter"/>
+      <use xlink:href="#m3716d64ca4" x="317.328801" y="62.896377" style="fill: #009e73; stroke: #009e73; stroke-linejoin: miter"/>
      </g>
     </g>
     <g id="text_40">
-     <text style="font-size: 6.3px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start" x="323.146458" y="66.078" transform="rotate(-0 323.146458 66.078)">Ideal ES</text>
+     <text style="font-size: 6.3px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', 'DejaVu Sans', sans-serif; text-anchor: start" x="326.148801" y="65.101377" transform="rotate(-0 326.148801 65.101377)">Ideal ES</text>
     </g>
    </g>
   </g>
@@ -850,155 +850,155 @@ z
    </g>
    <g id="text_41">
     <!-- Operational ratio $r_0 = m_0 / \hat{\sigma}_D$ -->
-    <g style="fill: #333333" transform="translate(424.879029 47.927094)">
+    <g style="fill: #333333" transform="translate(431.182029 47.135094)">
      <text>
-      <tspan x="0" y="-0.971875" style="font-style: oblique; font-size: 6.6px; font-family: 'DejaVu Sans'; fill: #333333">O</tspan>
-      <tspan x="5.190002" y="-0.971875" style="font-style: oblique; font-size: 6.6px; font-family: 'DejaVu Sans'; fill: #333333">p</tspan>
-      <tspan x="9.375488" y="-0.971875" style="font-style: oblique; font-size: 6.6px; font-family: 'DejaVu Sans'; fill: #333333">e</tspan>
-      <tspan x="13.43219" y="-0.971875" style="font-style: oblique; font-size: 6.6px; font-family: 'DejaVu Sans'; fill: #333333">r</tspan>
-      <tspan x="16.143097" y="-0.971875" style="font-style: oblique; font-size: 6.6px; font-family: 'DejaVu Sans'; fill: #333333">a</tspan>
-      <tspan x="20.183701" y="-0.971875" style="font-style: oblique; font-size: 6.6px; font-family: 'DejaVu Sans'; fill: #333333">t</tspan>
-      <tspan x="22.769043" y="-0.971875" style="font-style: oblique; font-size: 6.6px; font-family: 'DejaVu Sans'; fill: #333333">i</tspan>
-      <tspan x="24.600998" y="-0.971875" style="font-style: oblique; font-size: 6.6px; font-family: 'DejaVu Sans'; fill: #333333">o</tspan>
-      <tspan x="28.635162" y="-0.971875" style="font-style: oblique; font-size: 6.6px; font-family: 'DejaVu Sans'; fill: #333333">n</tspan>
-      <tspan x="32.814209" y="-0.971875" style="font-style: oblique; font-size: 6.6px; font-family: 'DejaVu Sans'; fill: #333333">a</tspan>
-      <tspan x="36.854813" y="-0.971875" style="font-style: oblique; font-size: 6.6px; font-family: 'DejaVu Sans'; fill: #333333">l</tspan>
-      <tspan x="38.686768" y="-0.971875" style="font-style: oblique; font-size: 6.6px; font-family: 'DejaVu Sans'; fill: #333333"> </tspan>
-      <tspan x="40.78273" y="-0.971875" style="font-style: oblique; font-size: 6.6px; font-family: 'DejaVu Sans'; fill: #333333">r</tspan>
-      <tspan x="43.493637" y="-0.971875" style="font-style: oblique; font-size: 6.6px; font-family: 'DejaVu Sans'; fill: #333333">a</tspan>
-      <tspan x="47.534241" y="-0.971875" style="font-style: oblique; font-size: 6.6px; font-family: 'DejaVu Sans'; fill: #333333">t</tspan>
-      <tspan x="50.119583" y="-0.971875" style="font-style: oblique; font-size: 6.6px; font-family: 'DejaVu Sans'; fill: #333333">i</tspan>
-      <tspan x="51.951538" y="-0.971875" style="font-style: oblique; font-size: 6.6px; font-family: 'DejaVu Sans'; fill: #333333">o</tspan>
-      <tspan x="55.985703" y="-0.971875" style="font-style: oblique; font-size: 6.6px; font-family: 'DejaVu Sans'; fill: #333333"> </tspan>
-      <tspan x="58.081665" y="-0.971875" style="font-style: oblique; font-size: 6.6px; font-family: 'DejaVu Sans'; fill: #333333">r</tspan>
-      <tspan x="72.003728" y="-0.971875" style="font-style: oblique; font-size: 6.6px; font-family: 'DejaVu Sans'; fill: #333333">m</tspan>
-      <tspan x="83.765436" y="-0.971875" style="font-style: oblique; font-size: 6.6px; font-family: 'DejaVu Sans'; fill: #333333">σ</tspan>
-      <tspan x="60.792572" y="0.018122" style="font-size: 4.62px; font-family: 'DejaVu Sans'; fill: #333333">0</tspan>
-      <tspan x="78.426839" y="0.018122" style="font-size: 4.62px; font-family: 'DejaVu Sans'; fill: #333333">0</tspan>
-      <tspan x="65.194264" y="-0.971875" style="font-size: 6.6px; font-family: 'DejaVu Sans'; fill: #333333">=</tspan>
-      <tspan x="81.543909" y="-0.971875" style="font-size: 6.6px; font-family: 'DejaVu Sans'; fill: #333333">/</tspan>
-      <tspan x="88.482072" y="-1.71875" style="font-size: 6.6px; font-family: 'DejaVu Sans'; fill: #333333">̂</tspan>
-      <tspan x="88.007646" y="0.018122" style="font-style: oblique; font-size: 4.62px; font-family: 'DejaVu Sans'; fill: #333333">D</tspan>
+      <tspan x="0" y="-0.76875" style="font-style: italic; font-size: 6.6px; font-family: 'Arial'; fill: #333333">O</tspan>
+      <tspan x="5.12883" y="-0.76875" style="font-style: italic; font-size: 6.6px; font-family: 'Arial'; fill: #333333">p</tspan>
+      <tspan x="8.795959" y="-0.76875" style="font-style: italic; font-size: 6.6px; font-family: 'Arial'; fill: #333333">e</tspan>
+      <tspan x="12.463089" y="-0.76875" style="font-style: italic; font-size: 6.6px; font-family: 'Arial'; fill: #333333">r</tspan>
+      <tspan x="14.658859" y="-0.76875" style="font-style: italic; font-size: 6.6px; font-family: 'Arial'; fill: #333333">a</tspan>
+      <tspan x="18.325989" y="-0.76875" style="font-style: italic; font-size: 6.6px; font-family: 'Arial'; fill: #333333">t</tspan>
+      <tspan x="20.157944" y="-0.76875" style="font-style: italic; font-size: 6.6px; font-family: 'Arial'; fill: #333333">i</tspan>
+      <tspan x="21.622864" y="-0.76875" style="font-style: italic; font-size: 6.6px; font-family: 'Arial'; fill: #333333">o</tspan>
+      <tspan x="25.289993" y="-0.76875" style="font-style: italic; font-size: 6.6px; font-family: 'Arial'; fill: #333333">n</tspan>
+      <tspan x="28.957123" y="-0.76875" style="font-style: italic; font-size: 6.6px; font-family: 'Arial'; fill: #333333">a</tspan>
+      <tspan x="32.624252" y="-0.76875" style="font-style: italic; font-size: 6.6px; font-family: 'Arial'; fill: #333333">l</tspan>
+      <tspan x="34.089172" y="-0.76875" style="font-style: italic; font-size: 6.6px; font-family: 'Arial'; fill: #333333"> </tspan>
+      <tspan x="35.921127" y="-0.76875" style="font-style: italic; font-size: 6.6px; font-family: 'Arial'; fill: #333333">r</tspan>
+      <tspan x="38.116898" y="-0.76875" style="font-style: italic; font-size: 6.6px; font-family: 'Arial'; fill: #333333">a</tspan>
+      <tspan x="41.784027" y="-0.76875" style="font-style: italic; font-size: 6.6px; font-family: 'Arial'; fill: #333333">t</tspan>
+      <tspan x="43.615982" y="-0.76875" style="font-style: italic; font-size: 6.6px; font-family: 'Arial'; fill: #333333">i</tspan>
+      <tspan x="45.080902" y="-0.76875" style="font-style: italic; font-size: 6.6px; font-family: 'Arial'; fill: #333333">o</tspan>
+      <tspan x="48.748032" y="-0.76875" style="font-style: italic; font-size: 6.6px; font-family: 'Arial'; fill: #333333"> </tspan>
+      <tspan x="50.579987" y="-0.76875" style="font-style: italic; font-size: 6.6px; font-family: 'Arial'; fill: #333333">r</tspan>
+      <tspan x="61.561546" y="-0.76875" style="font-style: italic; font-size: 6.6px; font-family: 'Arial'; fill: #333333">m</tspan>
+      <tspan x="71.624231" y="-0.76875" style="font-style: italic; font-size: 6.6px; font-family: 'Arial'; fill: #333333">σ</tspan>
+      <tspan x="52.775757" y="0.257812" style="font-size: 4.62px; font-family: 'Arial'; fill: #333333">0</tspan>
+      <tspan x="67.054192" y="0.257812" style="font-size: 4.62px; font-family: 'Arial'; fill: #333333">0</tspan>
+      <tspan x="56.61237" y="-0.76875" style="font-size: 6.6px; font-family: 'Arial'; fill: #333333">=</tspan>
+      <tspan x="69.792276" y="-0.76875" style="font-size: 6.6px; font-family: 'Arial'; fill: #333333">/</tspan>
+      <tspan x="73.649534" y="-1.25" style="font-size: 6.6px; font-family: 'Arial'; fill: #333333">̂</tspan>
+      <tspan x="75.660325" y="0.265625" style="font-style: italic; font-size: 4.62px; font-family: 'Arial'; fill: #333333">D</tspan>
      </text>
     </g>
    </g>
    <g id="text_42">
     <!-- Near Floor (S:$r_0&lt;2$, D:$r_0&lt;1.25$) -->
-    <g style="fill: #111111" transform="translate(414.395029 67.063065)">
+    <g style="fill: #111111" transform="translate(424.047529 67.031326)">
      <text>
-      <tspan x="0" y="-0.0625" style="font-weight: 700; font-size: 6.5px; font-family: 'DejaVu Sans'; fill: #111111">N</tspan>
-      <tspan x="5.439941" y="-0.0625" style="font-weight: 700; font-size: 6.5px; font-family: 'DejaVu Sans'; fill: #111111">e</tspan>
-      <tspan x="9.848389" y="-0.0625" style="font-weight: 700; font-size: 6.5px; font-family: 'DejaVu Sans'; fill: #111111">a</tspan>
-      <tspan x="14.234619" y="-0.0625" style="font-weight: 700; font-size: 6.5px; font-family: 'DejaVu Sans'; fill: #111111">r</tspan>
-      <tspan x="17.440186" y="-0.0625" style="font-weight: 700; font-size: 6.5px; font-family: 'DejaVu Sans'; fill: #111111"> </tspan>
-      <tspan x="19.703125" y="-0.0625" style="font-weight: 700; font-size: 6.5px; font-family: 'DejaVu Sans'; fill: #111111">F</tspan>
-      <tspan x="24.143311" y="-0.0625" style="font-weight: 700; font-size: 6.5px; font-family: 'DejaVu Sans'; fill: #111111">l</tspan>
-      <tspan x="26.371338" y="-0.0625" style="font-weight: 700; font-size: 6.5px; font-family: 'DejaVu Sans'; fill: #111111">o</tspan>
-      <tspan x="30.836914" y="-0.0625" style="font-weight: 700; font-size: 6.5px; font-family: 'DejaVu Sans'; fill: #111111">o</tspan>
-      <tspan x="35.30249" y="-0.0625" style="font-weight: 700; font-size: 6.5px; font-family: 'DejaVu Sans'; fill: #111111">r</tspan>
-      <tspan x="38.508057" y="-0.0625" style="font-weight: 700; font-size: 6.5px; font-family: 'DejaVu Sans'; fill: #111111"> </tspan>
-      <tspan x="40.770996" y="-0.0625" style="font-weight: 700; font-size: 6.5px; font-family: 'DejaVu Sans'; fill: #111111">(</tspan>
-      <tspan x="43.741699" y="-0.0625" style="font-weight: 700; font-size: 6.5px; font-family: 'DejaVu Sans'; fill: #111111">S</tspan>
-      <tspan x="48.423096" y="-0.0625" style="font-weight: 700; font-size: 6.5px; font-family: 'DejaVu Sans'; fill: #111111">:</tspan>
-      <tspan x="68.881909" y="-0.0625" style="font-weight: 700; font-size: 6.5px; font-family: 'DejaVu Sans'; fill: #111111">,</tspan>
-      <tspan x="71.351147" y="-0.0625" style="font-weight: 700; font-size: 6.5px; font-family: 'DejaVu Sans'; fill: #111111"> </tspan>
-      <tspan x="73.614087" y="-0.0625" style="font-weight: 700; font-size: 6.5px; font-family: 'DejaVu Sans'; fill: #111111">D</tspan>
-      <tspan x="79.009595" y="-0.0625" style="font-weight: 700; font-size: 6.5px; font-family: 'DejaVu Sans'; fill: #111111">:</tspan>
-      <tspan x="109.805566" y="-0.0625" style="font-weight: 700; font-size: 6.5px; font-family: 'DejaVu Sans'; fill: #111111">)</tspan>
-      <tspan x="51.022461" y="-0.0625" style="font-style: oblique; font-size: 6.5px; font-family: 'DejaVu Sans'; fill: #111111">r</tspan>
-      <tspan x="81.60896" y="-0.0625" style="font-style: oblique; font-size: 6.5px; font-family: 'DejaVu Sans'; fill: #111111">r</tspan>
-      <tspan x="53.694824" y="0.912497" style="font-size: 4.55px; font-family: 'DejaVu Sans'; fill: #111111">0</tspan>
-      <tspan x="84.281323" y="0.912497" style="font-size: 4.55px; font-family: 'DejaVu Sans'; fill: #111111">0</tspan>
-      <tspan x="58.033765" y="-0.0625" style="font-size: 6.5px; font-family: 'DejaVu Sans'; fill: #111111">&lt;</tspan>
-      <tspan x="64.746411" y="-0.0625" style="font-size: 6.5px; font-family: 'DejaVu Sans'; fill: #111111">2</tspan>
-      <tspan x="88.620264" y="-0.0625" style="font-size: 6.5px; font-family: 'DejaVu Sans'; fill: #111111">&lt;</tspan>
-      <tspan x="95.33291" y="-0.0625" style="font-size: 6.5px; font-family: 'DejaVu Sans'; fill: #111111">1</tspan>
-      <tspan x="99.468408" y="-0.0625" style="font-size: 6.5px; font-family: 'DejaVu Sans'; fill: #111111">.</tspan>
-      <tspan x="101.53457" y="-0.0625" style="font-size: 6.5px; font-family: 'DejaVu Sans'; fill: #111111">2</tspan>
-      <tspan x="105.670068" y="-0.0625" style="font-size: 6.5px; font-family: 'DejaVu Sans'; fill: #111111">5</tspan>
+      <tspan x="0" y="-0.265625" style="font-weight: 700; font-size: 6.5px; font-family: 'Arial'; fill: #111111">N</tspan>
+      <tspan x="4.694092" y="-0.265625" style="font-weight: 700; font-size: 6.5px; font-family: 'Arial'; fill: #111111">e</tspan>
+      <tspan x="8.309082" y="-0.265625" style="font-weight: 700; font-size: 6.5px; font-family: 'Arial'; fill: #111111">a</tspan>
+      <tspan x="11.924072" y="-0.265625" style="font-weight: 700; font-size: 6.5px; font-family: 'Arial'; fill: #111111">r</tspan>
+      <tspan x="14.453613" y="-0.265625" style="font-weight: 700; font-size: 6.5px; font-family: 'Arial'; fill: #111111"> </tspan>
+      <tspan x="16.259521" y="-0.265625" style="font-weight: 700; font-size: 6.5px; font-family: 'Arial'; fill: #111111">F</tspan>
+      <tspan x="20.22998" y="-0.265625" style="font-weight: 700; font-size: 6.5px; font-family: 'Arial'; fill: #111111">l</tspan>
+      <tspan x="22.035889" y="-0.265625" style="font-weight: 700; font-size: 6.5px; font-family: 'Arial'; fill: #111111">o</tspan>
+      <tspan x="26.006348" y="-0.265625" style="font-weight: 700; font-size: 6.5px; font-family: 'Arial'; fill: #111111">o</tspan>
+      <tspan x="29.976807" y="-0.265625" style="font-weight: 700; font-size: 6.5px; font-family: 'Arial'; fill: #111111">r</tspan>
+      <tspan x="32.506348" y="-0.265625" style="font-weight: 700; font-size: 6.5px; font-family: 'Arial'; fill: #111111"> </tspan>
+      <tspan x="34.312256" y="-0.265625" style="font-weight: 700; font-size: 6.5px; font-family: 'Arial'; fill: #111111">(</tspan>
+      <tspan x="36.476807" y="-0.265625" style="font-weight: 700; font-size: 6.5px; font-family: 'Arial'; fill: #111111">S</tspan>
+      <tspan x="40.812256" y="-0.265625" style="font-weight: 700; font-size: 6.5px; font-family: 'Arial'; fill: #111111">:</tspan>
+      <tspan x="57.41731" y="-0.265625" style="font-weight: 700; font-size: 6.5px; font-family: 'Arial'; fill: #111111">,</tspan>
+      <tspan x="59.223218" y="-0.265625" style="font-weight: 700; font-size: 6.5px; font-family: 'Arial'; fill: #111111"> </tspan>
+      <tspan x="61.029126" y="-0.265625" style="font-weight: 700; font-size: 6.5px; font-family: 'Arial'; fill: #111111">D</tspan>
+      <tspan x="65.723218" y="-0.265625" style="font-weight: 700; font-size: 6.5px; font-family: 'Arial'; fill: #111111">:</tspan>
+      <tspan x="91.36416" y="-0.265625" style="font-weight: 700; font-size: 6.5px; font-family: 'Arial'; fill: #111111">)</tspan>
+      <tspan x="42.976807" y="-0.265625" style="font-style: italic; font-size: 6.5px; font-family: 'Arial'; fill: #111111">r</tspan>
+      <tspan x="67.887769" y="-0.265625" style="font-style: italic; font-size: 6.5px; font-family: 'Arial'; fill: #111111">r</tspan>
+      <tspan x="45.141357" y="0.746875" style="font-size: 4.55px; font-family: 'Arial'; fill: #111111">0</tspan>
+      <tspan x="70.052319" y="0.746875" style="font-size: 4.55px; font-family: 'Arial'; fill: #111111">0</tspan>
+      <tspan x="48.923511" y="-0.265625" style="font-size: 6.5px; font-family: 'Arial'; fill: #111111">&lt;</tspan>
+      <tspan x="53.802319" y="-0.265625" style="font-size: 6.5px; font-family: 'Arial'; fill: #111111">2</tspan>
+      <tspan x="73.834473" y="-0.265625" style="font-size: 6.5px; font-family: 'Arial'; fill: #111111">&lt;</tspan>
+      <tspan x="78.713281" y="-0.265625" style="font-size: 6.5px; font-family: 'Arial'; fill: #111111">1</tspan>
+      <tspan x="82.328271" y="-0.265625" style="font-size: 6.5px; font-family: 'Arial'; fill: #111111">.</tspan>
+      <tspan x="84.13418" y="-0.265625" style="font-size: 6.5px; font-family: 'Arial'; fill: #111111">2</tspan>
+      <tspan x="87.74917" y="-0.265625" style="font-size: 6.5px; font-family: 'Arial'; fill: #111111">5</tspan>
      </text>
     </g>
    </g>
    <g id="text_43">
-    <text style="font-size: 6.4px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #262626" transform="translate(421.352529 76.587072)">Retain Input-Aligned Zero-Shot</text>
-    <text style="font-size: 6.4px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #262626" transform="translate(427.415529 84.395072)">(mitigates near-floor harm)</text>
+    <text style="font-size: 6.4px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', 'DejaVu Sans', sans-serif; fill: #262626" transform="translate(426.704029 76.717259)">Retain Input-Aligned Zero-Shot</text>
+    <text style="font-size: 6.4px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', 'DejaVu Sans', sans-serif; fill: #262626" transform="translate(433.118029 84.044884)">(mitigates near-floor harm)</text>
    </g>
    <g id="text_44">
     <!-- Shift (S:$r_0\geq 2$, D:$1.25$–$3$) -->
-    <g style="fill: #111111" transform="translate(428.767029 106.834058)">
+    <g style="fill: #111111" transform="translate(435.519029 106.802808)">
      <text>
-      <tspan x="0" y="-0.140625" style="font-weight: 700; font-size: 6.4px; font-family: 'DejaVu Sans'; fill: #111111">S</tspan>
-      <tspan x="4.602631" y="-0.140625" style="font-weight: 700; font-size: 6.4px; font-family: 'DejaVu Sans'; fill: #111111">h</tspan>
-      <tspan x="9.152206" y="-0.140625" style="font-weight: 700; font-size: 6.4px; font-family: 'DejaVu Sans'; fill: #111111">i</tspan>
-      <tspan x="11.342743" y="-0.140625" style="font-weight: 700; font-size: 6.4px; font-family: 'DejaVu Sans'; fill: #111111">f</tspan>
-      <tspan x="14.123047" y="-0.140625" style="font-weight: 700; font-size: 6.4px; font-family: 'DejaVu Sans'; fill: #111111">t</tspan>
-      <tspan x="17.177948" y="-0.140625" style="font-weight: 700; font-size: 6.4px; font-family: 'DejaVu Sans'; fill: #111111"> </tspan>
-      <tspan x="19.402817" y="-0.140625" style="font-weight: 700; font-size: 6.4px; font-family: 'DejaVu Sans'; fill: #111111">(</tspan>
-      <tspan x="22.323532" y="-0.140625" style="font-weight: 700; font-size: 6.4px; font-family: 'DejaVu Sans'; fill: #111111">S</tspan>
-      <tspan x="26.926163" y="-0.140625" style="font-weight: 700; font-size: 6.4px; font-family: 'DejaVu Sans'; fill: #111111">:</tspan>
-      <tspan x="47.040997" y="-0.140625" style="font-weight: 700; font-size: 6.4px; font-family: 'DejaVu Sans'; fill: #111111">,</tspan>
-      <tspan x="49.468686" y="-0.140625" style="font-weight: 700; font-size: 6.4px; font-family: 'DejaVu Sans'; fill: #111111"> </tspan>
-      <tspan x="51.693555" y="-0.140625" style="font-weight: 700; font-size: 6.4px; font-family: 'DejaVu Sans'; fill: #111111">D</tspan>
-      <tspan x="56.998273" y="-0.140625" style="font-weight: 700; font-size: 6.4px; font-family: 'DejaVu Sans'; fill: #111111">:</tspan>
-      <tspan x="81.044293" y="-0.140625" style="font-weight: 700; font-size: 6.4px; font-family: 'DejaVu Sans'; fill: #111111">)</tspan>
-      <tspan x="29.481796" y="-0.140625" style="font-style: oblique; font-size: 6.4px; font-family: 'DejaVu Sans'; fill: #111111">r</tspan>
-      <tspan x="32.109192" y="0.819372" style="font-size: 4.48px; font-family: 'DejaVu Sans'; fill: #111111">0</tspan>
-      <tspan x="36.375385" y="-0.140625" style="font-size: 6.4px; font-family: 'DejaVu Sans'; fill: #111111">≥</tspan>
-      <tspan x="42.975079" y="-0.140625" style="font-size: 6.4px; font-family: 'DejaVu Sans'; fill: #111111">2</tspan>
-      <tspan x="59.553906" y="-0.140625" style="font-size: 6.4px; font-family: 'DejaVu Sans'; fill: #111111">1</tspan>
-      <tspan x="63.619824" y="-0.140625" style="font-size: 6.4px; font-family: 'DejaVu Sans'; fill: #111111">.</tspan>
-      <tspan x="65.651227" y="-0.140625" style="font-size: 6.4px; font-family: 'DejaVu Sans'; fill: #111111">2</tspan>
-      <tspan x="69.717145" y="-0.140625" style="font-size: 6.4px; font-family: 'DejaVu Sans'; fill: #111111">5</tspan>
-      <tspan x="76.978375" y="-0.140625" style="font-size: 6.4px; font-family: 'DejaVu Sans'; fill: #111111">3</tspan>
-      <tspan x="73.783063" y="-0.140625" style="font-size: 6.4px; font-family: 'DejaVu Sans Display'; fill: #111111">–</tspan>
+      <tspan x="0" y="-0.34375" style="font-weight: 700; font-size: 6.4px; font-family: 'Arial'; fill: #111111">S</tspan>
+      <tspan x="4.262497" y="-0.34375" style="font-weight: 700; font-size: 6.4px; font-family: 'Arial'; fill: #111111">h</tspan>
+      <tspan x="8.166153" y="-0.34375" style="font-weight: 700; font-size: 6.4px; font-family: 'Arial'; fill: #111111">i</tspan>
+      <tspan x="9.941681" y="-0.34375" style="font-weight: 700; font-size: 6.4px; font-family: 'Arial'; fill: #111111">f</tspan>
+      <tspan x="12.069809" y="-0.34375" style="font-weight: 700; font-size: 6.4px; font-family: 'Arial'; fill: #111111">t</tspan>
+      <tspan x="14.197937" y="-0.34375" style="font-weight: 700; font-size: 6.4px; font-family: 'Arial'; fill: #111111"> </tspan>
+      <tspan x="15.973465" y="-0.34375" style="font-weight: 700; font-size: 6.4px; font-family: 'Arial'; fill: #111111">(</tspan>
+      <tspan x="18.101593" y="-0.34375" style="font-weight: 700; font-size: 6.4px; font-family: 'Arial'; fill: #111111">S</tspan>
+      <tspan x="22.36409" y="-0.34375" style="font-weight: 700; font-size: 6.4px; font-family: 'Arial'; fill: #111111">:</tspan>
+      <tspan x="38.464789" y="-0.34375" style="font-weight: 700; font-size: 6.4px; font-family: 'Arial'; fill: #111111">,</tspan>
+      <tspan x="40.240317" y="-0.34375" style="font-weight: 700; font-size: 6.4px; font-family: 'Arial'; fill: #111111"> </tspan>
+      <tspan x="42.015845" y="-0.34375" style="font-weight: 700; font-size: 6.4px; font-family: 'Arial'; fill: #111111">D</tspan>
+      <tspan x="46.630957" y="-0.34375" style="font-weight: 700; font-size: 6.4px; font-family: 'Arial'; fill: #111111">:</tspan>
+      <tspan x="61.197119" y="-0.34375" style="font-weight: 700; font-size: 6.4px; font-family: 'Arial'; fill: #111111">–</tspan>
+      <tspan x="68.305457" y="-0.34375" style="font-weight: 700; font-size: 6.4px; font-family: 'Arial'; fill: #111111">)</tspan>
+      <tspan x="24.492218" y="-0.34375" style="font-style: italic; font-size: 6.4px; font-family: 'Arial'; fill: #111111">r</tspan>
+      <tspan x="26.620346" y="0.65" style="font-size: 4.48px; font-family: 'Arial'; fill: #111111">0</tspan>
+      <tspan x="30.338577" y="-0.34375" style="font-size: 6.4px; font-family: 'Arial'; fill: #111111">≥</tspan>
+      <tspan x="34.91062" y="-0.34375" style="font-size: 6.4px; font-family: 'Arial'; fill: #111111">2</tspan>
+      <tspan x="48.759085" y="-0.34375" style="font-size: 6.4px; font-family: 'Arial'; fill: #111111">1</tspan>
+      <tspan x="52.313254" y="-0.34375" style="font-size: 6.4px; font-family: 'Arial'; fill: #111111">.</tspan>
+      <tspan x="54.088782" y="-0.34375" style="font-size: 6.4px; font-family: 'Arial'; fill: #111111">2</tspan>
+      <tspan x="57.64295" y="-0.34375" style="font-size: 6.4px; font-family: 'Arial'; fill: #111111">5</tspan>
+      <tspan x="64.751288" y="-0.34375" style="font-size: 6.4px; font-family: 'Arial'; fill: #111111">3</tspan>
      </text>
     </g>
    </g>
    <g id="text_45">
-    <text style="font-size: 6.3px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #262626" transform="translate(420.306255 116.417459)">Output-Space Ref. + Holdout ES</text>
-    <text style="font-size: 6.3px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #262626" transform="translate(415.005888 124.103459)">(converged full-kept disba rollback)</text>
+    <text style="font-size: 6.3px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', 'DejaVu Sans', sans-serif; fill: #262626" transform="translate(425.203521 116.584495)">Output-Space Ref. + Holdout ES</text>
+    <text style="font-size: 6.3px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', 'DejaVu Sans', sans-serif; fill: #262626" transform="translate(421.970341 123.758743)">(converged full-kept disba rollback)</text>
    </g>
    <g id="text_46">
     <!-- Deep Outliers (D:$r_0 &gt; 3.0$) -->
-    <g style="fill: #111111" transform="translate(425.510029 146.657027)">
+    <g style="fill: #111111" transform="translate(433.245029 146.625289)">
      <text>
-      <tspan x="0" y="-0.0625" style="font-weight: 700; font-size: 6.5px; font-family: 'DejaVu Sans'; fill: #111111">D</tspan>
-      <tspan x="5.395508" y="-0.0625" style="font-weight: 700; font-size: 6.5px; font-family: 'DejaVu Sans'; fill: #111111">e</tspan>
-      <tspan x="9.803955" y="-0.0625" style="font-weight: 700; font-size: 6.5px; font-family: 'DejaVu Sans'; fill: #111111">e</tspan>
-      <tspan x="14.212402" y="-0.0625" style="font-weight: 700; font-size: 6.5px; font-family: 'DejaVu Sans'; fill: #111111">p</tspan>
-      <tspan x="18.865234" y="-0.0625" style="font-weight: 700; font-size: 6.5px; font-family: 'DejaVu Sans'; fill: #111111"> </tspan>
-      <tspan x="21.128174" y="-0.0625" style="font-weight: 700; font-size: 6.5px; font-family: 'DejaVu Sans'; fill: #111111">O</tspan>
-      <tspan x="26.653809" y="-0.0625" style="font-weight: 700; font-size: 6.5px; font-family: 'DejaVu Sans'; fill: #111111">u</tspan>
-      <tspan x="31.28125" y="-0.0625" style="font-weight: 700; font-size: 6.5px; font-family: 'DejaVu Sans'; fill: #111111">t</tspan>
-      <tspan x="34.388428" y="-0.0625" style="font-weight: 700; font-size: 6.5px; font-family: 'DejaVu Sans'; fill: #111111">l</tspan>
-      <tspan x="36.616455" y="-0.0625" style="font-weight: 700; font-size: 6.5px; font-family: 'DejaVu Sans'; fill: #111111">i</tspan>
-      <tspan x="38.844482" y="-0.0625" style="font-weight: 700; font-size: 6.5px; font-family: 'DejaVu Sans'; fill: #111111">e</tspan>
-      <tspan x="43.25293" y="-0.0625" style="font-weight: 700; font-size: 6.5px; font-family: 'DejaVu Sans'; fill: #111111">r</tspan>
-      <tspan x="46.458496" y="-0.0625" style="font-weight: 700; font-size: 6.5px; font-family: 'DejaVu Sans'; fill: #111111">s</tspan>
-      <tspan x="50.327393" y="-0.0625" style="font-weight: 700; font-size: 6.5px; font-family: 'DejaVu Sans'; fill: #111111"> </tspan>
-      <tspan x="52.590332" y="-0.0625" style="font-weight: 700; font-size: 6.5px; font-family: 'DejaVu Sans'; fill: #111111">(</tspan>
-      <tspan x="55.561035" y="-0.0625" style="font-weight: 700; font-size: 6.5px; font-family: 'DejaVu Sans'; fill: #111111">D</tspan>
-      <tspan x="60.956543" y="-0.0625" style="font-weight: 700; font-size: 6.5px; font-family: 'DejaVu Sans'; fill: #111111">:</tspan>
-      <tspan x="87.617017" y="-0.0625" style="font-weight: 700; font-size: 6.5px; font-family: 'DejaVu Sans'; fill: #111111">)</tspan>
-      <tspan x="63.555908" y="-0.0625" style="font-style: oblique; font-size: 6.5px; font-family: 'DejaVu Sans'; fill: #111111">r</tspan>
-      <tspan x="66.228271" y="0.912497" style="font-size: 4.55px; font-family: 'DejaVu Sans'; fill: #111111">0</tspan>
-      <tspan x="70.567212" y="-0.0625" style="font-size: 6.5px; font-family: 'DejaVu Sans'; fill: #111111">&gt;</tspan>
-      <tspan x="77.279858" y="-0.0625" style="font-size: 6.5px; font-family: 'DejaVu Sans'; fill: #111111">3</tspan>
-      <tspan x="81.415356" y="-0.0625" style="font-size: 6.5px; font-family: 'DejaVu Sans'; fill: #111111">.</tspan>
-      <tspan x="83.481519" y="-0.0625" style="font-size: 6.5px; font-family: 'DejaVu Sans'; fill: #111111">0</tspan>
+      <tspan x="0" y="-0.265625" style="font-weight: 700; font-size: 6.5px; font-family: 'Arial'; fill: #111111">D</tspan>
+      <tspan x="4.694092" y="-0.265625" style="font-weight: 700; font-size: 6.5px; font-family: 'Arial'; fill: #111111">e</tspan>
+      <tspan x="8.309082" y="-0.265625" style="font-weight: 700; font-size: 6.5px; font-family: 'Arial'; fill: #111111">e</tspan>
+      <tspan x="11.924072" y="-0.265625" style="font-weight: 700; font-size: 6.5px; font-family: 'Arial'; fill: #111111">p</tspan>
+      <tspan x="15.894531" y="-0.265625" style="font-weight: 700; font-size: 6.5px; font-family: 'Arial'; fill: #111111"> </tspan>
+      <tspan x="17.700439" y="-0.265625" style="font-weight: 700; font-size: 6.5px; font-family: 'Arial'; fill: #111111">O</tspan>
+      <tspan x="22.756348" y="-0.265625" style="font-weight: 700; font-size: 6.5px; font-family: 'Arial'; fill: #111111">u</tspan>
+      <tspan x="26.726807" y="-0.265625" style="font-weight: 700; font-size: 6.5px; font-family: 'Arial'; fill: #111111">t</tspan>
+      <tspan x="28.891357" y="-0.265625" style="font-weight: 700; font-size: 6.5px; font-family: 'Arial'; fill: #111111">l</tspan>
+      <tspan x="30.697266" y="-0.265625" style="font-weight: 700; font-size: 6.5px; font-family: 'Arial'; fill: #111111">i</tspan>
+      <tspan x="32.503174" y="-0.265625" style="font-weight: 700; font-size: 6.5px; font-family: 'Arial'; fill: #111111">e</tspan>
+      <tspan x="36.118164" y="-0.265625" style="font-weight: 700; font-size: 6.5px; font-family: 'Arial'; fill: #111111">r</tspan>
+      <tspan x="38.647705" y="-0.265625" style="font-weight: 700; font-size: 6.5px; font-family: 'Arial'; fill: #111111">s</tspan>
+      <tspan x="42.262695" y="-0.265625" style="font-weight: 700; font-size: 6.5px; font-family: 'Arial'; fill: #111111"> </tspan>
+      <tspan x="44.068604" y="-0.265625" style="font-weight: 700; font-size: 6.5px; font-family: 'Arial'; fill: #111111">(</tspan>
+      <tspan x="46.233154" y="-0.265625" style="font-weight: 700; font-size: 6.5px; font-family: 'Arial'; fill: #111111">D</tspan>
+      <tspan x="50.927246" y="-0.265625" style="font-weight: 700; font-size: 6.5px; font-family: 'Arial'; fill: #111111">:</tspan>
+      <tspan x="72.953198" y="-0.265625" style="font-weight: 700; font-size: 6.5px; font-family: 'Arial'; fill: #111111">)</tspan>
+      <tspan x="53.091797" y="-0.265625" style="font-style: italic; font-size: 6.5px; font-family: 'Arial'; fill: #111111">r</tspan>
+      <tspan x="55.256348" y="0.746875" style="font-size: 4.55px; font-family: 'Arial'; fill: #111111">0</tspan>
+      <tspan x="59.038501" y="-0.265625" style="font-size: 6.5px; font-family: 'Arial'; fill: #111111">&gt;</tspan>
+      <tspan x="63.91731" y="-0.265625" style="font-size: 6.5px; font-family: 'Arial'; fill: #111111">3</tspan>
+      <tspan x="67.5323" y="-0.265625" style="font-size: 6.5px; font-family: 'Arial'; fill: #111111">.</tspan>
+      <tspan x="69.338208" y="-0.265625" style="font-size: 6.5px; font-family: 'Arial'; fill: #111111">0</tspan>
      </text>
     </g>
    </g>
    <g id="text_47">
-    <text style="font-size: 6.4px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #262626" transform="translate(419.457529 156.474534)">Audit fit &amp; &gt;10 km smoothness;</text>
-    <text style="font-size: 6.4px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #262626" transform="translate(423.516029 164.609034)">retain ZS or Classical fallback</text>
+    <text style="font-size: 6.4px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', 'DejaVu Sans', sans-serif; fill: #262626" transform="translate(426.618529 156.531721)">Audit fit &amp; &gt;10 km smoothness;</text>
+    <text style="font-size: 6.4px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', 'DejaVu Sans', sans-serif; fill: #262626" transform="translate(428.668529 164.273346)">retain ZS or Classical fallback</text>
    </g>
    <g id="text_48">
-    <text style="font-weight: 700; font-size: 8px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #009e73" x="470.815029" y="30.72" transform="rotate(-0 470.815029 30.72)">3. Diagnostic Routing Guide</text>
+    <text style="font-weight: 700; font-size: 8px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #009e73" x="470.815029" y="30.72" transform="rotate(-0 470.815029 30.72)">3. Diagnostic Routing Guide</text>
    </g>
   </g>
   <g id="text_49">
-   <text style="font-weight: 700; font-size: 8.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #111111" x="270" y="14.438719" transform="rotate(-0 270 14.438719)">When Can Dispersion Misfit Reduction Be Trusted? Forward-Solver &amp; Noise-Floor TTA Diagnostics</text>
+   <text style="font-weight: 700; font-size: 8.2px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #111111" x="270" y="14.177824" transform="rotate(-0 270 14.177824)">When Can Dispersion Misfit Reduction Be Trusted? Forward-Solver &amp; Noise-Floor TTA Diagnostics</text>
   </g>
  </g>
  <defs>

@@ -20,6 +20,7 @@ from matplotlib.lines import Line2D
 
 from swi_tta.visualization.style import (
     DOUBLE_COL_IN,
+    DOUBLE_COL_MM,
     METHOD_STYLE,
     PALETTE,
     add_panel_label,
@@ -88,208 +89,142 @@ def _draw_box(
     )
 
 
-def _draw_arrow(
+# ---------------------------------------------------------------------------
+# Figure 1: Diagnostic Evaluation Framework & Four-Step Safe-TTA Protocol
+# (Restrained geoscience editorial vector layout in true 1:1 millimetre space)
+# ---------------------------------------------------------------------------
+
+_F1_INK = "#111827"
+_F1_TEXT = "#334155"
+_F1_MUTED = "#64748B"
+_F1_LINE = "#94A3B8"
+_F1_BORDER = "#CBD5E1"
+_F1_BAND = "#FAFAFB"
+_F1_HDR = "#F1F5F9"
+_F1_BADGE = "#334155"
+
+_F1_NAVY = "#1F5A8A"
+_F1_NAVY_BG = "#F2F6FA"
+_F1_RUST = "#B8502A"
+_F1_RUST_BG = "#FAF2EE"
+_F1_SAGE = "#2E7D6F"
+_F1_SAGE_BG = "#F1F7F5"
+
+
+def _fmt_sci_tex(val: float) -> str:
+    """Format a positive float as LaTeX mantissa x 10^{exp} for Figure 1 labels."""
+    exp = int(np.floor(np.log10(abs(val))))
+    mant = val / (10.0 ** exp)
+    return rf"{mant:.1f}\times 10^{{{exp}}}"
+
+
+def _f1_box(
+    ax: plt.Axes,
+    x: float,
+    y: float,
+    w: float,
+    h: float,
+    *,
+    fc: str = "#FFFFFF",
+    ec: str = _F1_LINE,
+    lw: float = 0.75,
+    r: float = 1.8,
+    z: int = 2,
+) -> None:
+    ax.add_patch(
+        patches.FancyBboxPatch(
+            (x, y),
+            w,
+            h,
+            boxstyle=f"round,pad=0.0,rounding_size={r}",
+            facecolor=fc,
+            edgecolor=ec,
+            linewidth=lw,
+            zorder=z,
+        )
+    )
+
+
+def _f1_header_card(
+    ax: plt.Axes,
+    x: float,
+    y: float,
+    w: float,
+    h: float,
+    num: str,
+    title: str,
+    *,
+    ec: str = _F1_LINE,
+    hdr_fc: str = _F1_HDR,
+    badge_fc: str = _F1_BADGE,
+    lw: float = 0.78,
+    hdr_h: float = 8.2,
+    badge_r: float = 2.20,
+    title_fs: float = 6.9,
+    r: float = 1.8,
+) -> Tuple[float, float, float, float]:
+    """Draw a restrained flat card with uniform slate header and 1:1 true circular badge."""
+    _f1_box(ax, x, y, w, h, fc="#FFFFFF", ec=ec, lw=lw, r=r, z=2)
+
+    hy = y + h - hdr_h
+    ax.add_patch(
+        patches.FancyBboxPatch(
+            (x, hy),
+            w,
+            hdr_h,
+            boxstyle=f"round,pad=0.0,rounding_size={r}",
+            linewidth=0.0,
+            facecolor=hdr_fc,
+            zorder=3,
+        )
+    )
+    ax.add_patch(patches.Rectangle((x + 0.15, hy), w - 0.30, hdr_h * 0.45, linewidth=0.0, facecolor=hdr_fc, zorder=3))
+    ax.plot([x + 0.2, x + w - 0.2], [hy, hy], color=_F1_BORDER, lw=0.65, zorder=4)
+
+    cx = x + 4.1
+    cy = hy + hdr_h * 0.50
+    ax.add_patch(patches.Circle((cx, cy), radius=badge_r, facecolor=badge_fc, edgecolor="none", zorder=5))
+    ax.text(cx, cy - 0.08, num, ha="center", va="center", fontsize=6.4, fontweight="bold", color="white", zorder=6)
+
+    ax.text(
+        cx + badge_r + 1.5,
+        cy - 0.04,
+        title,
+        ha="left",
+        va="center",
+        fontsize=title_fs,
+        fontweight="bold",
+        color=_F1_INK,
+        zorder=6,
+    )
+    return (x + 2.0, y + 1.6, w - 4.0, h - hdr_h - 2.6)
+
+
+def _f1_straight_arrow(
     ax: plt.Axes,
     x0: float,
     y0: float,
     x1: float,
     y1: float,
-    color: str = "#333333",
-    lw: float = 1.15,
-    rad: float = 0.0,
+    *,
+    color: str = "#475569",
+    lw: float = 0.95,
+    head_len: float = 0.32,
+    head_w: float = 0.17,
+    z: int = 5,
 ) -> None:
     ax.annotate(
         "",
         xy=(x1, y1),
         xytext=(x0, y0),
         arrowprops=dict(
-            arrowstyle="-|>,head_length=0.45,head_width=0.25",
+            arrowstyle=f"-|>,head_length={head_len},head_width={head_w}",
             color=color,
             lw=lw,
-            connectionstyle=f"arc3,rad={rad}",
+            shrinkA=0.0,
+            shrinkB=0.0,
         ),
-        zorder=4,
-    )
-
-
-# ---------------------------------------------------------------------------
-# Figure 1: Diagnostic Evaluation Framework & Four-Step Safe-TTA Protocol
-# (PaperBanana-inspired pure-vector scientific architecture diagram)
-# ---------------------------------------------------------------------------
-
-
-def _draw_shadow_card(
-    ax: plt.Axes,
-    x: float,
-    y: float,
-    w: float,
-    h: float,
-    facecolor: str = "#FFFFFF",
-    edgecolor: str = "#CBD5E1",
-    lw: float = 0.85,
-    radius: float = 0.014,
-    zorder: int = 2,
-) -> None:
-    shadow = patches.FancyBboxPatch(
-        (x + 0.0035, y - 0.009),
-        w,
-        h,
-        boxstyle=f"round,pad=0.0,rounding_size={radius}",
-        linewidth=0.0,
-        facecolor="#E2E8F0",
-        alpha=0.65,
-        zorder=zorder - 1,
-    )
-    ax.add_patch(shadow)
-    card = patches.FancyBboxPatch(
-        (x, y),
-        w,
-        h,
-        boxstyle=f"round,pad=0.0,rounding_size={radius}",
-        linewidth=lw,
-        edgecolor=edgecolor,
-        facecolor=facecolor,
-        zorder=zorder,
-    )
-    ax.add_patch(card)
-
-
-def _draw_module_card(
-    ax: plt.Axes,
-    x: float,
-    y: float,
-    w: float,
-    h: float,
-    step_num: str,
-    title: str,
-    footer: str,
-    accent: str,
-    tint: str,
-) -> Tuple[float, float, float, float]:
-    """Draw a sleek PaperBanana-style module card and return inner schematic bbox."""
-    _draw_shadow_card(ax, x, y, w, h, facecolor="#FFFFFF", edgecolor=accent, lw=0.95, radius=0.015, zorder=2)
-
-    hh = h * 0.23
-    hy = y + h - hh
-    header = patches.FancyBboxPatch(
-        (x, hy),
-        w,
-        hh,
-        boxstyle="round,pad=0.0,rounding_size=0.014",
-        linewidth=0.0,
-        facecolor=tint,
-        zorder=3,
-    )
-    ax.add_patch(header)
-    ax.add_patch(patches.Rectangle((x, hy), w, hh * 0.45, linewidth=0.0, facecolor=tint, zorder=3))
-    ax.plot([x + 0.002, x + w - 0.002], [hy, hy], color=accent, lw=0.75, alpha=0.55, zorder=4)
-
-    cx = x + 0.015
-    cy = hy + hh * 0.50
-    badge = patches.Ellipse((cx, cy), width=0.022, height=hh * 0.62, facecolor=accent, edgecolor="none", zorder=5)
-    ax.add_patch(badge)
-    ax.text(cx, cy, step_num, ha="center", va="center", fontsize=6.6, fontweight="bold", color="white", zorder=6)
-
-    ax.text(
-        x + 0.029,
-        cy,
-        title,
-        ha="left",
-        va="center",
-        fontsize=6.9,
-        fontweight="bold",
-        color="#0F172A",
-        zorder=6,
-    )
-
-    ax.text(
-        x + w / 2.0,
-        y + h * 0.145,
-        footer,
-        ha="center",
-        va="center",
-        fontsize=6.5,
-        color="#334155",
-        linespacing=1.18,
-        zorder=5,
-    )
-
-    return (x + w * 0.07, y + h * 0.30, w * 0.86, h * 0.42)
-
-
-def _draw_accent_card(
-    ax: plt.Axes,
-    x: float,
-    y: float,
-    w: float,
-    h: float,
-    title: str,
-    subtitle: str,
-    accent: str,
-    tint: str,
-    tag_text: str,
-) -> None:
-    """Draw a modern white card with bold left accent stripe and status pill."""
-    _draw_shadow_card(ax, x, y, w, h, facecolor="#FFFFFF", edgecolor="#CBD5E1", lw=0.8, radius=0.012, zorder=2)
-    bg = patches.FancyBboxPatch(
-        (x + 0.001, y + 0.001),
-        w - 0.002,
-        h - 0.002,
-        boxstyle="round,pad=0.0,rounding_size=0.011",
-        linewidth=0.0,
-        facecolor=tint,
-        alpha=0.52,
-        zorder=2,
-    )
-    ax.add_patch(bg)
-    stripe = patches.FancyBboxPatch(
-        (x, y),
-        0.010,
-        h,
-        boxstyle="round,pad=0.0,rounding_size=0.006",
-        linewidth=0.0,
-        facecolor=accent,
-        zorder=4,
-    )
-    ax.add_patch(stripe)
-
-    pill_w = 0.112
-    pill_h = h * 0.34
-    px = x + w - pill_w - 0.008
-    py = y + h - pill_h - h * 0.10
-    pill = patches.FancyBboxPatch(
-        (px, py),
-        pill_w,
-        pill_h,
-        boxstyle="round,pad=0.0,rounding_size=0.008",
-        linewidth=0.0,
-        facecolor=accent,
-        zorder=5,
-    )
-    ax.add_patch(pill)
-    ax.text(px + pill_w / 2.0, py + pill_h / 2.0, tag_text, ha="center", va="center", fontsize=6.4, fontweight="bold", color="white", zorder=6)
-
-    ax.text(
-        x + 0.018,
-        y + h * 0.72,
-        title,
-        ha="left",
-        va="center",
-        fontsize=7.2,
-        fontweight="bold",
-        color="#0F172A",
-        zorder=5,
-    )
-    ax.text(
-        x + 0.018,
-        y + h * 0.30,
-        subtitle,
-        ha="left",
-        va="center",
-        fontsize=6.6,
-        color="#334155",
-        linespacing=1.20,
-        zorder=5,
+        zorder=z,
     )
 
 
@@ -299,267 +234,420 @@ def make_fig01_workflow_and_protocol(
     formats: Sequence[str] = ("pdf", "png", "svg"),
     dpi: int = 600,
 ) -> Dict[str, Dict[str, object]]:
-    """Generate Figure 1: PaperBanana-style vector diagnostic pipeline and 4-step protocol."""
+    """Generate Figure 1: restrained vector diagnostic pipeline and 4-step operational protocol."""
     apply_cg_style()
     rs = _load_json(summary_dir, "root_skipping_diagnostics.json")
-    dc_sh = rs["step_sizes_km_s"]["shallow_converged"]
-    dc_dp = rs["step_sizes_km_s"]["deep_converged"]
+    dc_sh = float(rs["step_sizes_km_s"]["shallow_converged"])
+    dc_dp = float(rs["step_sizes_km_s"]["deep_converged"])
 
-    fig = plt.figure(figsize=(DOUBLE_COL_IN, mm_to_in(152.0)))
+    W = DOUBLE_COL_MM
+    HA = 56.0
+    HB = 74.0
+    GAP_MM = 5.0
+    TOTAL_H = HA + HB + GAP_MM
+
+    fig = plt.figure(figsize=(mm_to_in(W), mm_to_in(TOTAL_H)))
     fig.patch.set_facecolor("white")
-    gs = gridspec.GridSpec(2, 1, height_ratios=[1.02, 1.26], hspace=0.09, left=0.008, right=0.992, top=0.988, bottom=0.012)
+
+    gs = gridspec.GridSpec(
+        2,
+        1,
+        height_ratios=[HA, HB],
+        hspace=GAP_MM / ((HA + HB) / 2.0),
+        left=0.004,
+        right=0.996,
+        top=0.994,
+        bottom=0.006,
+    )
 
     # Panel (a): Zero-Leakage Diagnostic Evaluation Pipeline
     ax_a = fig.add_subplot(gs[0])
-    ax_a.set_xlim(0.0, 1.0)
-    ax_a.set_ylim(0.0, 1.0)
+    ax_a.set_xlim(0.0, W)
+    ax_a.set_ylim(0.0, HA)
+    ax_a.set_aspect("equal")
     ax_a.axis("off")
 
-    band_a = patches.FancyBboxPatch(
-        (0.004, 0.02),
-        0.992,
-        0.955,
-        boxstyle="round,pad=0.0,rounding_size=0.018",
-        linewidth=0.85,
-        edgecolor="#CBD5E1",
-        facecolor="#F8FAFC",
-        zorder=0,
-    )
-    ax_a.add_patch(band_a)
+    _f1_box(ax_a, 0.8, 0.8, W - 1.6, HA - 1.6, fc=_F1_BAND, ec=_F1_BORDER, lw=0.70, r=2.4, z=0)
     ax_a.text(
-        0.018,
-        0.940,
+        4.0,
+        HA - 3.6,
         "(a) Zero-Leakage Diagnostic Evaluation Pipeline",
-        fontsize=8.8,
+        fontsize=8.5,
         fontweight="bold",
-        color="#0F172A",
+        color=_F1_INK,
         va="top",
+        ha="left",
         zorder=5,
     )
 
-    cw = 0.178
-    gap = 0.018
-    x0 = 0.014
-    cy0, ch = 0.065, 0.775
+    cw = 29.0
+    gap = 3.25
+    x0 = 4.0
+    cy0, ch = 3.8, 43.2
 
     # Card 1: Dispersion Input
-    gx, gy, gw, gh = _draw_module_card(
-        ax_a, x0, cy0, cw, ch, "1", "Dispersion Input",
-        "20% interior sealed\nbefore alignment", "#475569", "#F1F5F9"
-    )
-    ax_a.plot([gx, gx, gx + gw], [gy + gh, gy, gy], color="#64748B", lw=0.7, zorder=4)
+    bx, by, bw, bh = _f1_header_card(ax_a, x0, cy0, cw, ch, "1", "Dispersion Input", title_fs=6.8)
+    gx, gy, gw, gh = bx + 0.6, by + 9.2, bw - 1.2, bh - 10.2
+    ax_a.plot([gx, gx, gx + gw], [gy + gh, gy, gy], color=_F1_MUTED, lw=0.70, zorder=4)
     tx = np.linspace(0.08, 0.92, 9)
-    ty = 0.22 + 0.64 * (1.0 - np.exp(-2.6 * tx))
+    ty = 0.22 + 0.66 * (1.0 - np.exp(-2.6 * tx))
     kept_idx = [0, 1, 3, 4, 6, 7, 8]
     ho_idx = [2, 5]
-    ax_a.plot(gx + tx * gw, gy + ty * gh, "-", color="#94A3B8", lw=0.8, zorder=4)
-    ax_a.scatter(gx + tx[kept_idx] * gw, gy + ty[kept_idx] * gh, s=11, color="#1E293B", zorder=5)
-    ax_a.scatter(gx + tx[ho_idx] * gw, gy + ty[ho_idx] * gh, s=16, marker="D", facecolors="white", edgecolors=PALETTE["vermillion"], linewidths=0.9, zorder=6)
-    ax_a.text(gx + gw * 0.96, gy + gh * 0.06, "Kept / HO", ha="right", va="bottom", fontsize=6.4, color="#475569", zorder=6)
+    ax_a.plot(gx + tx * gw, gy + ty * gh, "-", color="#94A3B8", lw=0.80, zorder=4)
+    ax_a.scatter(gx + tx[kept_idx] * gw, gy + ty[kept_idx] * gh, s=11, color=_F1_INK, zorder=5)
+    ax_a.scatter(
+        gx + tx[ho_idx] * gw,
+        gy + ty[ho_idx] * gh,
+        s=15,
+        marker="D",
+        facecolors="white",
+        edgecolors=_F1_RUST,
+        linewidths=0.95,
+        zorder=6,
+    )
+    ax_a.text(gx + gw * 0.96, gy + gh * 0.06, "Kept / HO", ha="right", va="bottom", fontsize=6.0, color=_F1_MUTED, zorder=6)
+    ax_a.text(x0 + cw / 2, by + 3.6, "Seal 20% interior\nbefore alignment", ha="center", va="center", fontsize=6.1, color=_F1_TEXT, linespacing=1.18, zorder=5)
 
     # Card 2: Input Alignment
     x1 = x0 + (cw + gap)
-    gx, gy, gw, gh = _draw_module_card(
-        ax_a, x1, cy0, cw, ch, "2", "Input Alignment",
-        "Resample to training\ngrid (zero leak)", PALETTE["blue"], "#EFF6FF"
-    )
-    y_top, y_bot = gy + gh * 0.68, gy + gh * 0.28
-    ax_a.plot([gx + gw * 0.04, gx + gw * 0.96], [y_top, y_top], color="#94A3B8", lw=0.8, zorder=4)
-    ax_a.plot([gx + gw * 0.04, gx + gw * 0.96], [y_bot, y_bot], color=PALETTE["blue"], lw=1.1, zorder=4)
-    raw_pts = np.array([0.10, 0.24, 0.34, 0.56, 0.75, 0.88])
+    bx, by, bw, bh = _f1_header_card(ax_a, x1, cy0, cw, ch, "2", "Input Alignment", title_fs=6.8)
+    gx, gy, gw, gh = bx + 0.6, by + 9.2, bw - 1.2, bh - 10.2
+    y_top, y_bot = gy + gh * 0.66, gy + gh * 0.28
+    ax_a.plot([gx + 0.5, gx + gw - 0.5], [y_top, y_top], color="#94A3B8", lw=0.80, zorder=4)
+    ax_a.plot([gx + 0.5, gx + gw - 0.5], [y_bot, y_bot], color=_F1_NAVY, lw=1.10, zorder=4)
+    raw_pts = np.array([0.10, 0.24, 0.35, 0.57, 0.75, 0.89])
     uni_pts = np.linspace(0.10, 0.90, 7)
-    ax_a.scatter(gx + raw_pts * gw, np.full_like(raw_pts, y_top), s=11, color="#64748B", zorder=5)
-    ax_a.scatter(gx + uni_pts * gw, np.full_like(uni_pts, y_bot), s=12, marker="s", color=PALETTE["blue"], zorder=5)
+    ax_a.scatter(gx + raw_pts * gw, np.full_like(raw_pts, y_top), s=11, color=_F1_MUTED, zorder=5)
+    ax_a.scatter(gx + uni_pts * gw, np.full_like(uni_pts, y_bot), s=11, marker="s", color=_F1_NAVY, zorder=5)
     for rx in [0.18, 0.50, 0.82]:
-        ax_a.annotate("", xy=(gx + rx * gw, y_bot + gh * 0.09), xytext=(gx + rx * gw, y_top - gh * 0.09),
-                      arrowprops=dict(arrowstyle="-|>,head_length=0.25,head_width=0.14", color=PALETTE["blue"], lw=0.7), zorder=5)
-    ax_a.text(gx + gw * 0.5, gy + gh * 0.98, "Field grid", ha="center", va="top", fontsize=6.4, color="#64748B", zorder=6)
-    ax_a.text(gx + gw * 0.5, gy + gh * 0.01, "Train grid", ha="center", va="bottom", fontsize=6.4, fontweight="bold", color=PALETTE["blue"], zorder=6)
+        _f1_straight_arrow(ax_a, gx + rx * gw, y_top - 1.4, gx + rx * gw, y_bot + 1.5, color=_F1_NAVY, lw=0.72, head_len=0.25, head_w=0.13)
+    ax_a.text(gx + gw / 2, gy + gh * 0.96, "Field grid", ha="center", va="top", fontsize=6.0, color=_F1_MUTED, zorder=6)
+    ax_a.text(gx + gw / 2, gy + gh * 0.01, "Train grid", ha="center", va="bottom", fontsize=6.0, fontweight="bold", color=_F1_NAVY, zorder=6)
+    ax_a.text(x1 + cw / 2, by + 3.6, "Resample to training\ngrid (zero leak)", ha="center", va="center", fontsize=6.1, color=_F1_TEXT, linespacing=1.18, zorder=5)
 
-    # Card 3: Backbone & TTA Loop
+    # Card 3: Backbone & TTA
     x2 = x0 + 2 * (cw + gap)
-    gx, gy, gw, gh = _draw_module_card(
-        ax_a, x2, cy0, cw, ch, "3", "Backbone & TTA",
-        "OpenSWI / DispFormer\n+ surrogate loop", "#D97706", "#FFFBEB"
-    )
+    bx, by, bw, bh = _f1_header_card(ax_a, x2, cy0, cw, ch, "3", "Backbone & TTA", title_fs=6.8)
+    gx, gy, gw, gh = bx + 0.5, by + 9.2, bw - 1.0, bh - 10.2
     trap = patches.Polygon(
-        [[gx + gw * 0.03, gy + gh * 0.84], [gx + gw * 0.38, gy + gh * 0.72],
-         [gx + gw * 0.38, gy + gh * 0.36], [gx + gw * 0.03, gy + gh * 0.24]],
-        closed=True, facecolor="#FDE68A", edgecolor="#D97706", lw=0.8, zorder=4
+        [
+            [gx + 0.4, gy + gh * 0.88],
+            [gx + gw * 0.37, gy + gh * 0.76],
+            [gx + gw * 0.37, gy + gh * 0.42],
+            [gx + 0.4, gy + gh * 0.30],
+        ],
+        closed=True,
+        facecolor="#E2E8F0",
+        edgecolor="#475569",
+        lw=0.80,
+        zorder=4,
     )
     ax_a.add_patch(trap)
-    ax_a.text(gx + gw * 0.20, gy + gh * 0.54, "NN", ha="center", va="center", fontsize=6.5, fontweight="bold", color="#92400E", zorder=5)
-    vs_box = patches.FancyBboxPatch((gx + gw * 0.52, gy + gh * 0.30), gw * 0.44, gh * 0.46,
-                                    boxstyle="round,pad=0.0,rounding_size=0.008", facecolor="#FFFFFF", edgecolor="#D97706", lw=0.75, zorder=4)
-    ax_a.add_patch(vs_box)
-    pz = np.array([0.72, 0.56, 0.56, 0.44, 0.44, 0.34])
+    ax_a.text(gx + gw * 0.19, gy + gh * 0.59, "NN", ha="center", va="center", fontsize=6.3, fontweight="bold", color=_F1_INK, zorder=5)
+    _f1_box(ax_a, gx + gw * 0.52, gy + gh * 0.34, gw * 0.45, gh * 0.48, fc="#FFFFFF", ec="#64748B", lw=0.72, r=1.0, z=4)
+    pz = np.array([0.76, 0.62, 0.62, 0.50, 0.50, 0.40])
     pv = np.array([0.58, 0.62, 0.72, 0.72, 0.84, 0.90])
-    ax_a.plot(gx + pv * gw, gy + pz * gh, "-", color="#B45309", lw=1.0, zorder=5)
-    ax_a.text(gx + gw * 0.74, gy + gh * 0.80, r"$\hat{V}_s(z)$", ha="center", va="bottom", fontsize=6.5, color="#92400E", zorder=6)
-    ax_a.annotate("", xy=(gx + gw * 0.51, gy + gh * 0.53), xytext=(gx + gw * 0.39, gy + gh * 0.53),
-                  arrowprops=dict(arrowstyle="-|>,head_length=0.25,head_width=0.14", color="#B45309", lw=0.8), zorder=5)
-    ax_a.annotate("", xy=(gx + gw * 0.20, gy + gh * 0.22), xytext=(gx + gw * 0.74, gy + gh * 0.28),
-                  arrowprops=dict(arrowstyle="-|>,head_length=0.28,head_width=0.15", color="#D97706", lw=0.85, connectionstyle="arc3,rad=-0.26"), zorder=5)
-    ax_a.text(gx + gw * 0.48, gy + gh * 0.00, "Cycle loss", ha="center", va="bottom", fontsize=6.4, color="#92400E", fontweight="bold", zorder=6)
+    ax_a.plot(gx + pv * gw, gy + pz * gh, "-", color=_F1_NAVY, lw=1.05, zorder=5)
+    ax_a.text(gx + gw * 0.74, gy + gh * 0.85, r"$\hat{V}_s(z)$", ha="center", va="bottom", fontsize=6.3, color=_F1_INK, zorder=6)
+    _f1_straight_arrow(ax_a, gx + gw * 0.38, gy + gh * 0.58, gx + gw * 0.51, gy + gh * 0.58, color="#475569", lw=0.80, head_len=0.24, head_w=0.13)
+    cy_bot = gy + gh * 0.16
+    ax_a.plot([gx + gw * 0.74, gx + gw * 0.74, gx + gw * 0.19], [gy + gh * 0.34, cy_bot, cy_bot], color=_F1_NAVY, lw=0.82, zorder=5)
+    _f1_straight_arrow(ax_a, gx + gw * 0.19, cy_bot, gx + gw * 0.19, gy + gh * 0.31, color=_F1_NAVY, lw=0.82, head_len=0.25, head_w=0.13)
+    ax_a.text(gx + gw * 0.50, gy - 0.4, "Cycle loss", ha="center", va="bottom", fontsize=5.9, fontweight="bold", color=_F1_NAVY, zorder=6)
+    ax_a.text(x2 + cw / 2, by + 3.6, "OpenSWI / DispFormer\n+ surrogate loop", ha="center", va="center", fontsize=6.1, color=_F1_TEXT, linespacing=1.18, zorder=5)
 
-    # Card 4: Exact disba Solver (D5-3: include km/s on Shallow dc too)
+    # Card 4: Exact disba
     x3 = x0 + 3 * (cw + gap)
-    gx, gy, gw, gh = _draw_module_card(
-        ax_a, x3, cy0, cw, ch, "4", "Exact disba",
-        r"Sh.: $2.5\times 10^{-5}$ km/s" + "\n" + r"Dp.: $5.0\times 10^{-3}$ km/s", PALETTE["teal"], "#ECFDF5"
-    )
-    ax_a.plot([gx, gx, gx + gw], [gy + gh, gy, gy], color="#64748B", lw=0.7, zorder=4)
+    bx, by, bw, bh = _f1_header_card(ax_a, x3, cy0, cw, ch, "4", "Exact disba", title_fs=6.8)
+    gx, gy, gw, gh = bx + 0.6, by + 9.2, bw - 1.2, bh - 10.2
+    ax_a.plot([gx, gx, gx + gw], [gy + gh, gy, gy], color=_F1_MUTED, lw=0.70, zorder=4)
     rx = np.linspace(0.08, 0.92, 16)
     y_m0 = 0.24 + 0.04 * rx
     y_jump = 0.24 + 0.58 * (1.0 / (1.0 + np.exp(-9.0 * (rx - 0.42))))
-    ax_a.plot(gx + rx * gw, gy + y_jump * gh, "--", color=PALETTE["vermillion"], lw=0.95, zorder=4)
-    ax_a.plot(gx + rx * gw, gy + y_m0 * gh, "-", color=PALETTE["teal"], lw=1.25, zorder=5)
-    ax_a.scatter(gx + rx[::3] * gw, gy + y_m0[::3] * gh, s=8, color="#1E293B", zorder=6)
-    ax_a.text(gx + gw * 0.04, gy + gh * 0.97, "Mode 1", ha="left", va="top", fontsize=6.4, color=PALETTE["vermillion"], zorder=6)
-    ax_a.text(gx + gw * 0.96, gy + gh * 0.02, "Mode 0", ha="right", va="bottom", fontsize=6.4, fontweight="bold", color=PALETTE["teal"], zorder=6)
-
-    # Card 5: Regime Audit
-    x4 = x0 + 4 * (cw + gap)
-    gx, gy, gw, gh = _draw_module_card(
-        ax_a, x4, cy0, cw, ch, "5", "Regime Audit",
-        r"Bin by $r_0 = m_0/\hat{\sigma}_D$" + "\n" + r"Resolvable $V_s$ RMSE", PALETTE["vermillion"], "#FFF7ED"
-    )
-    y_zero = gy + gh * 0.48
-    ax_a.add_patch(patches.Rectangle((gx, y_zero), gw, gy + gh - y_zero, facecolor="#FEE2E2", alpha=0.55, lw=0, zorder=3))
-    ax_a.add_patch(patches.Rectangle((gx, gy), gw, y_zero - gy, facecolor="#D1FAE5", alpha=0.55, lw=0, zorder=3))
-    ax_a.plot([gx, gx, gx + gw], [gy + gh, gy, gy], color="#64748B", lw=0.7, zorder=4)
-    ax_a.plot([gx, gx + gw], [y_zero, y_zero], ":", color="#475569", lw=0.7, zorder=4)
-    sx = np.linspace(0.08, 0.92, 8)
-    sy = np.array([0.85, 0.72, 0.50, 0.34, 0.22, 0.16, 0.45, 0.80])
-    ax_a.plot(gx + sx * gw, gy + sy * gh, "-o", color=PALETTE["vermillion"], lw=1.0, ms=2.2, zorder=5)
-    ax_a.text(gx + gw * 0.52, gy + gh * 0.92, "Harm", ha="center", va="top", fontsize=6.4, color="#9A2D00", fontweight="bold", zorder=6)
-    ax_a.text(gx + gw * 0.52, gy + gh * 0.04, "Gain", ha="center", va="bottom", fontsize=6.4, color="#00664B", fontweight="bold", zorder=6)
-
-    for k in range(4):
-        xa = x0 + k * (cw + gap) + cw + 0.002
-        xb = x0 + (k + 1) * (cw + gap) - 0.002
-        _draw_arrow(ax_a, xa, cy0 + ch * 0.50, xb, cy0 + ch * 0.50, color="#475569", lw=1.15)
-
-    # Panel (b): Four-Step Operational Diagnostic & Routing Protocol
-    ax_b = fig.add_subplot(gs[1])
-    ax_b.set_xlim(0.0, 1.0)
-    ax_b.set_ylim(0.0, 1.0)
-    ax_b.axis("off")
-
-    band_b = patches.FancyBboxPatch(
-        (0.004, 0.015),
-        0.992,
-        0.965,
-        boxstyle="round,pad=0.0,rounding_size=0.018",
-        linewidth=0.85,
-        edgecolor="#CBD5E1",
-        facecolor="#F8FAFC",
-        zorder=0,
-    )
-    ax_b.add_patch(band_b)
-    ax_b.text(
-        0.018,
-        0.948,
-        "(b) Four-Step Operational Diagnostic and Routing Protocol",
-        fontsize=8.8,
-        fontweight="bold",
-        color="#0F172A",
-        va="top",
+    ax_a.plot(gx + rx * gw, gy + y_jump * gh, "--", color=_F1_RUST, lw=0.95, zorder=4)
+    ax_a.plot(gx + rx * gw, gy + y_m0 * gh, "-", color=_F1_SAGE, lw=1.25, zorder=5)
+    ax_a.scatter(gx + rx[::3] * gw, gy + y_m0[::3] * gh, s=8, color=_F1_INK, zorder=6)
+    ax_a.text(gx + gw * 0.04, gy + gh * 0.96, "Mode 1", ha="left", va="top", fontsize=6.0, color=_F1_RUST, zorder=6)
+    ax_a.text(gx + gw * 0.96, gy + gh * 0.02, "Mode 0", ha="right", va="bottom", fontsize=6.0, fontweight="bold", color=_F1_SAGE, zorder=6)
+    ax_a.text(
+        x3 + cw / 2,
+        by + 3.6,
+        f"Sh.: ${_fmt_sci_tex(dc_sh)}$ km/s\nDp.: ${_fmt_sci_tex(dc_dp)}$ km/s",
+        ha="center",
+        va="center",
+        fontsize=6.0,
+        color=_F1_TEXT,
+        linespacing=1.18,
         zorder=5,
     )
 
-    lx, lw_col = 0.016, 0.222
-    _draw_shadow_card(ax_b, lx, 0.495, lw_col, 0.360, facecolor="#FFFFFF", edgecolor=PALETTE["blue"], lw=0.95, radius=0.014, zorder=2)
-    ax_b.add_patch(patches.FancyBboxPatch((lx, 0.775), lw_col, 0.080, boxstyle="round,pad=0.0,rounding_size=0.012", lw=0, facecolor="#EFF6FF", zorder=3))
-    ax_b.add_patch(patches.Rectangle((lx, 0.775), lw_col, 0.032, lw=0, facecolor="#EFF6FF", zorder=3))
-    ax_b.add_patch(patches.Ellipse((lx + 0.017, 0.815), width=0.024, height=0.048, facecolor=PALETTE["blue"], zorder=5))
-    ax_b.text(lx + 0.017, 0.815, "1", ha="center", va="center", fontsize=6.6, fontweight="bold", color="white", zorder=6)
-    ax_b.text(lx + 0.033, 0.815, "Step 1: Alignment", ha="left", va="center", fontsize=7.0, fontweight="bold", color="#0F172A", zorder=6)
-    ax_b.text(lx + lw_col / 2.0, 0.630, "Resample kept curves\nto training grid; run\nInput-Aligned Zero-Shot.",
-              ha="center", va="center", fontsize=6.5, color="#334155", linespacing=1.24, zorder=5)
-
-    _draw_shadow_card(ax_b, lx, 0.055, lw_col, 0.360, facecolor="#FFFFFF", edgecolor=PALETTE["teal"], lw=0.95, radius=0.014, zorder=2)
-    ax_b.add_patch(patches.FancyBboxPatch((lx, 0.335), lw_col, 0.080, boxstyle="round,pad=0.0,rounding_size=0.012", lw=0, facecolor="#ECFDF5", zorder=3))
-    ax_b.add_patch(patches.Rectangle((lx, 0.335), lw_col, 0.032, lw=0, facecolor="#ECFDF5", zorder=3))
-    ax_b.add_patch(patches.Ellipse((lx + 0.017, 0.375), width=0.024, height=0.048, facecolor=PALETTE["teal"], zorder=5))
-    ax_b.text(lx + 0.017, 0.375, "2", ha="center", va="center", fontsize=6.6, fontweight="bold", color="white", zorder=6)
-    ax_b.text(lx + 0.032, 0.375, "Step 2: Solver & Floor", ha="left", va="center", fontsize=6.6, fontweight="bold", color="#0F172A", zorder=6)
-    ax_b.text(lx + lw_col / 2.0, 0.190, r"Verify disba $\Delta c$;" + "\ncalibrate " + r"$\hat{\sigma}_D$" + " (300 field /\n100 synth. stations).",
-              ha="center", va="center", fontsize=6.5, color="#334155", linespacing=1.24, zorder=5)
-
-    _draw_arrow(ax_b, lx + lw_col / 2.0, 0.490, lx + lw_col / 2.0, 0.420, color="#475569", lw=1.1)
-
-    mx, mw = 0.266, 0.205
-    _draw_shadow_card(ax_b, mx, 0.165, mw, 0.575, facecolor="#FFFFFF", edgecolor="#D97706", lw=1.05, radius=0.015, zorder=2)
-    ax_b.add_patch(patches.FancyBboxPatch((mx, 0.650), mw, 0.090, boxstyle="round,pad=0.0,rounding_size=0.013", lw=0, facecolor="#FFFBEB", zorder=3))
-    ax_b.add_patch(patches.Rectangle((mx, 0.650), mw, 0.035, lw=0, facecolor="#FFFBEB", zorder=3))
-    ax_b.add_patch(patches.Ellipse((mx + 0.017, 0.695), width=0.024, height=0.048, facecolor="#D97706", zorder=5))
-    ax_b.text(mx + 0.017, 0.695, "3", ha="center", va="center", fontsize=6.6, fontweight="bold", color="white", zorder=6)
-    ax_b.text(mx + 0.033, 0.695, "Step 3: Screen", ha="left", va="center", fontsize=7.0, fontweight="bold", color="#0F172A", zorder=6)
-
-    ax_b.text(mx + mw / 2.0, 0.545, "Initial exact kept\nmisfit-to-floor ratio:", ha="center", va="center", fontsize=6.5, color="#334155", linespacing=1.22, zorder=5)
-    fpill = patches.FancyBboxPatch((mx + 0.020, 0.400), mw - 0.040, 0.088, boxstyle="round,pad=0.0,rounding_size=0.010",
-                                   facecolor="#FEF3C7", edgecolor="#D97706", lw=0.8, zorder=4)
-    ax_b.add_patch(fpill)
-    ax_b.text(mx + mw / 2.0, 0.444, r"$r_0 = m_0 / \hat{\sigma}_D$", ha="center", va="center", fontsize=7.8, fontweight="bold", color="#92400E", zorder=5)
-
-    bar_x = mx + 0.014
-    bar_w = mw - 0.028
-    bar_y, bar_h = 0.275, 0.052
-    ax_b.add_patch(patches.Rectangle((bar_x, bar_y), bar_w * 0.34, bar_h, facecolor=PALETTE["teal"], alpha=0.85, lw=0, zorder=4))
-    ax_b.add_patch(patches.Rectangle((bar_x + bar_w * 0.34, bar_y), bar_w * 0.36, bar_h, facecolor=PALETTE["blue"], alpha=0.85, lw=0, zorder=4))
-    ax_b.add_patch(patches.Rectangle((bar_x + bar_w * 0.70, bar_y), bar_w * 0.30, bar_h, facecolor=PALETTE["vermillion"], alpha=0.85, lw=0, zorder=4))
-    ax_b.text(bar_x, bar_y - 0.018, "0", ha="center", va="top", fontsize=6.4, color="#475569", zorder=5)
-    ax_b.text(bar_x + bar_w * 0.34, bar_y - 0.018, "2/1.25", ha="center", va="top", fontsize=6.4, color="#475569", zorder=5)
-    ax_b.text(bar_x + bar_w * 0.70, bar_y - 0.018, "3(D)", ha="center", va="top", fontsize=6.4, color="#475569", zorder=5)
-    ax_b.text(bar_x + bar_w, bar_y - 0.018, "∞", ha="center", va="top", fontsize=6.6, color="#475569", zorder=5)
-    ax_b.text(bar_x + bar_w * 0.17, bar_y + bar_h * 0.5, "A", ha="center", va="center", fontsize=6.5, fontweight="bold", color="white", zorder=5)
-    ax_b.text(bar_x + bar_w * 0.52, bar_y + bar_h * 0.5, "B", ha="center", va="center", fontsize=6.5, fontweight="bold", color="white", zorder=5)
-    ax_b.text(bar_x + bar_w * 0.85, bar_y + bar_h * 0.5, "C", ha="center", va="center", fontsize=6.5, fontweight="bold", color="white", zorder=5)
-    ax_b.text(mx + mw / 2.0, 0.195, "Shallow (S) / Deep (D)", ha="center", va="center", fontsize=6.4, style="italic", color="#64748B", zorder=5)
-
-    _draw_arrow(ax_b, lx + lw_col + 0.002, 0.660, mx - 0.003, 0.545, color="#475569", lw=1.1, rad=-0.08)
-    _draw_arrow(ax_b, lx + lw_col + 0.002, 0.235, mx - 0.003, 0.355, color="#475569", lw=1.1, rad=0.08)
-
-    rx, rw = 0.588, 0.396
-    _draw_accent_card(
-        ax_b, rx, 0.640, rw, 0.240,
-        "Regime A: Near-Floor",
-        "Retain Input-Aligned Zero-Shot (skip TTA).\nMitigates +13% to +157% noise-fitting harm.",
-        PALETTE["teal"], "#ECFDF5", "Retain ZS"
-    )
-    _draw_accent_card(
-        ax_b, rx, 0.348, rw, 0.248,
-        "Regime B: Shift Window",
-        "Step 4: Output-Space Ref. + Holdout ES.\nConverged full-kept disba rollback (unfrozen).",
-        PALETTE["blue"], "#EFF6FF", "Step 4: TTA"
-    )
-    _draw_accent_card(
-        ax_b, rx, 0.055, rw, 0.248,
-        "Regime C: Deep Outliers",
-        "Deep $r_0 > 3.0$: audit fit & >10 km smoothness;\nretain zero-shot or Classical Inv. fallback.",
-        PALETTE["vermillion"], "#FFF7ED", "Audit / ZS"
+    # Card 5: Regime Audit
+    x4 = x0 + 4 * (cw + gap)
+    bx, by, bw, bh = _f1_header_card(ax_a, x4, cy0, cw, ch, "5", "Regime Audit", title_fs=6.8)
+    gx, gy, gw, gh = bx + 0.6, by + 9.2, bw - 1.2, bh - 10.2
+    y_zero = gy + gh * 0.48
+    ax_a.add_patch(patches.Rectangle((gx, y_zero), gw, gy + gh - y_zero, facecolor=_F1_RUST_BG, alpha=0.90, lw=0, zorder=3))
+    ax_a.add_patch(patches.Rectangle((gx, gy), gw, y_zero - gy, facecolor=_F1_SAGE_BG, alpha=0.90, lw=0, zorder=3))
+    ax_a.plot([gx, gx, gx + gw], [gy + gh, gy, gy], color=_F1_MUTED, lw=0.70, zorder=4)
+    ax_a.plot([gx, gx + gw], [y_zero, y_zero], ":", color="#475569", lw=0.70, zorder=4)
+    sx = np.linspace(0.08, 0.92, 8)
+    sy = np.array([0.85, 0.72, 0.50, 0.34, 0.22, 0.16, 0.45, 0.80])
+    ax_a.plot(gx + sx * gw, gy + sy * gh, "-o", color=_F1_INK, lw=0.95, ms=2.1, zorder=5)
+    ax_a.text(gx + gw * 0.52, gy + gh * 0.94, "Harm", ha="center", va="top", fontsize=6.0, fontweight="bold", color=_F1_RUST, zorder=6)
+    ax_a.text(gx + gw * 0.52, gy + gh * 0.04, "Gain", ha="center", va="bottom", fontsize=6.0, fontweight="bold", color=_F1_SAGE, zorder=6)
+    ax_a.text(
+        x4 + cw / 2,
+        by + 3.6,
+        r"Bin by $r_0 = m_0/\hat{\sigma}_D$" + "\n" + r"Resolvable $V_s$ RMSE",
+        ha="center",
+        va="center",
+        fontsize=6.0,
+        color=_F1_TEXT,
+        linespacing=1.18,
+        zorder=5,
     )
 
-    branches = [
-        (0.585, 0.760, PALETTE["teal"], "S: $r_0<2.0$\nD: $r_0<1.25$", 0.530, 0.745, 0.09),
-        (0.455, 0.472, PALETTE["blue"], "S: $r_0\\geq 2.0$\nD: $1.25\\leq r_0\\leq 3$", 0.530, 0.495, 0.00),
-        (0.320, 0.178, PALETTE["vermillion"], "D: $r_0>3.0$", 0.530, 0.195, -0.09),
-    ]
-    for y_start, y_end, col, lbl, tx_l, ty_l, rad in branches:
-        _draw_arrow(ax_b, mx + mw + 0.003, y_start, rx - 0.004, y_end, color=col, lw=1.25, rad=rad)
-        ax_b.text(
-            tx_l,
-            ty_l,
-            lbl,
-            ha="center",
-            va="center",
-            fontsize=6.4,
-            fontweight="bold",
-            color=col,
-            bbox=dict(boxstyle="round,pad=0.14", facecolor="white", edgecolor=col, lw=0.65, alpha=0.97),
-            zorder=6,
+    for k in range(4):
+        xa = x0 + k * (cw + gap) + cw + 0.35
+        xb = x0 + (k + 1) * (cw + gap) - 0.35
+        _f1_straight_arrow(ax_a, xa, cy0 + ch * 0.50, xb, cy0 + ch * 0.50, color="#475569", lw=1.00)
+
+    # Panel (b): Four-Step Operational Diagnostic and Routing Protocol
+    ax_b = fig.add_subplot(gs[1])
+    ax_b.set_xlim(0.0, W)
+    ax_b.set_ylim(0.0, HB)
+    ax_b.set_aspect("equal")
+    ax_b.axis("off")
+
+    _f1_box(ax_b, 0.8, 0.8, W - 1.6, HB - 1.6, fc=_F1_BAND, ec=_F1_BORDER, lw=0.70, r=2.4, z=0)
+    ax_b.text(
+        4.0,
+        HB - 3.6,
+        "(b) Four-Step Operational Diagnostic and Routing Protocol",
+        fontsize=8.5,
+        fontweight="bold",
+        color=_F1_INK,
+        va="top",
+        ha="left",
+        zorder=5,
+    )
+
+    # Column 1: Step 1 & Step 2
+    c1x, c1w = 4.0, 37.0
+
+    bx, by, bw, bh = _f1_header_card(ax_b, c1x, 37.5, c1w, 27.0, "1", "Step 1: Align & ZS", hdr_h=7.8, badge_r=2.15, title_fs=6.8)
+    sy_mid = by + bh * 0.58
+    ax_b.plot([bx + 0.2, bx + 0.2, bx + 7.4], [sy_mid + 3.6, sy_mid - 3.4, sy_mid - 3.4], color=_F1_MUTED, lw=0.65, zorder=4)
+    p1x = np.linspace(bx + 1.0, bx + 6.8, 5)
+    p1y = sy_mid - 2.1 + 4.2 * (1 - np.exp(-0.55 * np.arange(5)))
+    ax_b.plot(p1x, p1y, "-", color="#94A3B8", lw=0.75, zorder=4)
+    ax_b.scatter(p1x[[0, 1, 3, 4]], p1y[[0, 1, 3, 4]], s=7, color=_F1_INK, zorder=5)
+    ax_b.scatter([p1x[2]], [p1y[2]], s=10, marker="D", facecolors="white", edgecolors=_F1_RUST, linewidths=0.85, zorder=6)
+    _f1_straight_arrow(ax_b, bx + 7.8, sy_mid, bx + 10.2, sy_mid, color="#475569", lw=0.80, head_len=0.23, head_w=0.12)
+    _f1_box(ax_b, bx + 10.4, sy_mid - 3.1, 6.0, 6.2, fc=_F1_NAVY_BG, ec=_F1_NAVY, lw=0.75, r=1.0, z=4)
+    ax_b.text(bx + 13.4, sy_mid, r"$\mathbf{g}_{\mathrm{train}}$", ha="center", va="center", fontsize=6.1, fontweight="bold", color=_F1_NAVY, zorder=5)
+    _f1_straight_arrow(ax_b, bx + 16.6, sy_mid, bx + 19.0, sy_mid, color="#475569", lw=0.80, head_len=0.23, head_w=0.12)
+    nn_poly = patches.Polygon(
+        [[bx + 19.2, sy_mid + 3.3], [bx + 24.4, sy_mid + 2.1], [bx + 24.4, sy_mid - 2.1], [bx + 19.2, sy_mid - 3.3]],
+        closed=True,
+        facecolor="#E2E8F0",
+        edgecolor="#475569",
+        lw=0.72,
+        zorder=4,
+    )
+    ax_b.add_patch(nn_poly)
+    ax_b.text(bx + 21.7, sy_mid, r"$f_\theta$", ha="center", va="center", fontsize=6.2, fontweight="bold", color=_F1_INK, zorder=5)
+    _f1_straight_arrow(ax_b, bx + 24.7, sy_mid, bx + 27.1, sy_mid, color="#475569", lw=0.80, head_len=0.23, head_w=0.12)
+    ax_b.text(bx + 30.2, sy_mid, r"$\mathbf{v}_{s,i}^{(0)}$", ha="center", va="center", fontsize=6.4, fontweight="bold", color=_F1_INK, zorder=5)
+    ax_b.text(c1x + c1w / 2, by + 1.8, "Seal 20% HO  |  Input-Aligned ZS", ha="center", va="center", fontsize=5.95, color=_F1_TEXT, zorder=5)
+
+    _f1_straight_arrow(ax_b, c1x + c1w / 2, 37.2, c1x + c1w / 2, 32.0, color="#475569", lw=1.00)
+
+    bx, by, bw, bh = _f1_header_card(ax_b, c1x, 4.5, c1w, 27.0, "2", "Step 2: Solver & Floor", hdr_h=7.8, badge_r=2.15, title_fs=6.8)
+    my = by + 4.8
+    mh = 8.4
+    ax_b.text(bx + 7.4, my + mh + 2.4, r"disba $\Delta c \Rightarrow m_{0,i}$", ha="center", va="top", fontsize=5.75, fontweight="bold", color=_F1_INK, zorder=6)
+    ax_b.plot([bx + 0.8, bx + 0.8, bx + 14.0], [my + mh, my, my], color=_F1_MUTED, lw=0.65, zorder=4)
+    dx = np.linspace(bx + 1.6, bx + 13.4, 10)
+    dy0 = my + 1.9 + 0.7 * np.linspace(0, 1, 10)
+    dy1 = my + 1.9 + 5.2 * (1 / (1 + np.exp(-7 * (np.linspace(0, 1, 10) - 0.45))))
+    ax_b.plot(dx, dy1, "--", color=_F1_RUST, lw=0.80, alpha=0.85, zorder=4)
+    ax_b.plot(dx, dy0, "-", color=_F1_SAGE, lw=1.15, zorder=5)
+
+    hx0 = bx + 17.6
+    ax_b.text(hx0 + 7.2, my + mh + 2.4, r"Floor $\hat{\sigma}_D$", ha="center", va="top", fontsize=5.75, fontweight="bold", color=_F1_INK, zorder=6)
+    ax_b.plot([hx0, hx0, hx0 + 14.4], [my + mh, my, my], color=_F1_MUTED, lw=0.65, zorder=4)
+    bar_h = [2.2, 4.6, 6.4, 3.8, 1.8]
+    for bi, bh_i in enumerate(bar_h):
+        ax_b.add_patch(patches.Rectangle((hx0 + 1.1 + bi * 2.5, my + 0.15), 1.9, bh_i, facecolor="#CBD5E1", edgecolor="#64748B", lw=0.45, zorder=4))
+    ax_b.plot([hx0 + 7.1, hx0 + 7.1], [my, my + mh - 0.3], "--", color=_F1_NAVY, lw=1.00, zorder=6)
+    ax_b.text(c1x + c1w / 2, by + 1.6, "Exact misfit  +  Classical floor", ha="center", va="center", fontsize=5.95, color=_F1_TEXT, zorder=5)
+
+    # Column 2: Step 3 Screen (explicit stacked Shallow S and Deep D regime bars)
+    c2x, c2w, c2y, c2h = 47.5, 33.0, 9.5, 50.0
+    bx, by, bw, bh = _f1_header_card(ax_b, c2x, c2y, c2w, c2h, "3", "Step 3: Screen", hdr_h=8.0, badge_r=2.15, title_fs=6.8)
+
+    _f1_box(ax_b, bx + 1.0, by + 27.6, bw - 2.0, 9.6, fc=_F1_NAVY_BG, ec=_F1_NAVY, lw=0.85, r=1.6, z=4)
+    ax_b.text(c2x + c2w / 2, by + 32.4, r"$r_{0,i} = m_{0,i} / \hat{\sigma}_D$", ha="center", va="center", fontsize=7.9, fontweight="bold", color=_F1_INK, zorder=5)
+    ax_b.text(c2x + c2w / 2, by + 23.8, "Domain regime partition", ha="center", va="center", fontsize=5.95, color=_F1_TEXT, zorder=5)
+
+    bar_x = bx + 4.4
+    bar_w = bw - 5.2
+    bar_hh = 5.4
+
+    # Shallow (S) bar: A | B (no C outlier branch)
+    ys = by + 15.0
+    ax_b.text(bx + 1.9, ys + bar_hh / 2, "S", ha="center", va="center", fontsize=6.2, fontweight="bold", color=_F1_INK, zorder=5)
+    ws_a = bar_w * 0.44
+    ws_b = bar_w - ws_a
+    ax_b.add_patch(patches.Rectangle((bar_x, ys), ws_a, bar_hh, facecolor="#64748B", lw=0, zorder=4))
+    ax_b.add_patch(patches.Rectangle((bar_x + ws_a, ys), ws_b, bar_hh, facecolor=_F1_NAVY, lw=0, zorder=4))
+    ax_b.text(bar_x + ws_a / 2, ys + bar_hh / 2, "A", ha="center", va="center", fontsize=6.3, fontweight="bold", color="white", zorder=5)
+    ax_b.text(bar_x + ws_a + ws_b / 2, ys + bar_hh / 2, "B", ha="center", va="center", fontsize=6.3, fontweight="bold", color="white", zorder=5)
+
+    # Deep (D) bar: A | B | C
+    yd = by + 8.0
+    ax_b.text(bx + 1.9, yd + bar_hh / 2, "D", ha="center", va="center", fontsize=6.2, fontweight="bold", color=_F1_INK, zorder=5)
+    wd_a = bar_w * 0.28
+    wd_b = bar_w * 0.38
+    wd_c = bar_w - wd_a - wd_b
+    ax_b.add_patch(patches.Rectangle((bar_x, yd), wd_a, bar_hh, facecolor="#64748B", lw=0, zorder=4))
+    ax_b.add_patch(patches.Rectangle((bar_x + wd_a, yd), wd_b, bar_hh, facecolor=_F1_NAVY, lw=0, zorder=4))
+    ax_b.add_patch(patches.Rectangle((bar_x + wd_a + wd_b, yd), wd_c, bar_hh, facecolor=_F1_RUST, lw=0, zorder=4))
+    ax_b.text(bar_x + wd_a / 2, yd + bar_hh / 2, "A", ha="center", va="center", fontsize=6.3, fontweight="bold", color="white", zorder=5)
+    ax_b.text(bar_x + wd_a + wd_b / 2, yd + bar_hh / 2, "B", ha="center", va="center", fontsize=6.3, fontweight="bold", color="white", zorder=5)
+    ax_b.text(bar_x + wd_a + wd_b + wd_c / 2, yd + bar_hh / 2, "C", ha="center", va="center", fontsize=6.3, fontweight="bold", color="white", zorder=5)
+
+    ax_b.text(bar_x, yd - 1.3, "Low $r_0$", ha="left", va="top", fontsize=5.35, color=_F1_MUTED)
+    ax_b.text(bar_x + bar_w, yd - 1.3, "High $r_0$", ha="right", va="top", fontsize=5.35, color=_F1_MUTED)
+    ax_b.text(c2x + c2w / 2, by + 1.8, "S: Shallow  |  D: Deep", ha="center", va="center", fontsize=5.75, style="italic", color=_F1_MUTED)
+
+    # Straight horizontal arrows Col 1 -> Col 2
+    _f1_straight_arrow(ax_b, c1x + c1w + 0.4, 51.0, c2x - 0.4, 51.0, color="#475569", lw=1.00)
+    _f1_straight_arrow(ax_b, c1x + c1w + 0.4, 18.0, c2x - 0.4, 18.0, color="#475569", lw=1.00)
+
+    # Column 3: Three Restrained Visual-First Regime Cards
+    c3x, c3w = 101.5, 60.5
+    rh = 17.8
+
+    def _regime_card(
+        y_bot: float,
+        stripe_c: str,
+        border_c: str,
+        bg_c: str,
+        title: str,
+        tag: str,
+        tag_solid: bool,
+        footer: str,
+    ) -> Tuple[float, float, float, float]:
+        lw_card = 1.05 if tag_solid else 0.78
+        _f1_box(ax_b, c3x, y_bot, c3w, rh, fc=bg_c, ec=border_c, lw=lw_card, r=1.8, z=2)
+        ax_b.add_patch(
+            patches.FancyBboxPatch(
+                (c3x, y_bot),
+                1.6,
+                rh,
+                boxstyle="round,pad=0.0,rounding_size=0.8",
+                lw=0,
+                facecolor=stripe_c,
+                zorder=4,
+            )
         )
+        ix, iy, iw, ih = c3x + 3.4, y_bot + 2.1, 16.5, 13.6
+        _f1_box(ax_b, ix, iy, iw, ih, fc="#FFFFFF", ec=_F1_BORDER, lw=0.60, r=1.1, z=4)
+
+        tx0 = ix + iw + 2.4
+        pill_w, pill_h = 15.0, 5.0
+        px, py = c3x + c3w - pill_w - 1.8, y_bot + rh - pill_h - 1.9
+        if tag_solid:
+            _f1_box(ax_b, px, py, pill_w, pill_h, fc=stripe_c, ec="none", lw=0, r=1.1, z=5)
+            tag_color = "white"
+        else:
+            _f1_box(ax_b, px, py, pill_w, pill_h, fc="#FFFFFF", ec=stripe_c, lw=0.75, r=1.1, z=5)
+            tag_color = stripe_c
+        ax_b.text(px + pill_w / 2, py + pill_h / 2 - 0.05, tag, ha="center", va="center", fontsize=5.8, fontweight="bold", color=tag_color, zorder=6)
+
+        ax_b.text(tx0, y_bot + rh - 4.4, title, ha="left", va="center", fontsize=6.7, fontweight="bold", color=_F1_INK, zorder=5)
+        ax_b.text(tx0, y_bot + 5.6, footer, ha="left", va="center", fontsize=5.95, color=_F1_TEXT, linespacing=1.34, zorder=5)
+        return (ix + 1.4, iy + 1.4, iw - 2.8, ih - 2.8)
+
+    # Regime A: Neutral Slate
+    ix, iy, iw, ih = _regime_card(
+        46.7,
+        "#64748B",
+        _F1_LINE,
+        "#FFFFFF",
+        "Regime A",
+        "Retain ZS",
+        False,
+        "Near-floor: skip TTA\n" + r"$\mathbf{v}_{s,i}^{\mathrm{out}} = \mathbf{v}_{s,i}^{(0)}$",
+    )
+    ax_b.plot([ix, ix, ix + iw], [iy + ih, iy, iy], color="#94A3B8", lw=0.6, zorder=5)
+    vz = np.array([0.88, 0.64, 0.64, 0.38, 0.38, 0.12])
+    vv = np.array([0.22, 0.26, 0.48, 0.50, 0.74, 0.78])
+    ax_b.plot(ix + vv * iw, iy + vz * ih, "-", color="#475569", lw=1.20, zorder=6)
+    ax_b.text(ix + iw * 0.90, iy + ih * 0.88, "ZS", ha="right", va="top", fontsize=5.3, fontweight="bold", color="#475569", zorder=6)
+
+    # Regime B: Highlighted Steel Navy (active TTA path)
+    ix, iy, iw, ih = _regime_card(
+        25.6,
+        _F1_NAVY,
+        _F1_NAVY,
+        _F1_NAVY_BG,
+        "Regime B",
+        "Step 4: TTA",
+        True,
+        "Unfrozen Holdout ES\n+ exact disba rollback",
+    )
+    ax_b.plot([ix, ix, ix + iw], [iy + ih, iy, iy], color="#94A3B8", lw=0.6, zorder=5)
+    ex_x = np.linspace(0.08, 0.92, 9)
+    ex_y = np.array([0.86, 0.54, 0.34, 0.22, 0.18, 0.25, 0.38, 0.54, 0.68])
+    ax_b.plot(ix + ex_x[:5] * iw, iy + ex_y[:5] * ih, "-", color=_F1_NAVY, lw=1.25, zorder=6)
+    ax_b.plot(ix + ex_x[4:] * iw, iy + ex_y[4:] * ih, "--", color="#94A3B8", lw=0.90, zorder=5)
+    ax_b.scatter([ix + ex_x[4] * iw], [iy + ex_y[4] * ih], s=22, marker="*", color=_F1_NAVY, edgecolors="white", linewidths=0.35, zorder=7)
+    ax_b.text(ix + ex_x[4] * iw + 0.5, iy + ex_y[4] * ih + 3.2, r"$s^\star$", ha="center", va="bottom", fontsize=5.8, fontweight="bold", color=_F1_NAVY, zorder=7)
+
+    # Regime C: Quiet Mineral Terracotta
+    ix, iy, iw, ih = _regime_card(
+        4.5,
+        _F1_RUST,
+        "#D6A592",
+        _F1_RUST_BG,
+        "Regime C",
+        "Audit / ZS",
+        False,
+        "Deep outliers (>10 km)\nSmoothness / Classical",
+    )
+    ax_b.plot([ix, ix, ix + iw], [iy + ih, iy, iy], color="#94A3B8", lw=0.6, zorder=5)
+    oz = np.linspace(0.92, 0.08, 40)
+    ov_sm = 0.24 + 0.50 * (1.0 - oz)
+    osc_env = np.where(oz < 0.72, np.sin(5.0 * np.pi * (0.72 - oz) / 0.64) * np.sin(np.pi * (0.72 - oz) / 0.64), 0.0)
+    ov_wig = ov_sm + 0.17 * osc_env
+    ax_b.plot(ix + ov_sm * iw, iy + oz * ih, "--", color="#94A3B8", lw=0.85, zorder=5)
+    ax_b.plot(ix + np.clip(ov_wig, 0.08, 0.94) * iw, iy + oz * ih, "-", color=_F1_RUST, lw=1.15, zorder=6)
+
+    # Three straight horizontal routing arrows with flush-left aligned S:/D: labels
+    ax_x0 = c2x + c2w + 0.5
+    ax_x1 = c3x - 0.5
+    lbl_x = ax_x0 + 2.2
+    val_x = lbl_x + 3.4
+
+    def _arrow_tag(y_line: float, rows: Sequence[Tuple[str, str]], color: str) -> None:
+        base_y = y_line + 1.6
+        step_y = 3.1
+        for idx, (prefix, expr) in enumerate(reversed(rows)):
+            yy = base_y + idx * step_y
+            ax_b.text(lbl_x, yy, prefix, ha="left", va="bottom", fontsize=5.65, fontweight="bold", color=color)
+            ax_b.text(val_x, yy, expr, ha="left", va="bottom", fontsize=5.65, color=color)
+
+    _f1_straight_arrow(ax_b, ax_x0, 54.0, ax_x1, 54.0, color="#64748B", lw=1.00)
+    _arrow_tag(54.0, [("S:", r"$r_0 < 2.0$"), ("D:", r"$r_0 < 1.25$")], _F1_TEXT)
+
+    _f1_straight_arrow(ax_b, ax_x0, 34.5, ax_x1, 34.5, color=_F1_NAVY, lw=1.15)
+    _arrow_tag(34.5, [("S:", r"$r_0 \geq 2.0$"), ("D:", r"$[1.25, 3.0]$")], _F1_NAVY)
+
+    _f1_straight_arrow(ax_b, ax_x0, 14.5, ax_x1, 14.5, color=_F1_RUST, lw=1.00)
+    _arrow_tag(14.5, [("D:", r"$r_0 > 3.0$")], _F1_RUST)
 
     return save_figure(fig, out_stem, formats=formats, dpi=dpi)
 
@@ -629,7 +717,7 @@ def make_graphical_abstract(
         dx = -0.09 if i_b == 2 else 0.0
         ax1.text(bar.get_x() + bar.get_width() / 2 + dx, v + 0.25, f"{v:.2f}%", ha="center", va="bottom", fontsize=6.3)
     for i_b, (bar, v) in enumerate(zip(b2, new_vals)):
-        dx = 0.11 if i_b == 2 else 0.0
+        dx = 0.06 if i_b == 0 else (0.11 if i_b == 2 else 0.0)
         ax1.text(bar.get_x() + bar.get_width() / 2 + dx, v + 0.25, f"{v:.2f}%", ha="center", va="bottom", fontsize=6.3)
     ax1.set_xticks(x)
     ax1.set_xticklabels(labels, fontsize=6.8)
@@ -988,22 +1076,31 @@ def make_fig03_disba_root_skipping(
     ax.plot(T[is_ho], obs[is_ho], "D", mfc="white", mec="#222222", ms=3.5, mew=0.85, label="Obs. (held-out)", zorder=6)
     ax.plot(
         T, c_m0_old, "-", color=PALETTE["vermillion"], lw=1.4,
-        label=r"Mode 0 at $\Delta c=5\times 10^{-3}$ (Mode 1)",
+        label=r"Mode 0 ($\Delta c=5\times 10^{-3}\!\to\!$Mode 1)",
     )
     ax.plot(
         T, c_m0_new, "--", color=PALETTE["teal"], lw=1.4,
-        label=r"Mode 0 ($\Delta c=2.5\times 10^{-5}$, HO=0.65%)",
+        label=r"Mode 0 ($\Delta c=2.5\times 10^{-5}$, 0.65%)",
     )
     ax.plot(
         T, c_m1_old, ":", color=PALETTE["purple"], lw=1.2,
-        label=r"Mode 1 at $\Delta c=5\times 10^{-3}$ (Mode 2)",
+        label=r"Mode 1 ($\Delta c=5\times 10^{-3}\!\to\!$Mode 2)",
     )
     ax.set_ylim(0.74, 2.55)
     ax.set_xlabel("Period (s)", fontsize=7.6)
     ax.set_ylabel("Rayleigh Phase Velocity (km/s)", fontsize=7.6)
     ax.tick_params(labelsize=7.0)
     ax.set_title(f"(b) Root-Skipping Example (#{ex0['sample_idx']}, {ex0['structure_type']})", fontsize=8.0, fontweight="bold")
-    ax.legend(loc="center right", bbox_to_anchor=(0.99, 0.42), fontsize=6.1, handlelength=1.3, framealpha=0.95)
+    ax.legend(
+        loc="lower right",
+        bbox_to_anchor=(0.99, 0.145),
+        fontsize=5.6,
+        handlelength=1.25,
+        handletextpad=0.40,
+        labelspacing=0.26,
+        borderpad=0.32,
+        framealpha=0.95,
+    )
 
     # Panel (c): Per-Regime Convergence & Single-Forward Timing (unoccluded full deep curve)
     ax = axes[1, 0]
@@ -1261,27 +1358,14 @@ def make_fig05_cross_backbone_signatures(
         _plot_curve(dsp_bins, "holdout_es", PALETTE["purple"], ":", "v", "DispFormer: Holdout ES")
 
         if dk == "deep_lithospheric":
-            # Explicitly highlight Retrained-Only cross-backbone consistency in [0, 1)
+            # Highlight Retrained-Only cross-backbone consistency in [0, 1) cleanly via diamonds (values in legend/caption/Table S2)
             osw_ret = d_blk["by_backbone"]["openswi"]["retrained_only"]["pooled_signature_bins"]["bins"][0]
             dsp_ret = d_blk["by_backbone"]["dispformer"]["retrained_only"]["pooled_signature_bins"]["bins"][0]
             osw_ret_v = osw_ret["methods"]["output_refined_50"]["median_rel_change_pct"]
             dsp_ret_v = dsp_ret["methods"]["output_refined_50"]["median_rel_change_pct"]
-            dsp_all_v = dsp_bins[0]["methods"]["output_refined_50"]["median_rel_change_pct"]
             ax_top.scatter([0.08], [osw_ret_v], marker="D", s=34, color=PALETTE["vermillion"], edgecolors="#111111", lw=0.7, zorder=7)
             ax_top.scatter([-0.08], [dsp_ret_v], marker="D", s=34, color=PALETTE["blue"], edgecolors="#111111", lw=0.7, zorder=7)
-            ax_top.annotate(
-                f"Retrained-only [0, 1):\nOpenSWI {osw_ret_v:+.2f}%\nDispFormer {dsp_ret_v:+.2f}%\n(All DF: {dsp_all_v:+.2f}%)",
-                xy=(0.0, dsp_ret_v),
-                xytext=(0.06, 0.96),
-                textcoords="axes fraction",
-                ha="left",
-                va="top",
-                fontsize=6.4,
-                bbox=dict(boxstyle="round,pad=0.18", facecolor="#FFF8E1", edgecolor=PALETTE["orange"], lw=0.8),
-                arrowprops=dict(arrowstyle="->", color=PALETTE["blue"], lw=0.85),
-                zorder=8,
-            )
-            ax_top.set_ylim(-42.0, 166.0)
+            ax_top.set_ylim(-42.0, 160.0)
         elif dk == "shallow_prior_shift":
             ax_top.set_ylim(-92.0, 125.0)
         else:
@@ -1586,7 +1670,6 @@ def make_fig07_safe_tta_failure_attribution(
     aligned_med = [dh["per_ckpt"][ck]["thresholds"]["gt_5sigma"]["aligned_misfit"]["median"] * 100.0 for ck, _ in ck_order]
     gt_med = [dh["per_ckpt"][ck]["thresholds"]["gt_5sigma"]["gt_profile_misfit_subset"]["median"] * 100.0 for ck, _ in ck_order]
     gt_all_med = dh["gt_profile_all_5000"]["combined_misfit"]["median"] * 100.0
-    deep_share = [dh["per_ckpt"][ck]["thresholds"]["gt_5sigma"]["by_alpha"]["1.25"]["depth_error_increment_split"]["share_of_increment_gt_10km_pct"] for ck, _ in ck_order]
 
     w = 0.36
     ax.bar(cx - w / 2, aligned_med, w, color=PALETTE["vermillion"], alpha=0.88, label="Aligned ZS Misfit (%)")
@@ -1596,20 +1679,9 @@ def make_fig07_safe_tta_failure_attribution(
     ax.set_xticklabels([lbl for _, lbl in ck_order], rotation=28, ha="right", fontsize=6.5, rotation_mode="anchor")
     ax.tick_params(axis="y", labelsize=7.0)
     ax.set_ylabel("Kept Misfit Median (%)", fontsize=7.6)
-    ax.set_ylim(0, max(aligned_med) * 1.68)
+    ax.set_ylim(0, max(aligned_med) * 1.38)
     ax.set_title(r"(d) Deep $>5\hat{\sigma}_D$: Initial vs. GT Misfit", fontsize=8.0, fontweight="bold")
-    ax.legend(loc="upper right", fontsize=6.0, framealpha=0.95)
-
-    ax.text(
-        0.02,
-        0.96,
-        f">10 km ΔSSE share:\n{min(deep_share):.0f}%–{max(deep_share):.0f}%\n(≤10 km improves)",
-        transform=ax.transAxes,
-        ha="left",
-        va="top",
-        fontsize=6.0,
-        bbox=dict(boxstyle="round,pad=0.16", facecolor=PALETTE["info_tint"], edgecolor=PALETTE["blue"], lw=0.7),
-    )
+    ax.legend(loc="upper right", fontsize=6.2, framealpha=0.95)
 
     return save_figure(fig, out_stem, formats=formats, dpi=dpi)
 

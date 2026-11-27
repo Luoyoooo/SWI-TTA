@@ -9,6 +9,7 @@ from typing import Dict, Iterable, List, Optional, Tuple
 import matplotlib
 
 matplotlib.use("Agg")
+import matplotlib.font_manager as fm
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 
@@ -63,50 +64,72 @@ def mm_to_in(mm: float) -> float:
     return float(mm) / MM_PER_INCH
 
 
+def _resolve_journal_math_font() -> Optional[str]:
+    """Select an installed Arial-compatible sans-serif family for mathtext."""
+    available = {f.name for f in fm.fontManager.ttflist}
+    for family in ("Arial", "Helvetica", "Liberation Sans"):
+        if family in available:
+            return family
+    return None
+
+
 def apply_cg_style() -> None:
     """Apply Elsevier / Computers & Geosciences publication matplotlib defaults."""
-    plt.rcParams.update(
-        {
-            "font.family": "sans-serif",
-            "font.sans-serif": ["DejaVu Sans", "Arial", "Helvetica"],
-            "mathtext.fontset": "dejavusans",
-            "font.size": 8.5,
-            "axes.titlesize": 9.0,
-            "axes.titleweight": "bold",
-            "axes.labelsize": 8.5,
-            "axes.labelcolor": "#1A1A1A",
-            "xtick.labelsize": 7.8,
-            "ytick.labelsize": 7.8,
-            "legend.fontsize": 7.4,
-            "legend.title_fontsize": 7.6,
-            "legend.frameon": True,
-            "legend.framealpha": 0.92,
-            "legend.edgecolor": "#CCCCCC",
-            "axes.linewidth": 0.75,
-            "axes.edgecolor": "#333333",
-            "axes.spines.top": False,
-            "axes.spines.right": False,
-            "axes.grid": True,
-            "grid.color": "#D9D9D9",
-            "grid.linestyle": ":",
-            "grid.linewidth": 0.55,
-            "grid.alpha": 0.8,
-            "xtick.major.width": 0.7,
-            "ytick.major.width": 0.7,
-            "xtick.major.size": 3.0,
-            "ytick.major.size": 3.0,
-            "lines.linewidth": 1.35,
-            "lines.markersize": 4.2,
-            "savefig.bbox": "tight",
-            "savefig.pad_inches": 0.04,
-            "savefig.facecolor": "white",
-            "figure.facecolor": "white",
-            "pdf.fonttype": 42,
-            "ps.fonttype": 42,
-            "svg.fonttype": "none",
-            "svg.hashsalt": "swi-tta-diagnostics-cg",
-        }
-    )
+    math_fam = _resolve_journal_math_font()
+    rc_updates = {
+        "font.family": "sans-serif",
+        "font.sans-serif": ["Arial", "Helvetica", "Liberation Sans", "DejaVu Sans"],
+        "font.size": 8.5,
+        "axes.titlesize": 9.0,
+        "axes.titleweight": "bold",
+        "axes.labelsize": 8.5,
+        "axes.labelcolor": "#1A1A1A",
+        "xtick.labelsize": 7.8,
+        "ytick.labelsize": 7.8,
+        "legend.fontsize": 7.4,
+        "legend.title_fontsize": 7.6,
+        "legend.frameon": True,
+        "legend.framealpha": 0.92,
+        "legend.edgecolor": "#CCCCCC",
+        "axes.linewidth": 0.75,
+        "axes.edgecolor": "#333333",
+        "axes.spines.top": False,
+        "axes.spines.right": False,
+        "axes.grid": True,
+        "grid.color": "#D9D9D9",
+        "grid.linestyle": ":",
+        "grid.linewidth": 0.55,
+        "grid.alpha": 0.8,
+        "xtick.major.width": 0.7,
+        "ytick.major.width": 0.7,
+        "xtick.major.size": 3.0,
+        "ytick.major.size": 3.0,
+        "lines.linewidth": 1.35,
+        "lines.markersize": 4.2,
+        "savefig.bbox": "tight",
+        "savefig.pad_inches": 0.04,
+        "savefig.facecolor": "white",
+        "figure.facecolor": "white",
+        "pdf.fonttype": 42,
+        "ps.fonttype": 42,
+        "svg.fonttype": "none",
+        "svg.hashsalt": "swi-tta-diagnostics-cg",
+    }
+    if math_fam is not None:
+        rc_updates.update(
+            {
+                "mathtext.fontset": "custom",
+                "mathtext.rm": math_fam,
+                "mathtext.it": f"{math_fam}:italic",
+                "mathtext.bf": f"{math_fam}:bold",
+                "mathtext.sf": math_fam,
+                "mathtext.cal": f"{math_fam}:italic",
+                "mathtext.tt": "DejaVu Sans Mono",
+            }
+        )
+    else:
+        rc_updates["mathtext.fontset"] = "dejavusans"
+    plt.rcParams.update(rc_updates)
 
 
 def add_panel_label(

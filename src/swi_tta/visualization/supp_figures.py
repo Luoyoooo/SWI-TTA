@@ -14,6 +14,7 @@ import matplotlib.gridspec as gridspec
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
 import numpy as np
+from matplotlib.lines import Line2D
 
 from swi_tta.visualization.style import (
     DOUBLE_COL_IN,
@@ -569,18 +570,24 @@ def make_figS05_field_spatial_misfit_and_data(
     ax.set_ylabel("HO Misfit Median (%)", fontsize=7.0)
     ax.tick_params(labelsize=6.4)
     ax.set_title("(f) Classical Inv. Conv.", fontsize=7.8, fontweight="bold")
-    ax.legend(loc="upper right", fontsize=6.1)
-    ax.text(
-        0.96,
-        0.54,
-        "× Initial budget\n★ 500-sta final",
-        transform=ax.transAxes,
-        ha="right",
-        va="center",
-        fontsize=6.0,
-        color="#333333",
-        bbox=dict(boxstyle="round,pad=0.16", facecolor="white", edgecolor="#CCCCCC", alpha=0.9),
+    handles, _ = ax.get_legend_handles_labels()
+    handles.extend(
+        [
+            Line2D([0], [0], marker="x", color="none", markeredgecolor="#333333", markersize=4.8, label="Initial budget"),
+            Line2D(
+                [0],
+                [0],
+                marker="*",
+                color="none",
+                markerfacecolor="#777777",
+                markeredgecolor="#111111",
+                markeredgewidth=0.5,
+                markersize=6.2,
+                label="500-sta final",
+            ),
+        ]
     )
+    ax.legend(handles=handles, loc="upper right", fontsize=5.8, handlelength=1.35, labelspacing=0.28, framealpha=0.95)
 
     return save_figure(fig, out_stem, formats=formats, dpi=dpi)
 

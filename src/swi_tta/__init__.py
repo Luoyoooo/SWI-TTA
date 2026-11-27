@@ -1,4 +1,4 @@
-"""swi_tta: Diagnostic benchmark and physics-referee toolkit for surface-wave dispersion TTA."""
+"""swi_tta: Diagnostic benchmark, forward-solver auditing, and operational TTA toolkit for surface-wave dispersion inversion."""
 
 from __future__ import annotations
 

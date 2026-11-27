@@ -51,12 +51,18 @@ def test_table_generation_and_erratum_values(tmp_path: Path) -> None:
         "table4_safe_tta_validation_audit",
         "tableS1_noise_floor_calibration",
         "tableS2_signature_bins",
+        "tableS3_protocol_and_retrained_audit",
     }
     assert set(records.keys()) == expected_tables
+    t2_md = (tmp_path / "table2_referee_convergence_and_tails.md").read_text(encoding="utf-8")
+    assert "21,469" in t2_md and "10,626" in t2_md
     s1_md = (tmp_path / "tableS1_noise_floor_calibration.md").read_text(encoding="utf-8")
     assert "0.02417" in s1_md and "1.82×" in s1_md
     s2_md = (tmp_path / "tableS2_signature_bins.md").read_text(encoding="utf-8")
     assert "+15.24%" in s2_md and "+13.25%" in s2_md
+    s3_md = (tmp_path / "tableS3_protocol_and_retrained_audit.md").read_text(encoding="utf-8")
+    assert "LongBeach Report" in s3_md and "CSRM Report" in s3_md
+    assert "ΔRMSE (w/o RB)" in s3_md and "ΔRMSE (w/ RB)" in s3_md
 
 
 def test_generated_figures_manifest_and_graphical_abstract_dimensions() -> None:

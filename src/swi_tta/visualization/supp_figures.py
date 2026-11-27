@@ -46,13 +46,13 @@ def make_figS01_iteration_curves_and_lag(
     bo = _load_json(summary_dir, "benchmark_overview.json")
 
     ds_specs = [
-        ("longbeach_matched_shallow", "LongBeach-Matched Shallow"),
-        ("shallow_benchmark", "Shallow Benchmark"),
-        ("deep_benchmark", "Deep Benchmark"),
+        ("longbeach_matched_shallow", "(a) LB-Matched Shallow"),
+        ("shallow_benchmark", "(b) Shallow Benchmark"),
+        ("deep_benchmark", "(c) Deep Benchmark"),
     ]
 
-    fig, axes = plt.subplots(2, 3, figsize=(DOUBLE_COL_IN, mm_to_in(116.0)))
-    plt.subplots_adjust(wspace=0.38, hspace=0.40, left=0.075, right=0.935, top=0.93, bottom=0.10)
+    fig, axes = plt.subplots(2, 3, figsize=(DOUBLE_COL_IN, mm_to_in(136.0)))
+    plt.subplots_adjust(wspace=0.40, hspace=0.50, left=0.09, right=0.925, top=0.93, bottom=0.19)
 
     # Top row: Median iteration trajectories (RMSE left axis, HO misfit right axis)
     for col, (dk, title) in enumerate(ds_specs):
@@ -69,10 +69,10 @@ def make_figS01_iteration_curves_and_lag(
         rmse_adp = np.asarray(c_adp["vs_rmse_res"], dtype=float)
         ho_adp = np.asarray(c_adp["ho_misfit"], dtype=float) * 100.0
 
-        l1, = ax.plot(steps, rmse_out, "-o", color=PALETTE["vermillion"], ms=3.0, lw=1.35, label="Output-Ref.: $V_s$ RMSE")
-        l2, = ax.plot(steps, rmse_adp, "--s", color=PALETTE["teal"], ms=2.8, lw=1.2, label="Low-DOF Adp.: $V_s$ RMSE")
-        l3, = ax_r.plot(steps, ho_out, "-.^", color=PALETTE["blue"], ms=2.8, lw=1.2, label="Output-Ref.: HO misfit (%)")
-        l4, = ax_r.plot(steps, ho_adp, ":d", color=PALETTE["sky"], ms=2.6, lw=1.1, label="Low-DOF Adp.: HO misfit (%)")
+        l1, = ax.plot(steps, rmse_out, "-o", color=PALETTE["vermillion"], ms=3.0, lw=1.35, label="Out.-Space Ref.: RMSE")
+        l2, = ax.plot(steps, rmse_adp, "--s", color=PALETTE["teal"], ms=2.8, lw=1.2, label="Low-DOF Adp.: RMSE")
+        l3, = ax_r.plot(steps, ho_out, "-.^", color=PALETTE["blue"], ms=2.8, lw=1.2, label="Out.-Space Ref.: HO (%)")
+        l4, = ax_r.plot(steps, ho_adp, ":d", color=PALETTE["sky"], ms=2.6, lw=1.1, label="Low-DOF Adp.: HO (%)")
 
         b_rmse = int(c_out["best_step_vs_rmse_res"])
         b_ho = int(c_out["best_step_ho_misfit"])
@@ -80,85 +80,85 @@ def make_figS01_iteration_curves_and_lag(
         ax.axvline(b_rmse, color=PALETTE["vermillion"], lw=0.85, ls=":")
         ax.axvline(b_ho, color=PALETTE["blue"], lw=0.85, ls=":")
         if col == 2:
-            # Give clean headroom above the rising Deep Benchmark RMSE curve (steps 35-50)
             y_lo_c, y_hi_c = ax.get_ylim()
-            ax.set_ylim(y_lo_c, y_hi_c + 0.34 * (y_hi_c - y_lo_c))
+            ax.set_ylim(y_lo_c, y_hi_c + 0.40 * (y_hi_c - y_lo_c))
         ax.text(
             0.97,
             0.96,
-            f"Output-Ref.:\nBest RMSE: step {b_rmse}\nBest HO: step {b_ho}\nLag: {lag:+d} steps",
+            f"Out.-Space Ref.:\nBest RMSE: {b_rmse}\nBest HO: {b_ho}\nLag: {lag:+d} steps",
             transform=ax.transAxes,
             ha="right",
             va="top",
-            fontsize=5.3,
+            fontsize=6.3,
             bbox=dict(boxstyle="round,pad=0.18", facecolor="white", edgecolor="#CCCCCC", alpha=0.92),
         )
 
-        ax.set_title(title, fontsize=7.9, fontweight="bold")
-        ax.set_xlabel("Adaptation Step", fontsize=7.0)
+        ax.set_title(title, fontsize=8.0, fontweight="bold")
+        ax.set_xlabel("Adaptation Step", fontsize=7.6)
         if col == 0:
-            ax.set_ylabel("Median $V_s$ RMSE (km/s)", fontsize=7.0, color=PALETTE["vermillion"])
+            ax.set_ylabel("Median $V_s$ RMSE (km/s)", fontsize=7.6, color=PALETTE["vermillion"])
         if col == 2:
-            ax_r.set_ylabel("Median HO Misfit (%)", fontsize=7.0, color=PALETTE["blue"])
-        ax.tick_params(axis="y", labelcolor=PALETTE["vermillion"], labelsize=6.3)
-        ax_r.tick_params(axis="y", labelcolor=PALETTE["blue"], labelsize=6.3)
-        add_panel_label(ax, f"({chr(97 + col)})", x=-0.16, y=1.05)
+            ax_r.set_ylabel("Median HO Misfit (%)", fontsize=7.6, color=PALETTE["blue"])
+        ax.tick_params(axis="x", labelsize=6.8)
+        ax.tick_params(axis="y", labelcolor=PALETTE["vermillion"], labelsize=6.8)
+        ax_r.tick_params(axis="y", labelcolor=PALETTE["blue"], labelsize=6.8)
 
         if col == 0:
             ax.legend(
                 [l1, l2, l3, l4],
                 [l.get_label() for l in (l1, l2, l3, l4)],
                 loc="center right",
-                bbox_to_anchor=(0.98, 0.56),
-                fontsize=5.1,
+                bbox_to_anchor=(0.98, 0.50),
+                fontsize=6.0,
                 framealpha=0.92,
+                handlelength=1.2,
             )
 
-    # Bottom row: Spearman rho (all vs tail-excluded at converged dc) across key methods
+    # Bottom row: Spearman rho (all vs tail-excluded at converged dc) — single-line rotated ticks
     key_methods = [
-        ("zero_shot_aligned", "ZS\nAligned"),
-        ("low_dof_adapter", "Low-DOF\nAdp."),
-        ("output_refined_raw", "Out-Ref.\n(Raw)"),
-        ("output_refined_aligned", "Out-Ref.\n(50-step)"),
-        ("adapter_output_refined_aligned", "Adp.+\nOut-Ref."),
+        ("zero_shot_aligned", "Aligned ZS"),
+        ("low_dof_adapter", "Low-DOF"),
+        ("output_refined_raw", "Out.-Ref. (Raw)"),
+        ("output_refined_aligned", "Out.-Space Ref."),
+        ("adapter_output_refined_aligned", "Adp.+Out.-Ref."),
     ]
-    for col, (dk, title) in enumerate(ds_specs):
+    for col, (dk, _) in enumerate(ds_specs):
         ax = axes[1, col]
         sp_d = bo["spearman_ho_vs_rmse"][dk]
         x = np.arange(len(key_methods))
-        w = 0.34
+        w = 0.36
         rho_all = [sp_d[mk]["converged_dc_all_rho"] for mk, _ in key_methods]
         rho_nt = [sp_d[mk]["converged_dc_no_tail_rho"] for mk, _ in key_methods]
 
-        b1 = ax.bar(x - w / 2, rho_all, w, color=PALETTE["blue"], label="All samples (conv. dc)")
-        b2 = ax.bar(x + w / 2, rho_nt, w, color=PALETTE["orange"], label="Tail-excluded (≤20%)")
+        b1 = ax.bar(x - w / 2, rho_all, w, color=PALETTE["blue"], label=r"All (conv. $\Delta c$)")
+        b2 = ax.bar(x + w / 2, rho_nt, w, color=PALETTE["orange"], label="Tail-excl. (≤20%)")
         for bar, v in zip(b1, rho_all):
-            ax.text(bar.get_x() + bar.get_width() - 0.03, v + 0.02, f"{v:.2f}", ha="right", va="bottom", fontsize=4.3)
+            ax.text(bar.get_x() + bar.get_width() / 2, v + 0.02, f"{v:.2f}", ha="center", va="bottom", fontsize=6.0, rotation=90)
         for bar, v in zip(b2, rho_nt):
-            ax.text(bar.get_x() + 0.03, v + 0.02, f"{v:.2f}", ha="left", va="bottom", fontsize=4.3)
+            ax.text(bar.get_x() + bar.get_width() / 2, v + 0.02, f"{v:.2f}", ha="center", va="bottom", fontsize=6.0, rotation=90)
 
         # Annotate below-GT-floor fraction for Output-Refined (50-step)
         nf_out = bo["noise_floor_overfit"][dk]["methods"]["output_refined_aligned"]
         ax.text(
             0.03,
-            0.96,
-            f"50-step < GT floor: {nf_out['below_own_gt_floor_fraction']*100:.1f}%\n"
-            f"ΔRMSE (<floor): {nf_out['below_own_gt_floor_rel_rmse_change_pct']:+.1f}%",
+            0.97,
+            f"<GT floor: {nf_out['below_own_gt_floor_fraction']*100:.1f}%\n"
+            f"ΔRMSE: {nf_out['below_own_gt_floor_rel_rmse_change_pct']:+.1f}%",
             transform=ax.transAxes,
             ha="left",
             va="top",
-            fontsize=5.3,
-            bbox=dict(boxstyle="round,pad=0.2", facecolor=PALETTE["warn_tint"], edgecolor=PALETTE["vermillion"], lw=0.6),
+            fontsize=6.3,
+            bbox=dict(boxstyle="round,pad=0.18", facecolor=PALETTE["warn_tint"], edgecolor=PALETTE["vermillion"], lw=0.6),
         )
 
         ax.set_xticks(x)
-        ax.set_xticklabels([lbl for _, lbl in key_methods], fontsize=5.6)
-        ax.set_ylim(0.0, 1.08)
-        ax.set_title("HO–RMSE Correlation", fontsize=7.6)
+        ax.set_xticklabels([lbl for _, lbl in key_methods], fontsize=6.4, rotation=36, ha="right", rotation_mode="anchor")
+        ax.tick_params(axis="y", labelsize=6.8)
+        ax.set_ylim(0.0, 1.24)
+        ax.set_title(f"({chr(100 + col)}) HO–RMSE Correlation", fontsize=8.0, fontweight="bold")
         if col == 0:
-            ax.set_ylabel("Spearman ρ (HO Misfit vs $V_s$ RMSE)", fontsize=6.9)
-            ax.legend(loc="upper right", bbox_to_anchor=(0.99, 0.77), fontsize=5.2)
-        add_panel_label(ax, f"({chr(100 + col)})", x=-0.16, y=1.05)
+            ax.set_ylabel("Spearman ρ (HO vs $V_s$ RMSE)", fontsize=7.4)
+            ax.legend(loc="upper right", bbox_to_anchor=(0.99, 0.72), fontsize=6.1)
 
     return save_figure(fig, out_stem, formats=formats, dpi=dpi)
 
@@ -181,8 +181,8 @@ def make_figS02_lvz_counterfactual_examples(
     examples = rs["typical_lvz_examples"][:6]
 
     # 3 rows x 4 columns: left pair = Output-Space Refinement (0..2), right pair = Gated Adapter + Output-Refined (3..5)
-    fig, axes = plt.subplots(3, 4, figsize=(DOUBLE_COL_IN, mm_to_in(166.0)))
-    plt.subplots_adjust(wspace=0.34, hspace=0.40, left=0.07, right=0.985, top=0.835, bottom=0.065)
+    fig, axes = plt.subplots(3, 4, figsize=(DOUBLE_COL_IN, mm_to_in(182.0)))
+    plt.subplots_adjust(wspace=0.40, hspace=0.52, left=0.085, right=0.985, top=0.825, bottom=0.065)
 
     for idx, ex in enumerate(examples):
         row = idx % 3
@@ -204,50 +204,57 @@ def make_figS02_lvz_counterfactual_examples(
             transform=ax_v.transAxes,
             ha="right",
             va="bottom",
-            fontsize=5.2,
-            bbox=dict(boxstyle="round,pad=0.15", facecolor="white", edgecolor="#CCCCCC", alpha=0.9),
+            fontsize=6.2,
+            bbox=dict(boxstyle="round,pad=0.14", facecolor="white", edgecolor="#CCCCCC", alpha=0.9),
         )
         ax_v.set_ylim(depth_km[-1], 0.0)
-        ax_v.set_title(f"#{ex['sample_idx']} ({ex['structure_type']})", fontsize=7.0, fontweight="bold")
+        ax_v.set_title(f"#{ex['sample_idx']} ({ex['structure_type']})", fontsize=7.4, fontweight="bold")
         if col_base == 0:
-            ax_v.set_ylabel("Depth (km)", fontsize=6.6)
+            ax_v.set_ylabel("Depth (km)", fontsize=7.2)
         if row == 2:
-            ax_v.set_xlabel("$V_s$ (km/s)", fontsize=6.6)
-        ax_v.tick_params(labelsize=5.8)
+            ax_v.set_xlabel("$V_s$ (km/s)", fontsize=7.2)
+        ax_v.tick_params(labelsize=6.5)
 
-        # Dispersion curves
+        # Dispersion curves — M8 fix: plot true converged dc=2.5e-5 and separate step-refinement vs LVZ-raised HO
         T = np.asarray(ex["periods_s"], dtype=float)
         obs = np.asarray(ex["phase_obs_km_s"], dtype=float)
         is_ho = np.asarray(ex["is_heldout"], dtype=bool)
         c = ex["curves"]
         m0_old = np.asarray([np.nan if v is None else float(v) for v in c["orig_mode0_dc005"]], dtype=float)
-        m0_new = np.asarray([np.nan if v is None else float(v) for v in c["orig_mode0_dc0002"]], dtype=float)
+        has_2p5 = "orig_mode0_dc2p5e5" in c
+        m0_conv = np.asarray([np.nan if v is None else float(v) for v in (c["orig_mode0_dc2p5e5"] if has_2p5 else c["orig_mode0_dc0002"])], dtype=float)
         m1_old = np.asarray([np.nan if v is None else float(v) for v in c["orig_mode1_dc005"]], dtype=float)
         m0_int = np.asarray([np.nan if v is None else float(v) for v in c["lvz_raised_mode0_dc005"]], dtype=float)
 
+        ho_old_pct = float(c["orig_ho_misfit_dc005"]) * 100.0
+        ho_conv_pct = float(c.get("orig_ho_misfit_dc2p5e5", c.get("orig_ho_misfit_dc0002", np.nan))) * 100.0
+        ho_lvz_pct = float(c["lvz_raised_ho_misfit_dc005"]) * 100.0
+        conv_lbl = r"Mode 0 ($\Delta c=2.5\times 10^{-5}$)" if has_2p5 else r"Mode 0 ($\Delta c=2\times 10^{-4}$)"
+
         ax_c.plot(T[~is_ho], obs[~is_ho], "o", color="#222222", ms=2.1, label="Obs. (kept)")
         ax_c.plot(T[is_ho], obs[is_ho], "D", mfc="white", mec="#222222", ms=2.6, mew=0.7, label="Obs. (HO)")
-        ax_c.plot(T, m0_old, "-", color=PALETTE["vermillion"], lw=1.2, label="Mode 0 (dc=5e-3)")
-        ax_c.plot(T, m0_new, "--", color=PALETTE["teal"], lw=1.2, label="Mode 0 (dc=2e-4)")
-        ax_c.plot(T, m0_int, ":", color=PALETTE["blue"], lw=1.0, label="LVZ-Raised (5e-3)")
-        ax_c.plot(T, m1_old, "-.", color=PALETTE["purple"], lw=0.85, alpha=0.8, label="Mode 1 (5e-3)")
+        ax_c.plot(T, m0_old, "-", color=PALETTE["vermillion"], lw=1.2, label=r"Mode 0 ($\Delta c=5\times 10^{-3}$)")
+        ax_c.plot(T, m0_conv, "--", color=PALETTE["teal"], lw=1.2, label=conv_lbl)
+        ax_c.plot(T, m0_int, ":", color=PALETTE["blue"], lw=1.0, label=r"LVZ-Raised ($\Delta c=5\times 10^{-3}$)")
+        ax_c.plot(T, m1_old, "-.", color=PALETTE["purple"], lw=0.85, alpha=0.8, label=r"Mode 1 ($\Delta c=5\times 10^{-3}$)")
         ax_c.set_title(
-            f"HO: {c['orig_ho_misfit_dc005']*100:.1f}% → {c['lvz_raised_ho_misfit_dc005']*100:.1f}%",
-            fontsize=6.8,
+            f"Step $\\Delta c$: {ho_old_pct:.1f}%→{ho_conv_pct:.2f}%\nLVZ-raised: →{ho_lvz_pct:.1f}%",
+            fontsize=6.5,
+            pad=3,
         )
         if row == 2:
-            ax_c.set_xlabel("Period (s)", fontsize=6.6)
-        ax_c.set_ylabel("Phase $c$ (km/s)", fontsize=6.2)
-        ax_c.tick_params(labelsize=5.8)
+            ax_c.set_xlabel("Period (s)", fontsize=7.2)
+        ax_c.set_ylabel("Phase $c$ (km/s)", fontsize=7.0)
+        ax_c.tick_params(labelsize=6.5)
 
     # Column group titles & legends clearly above row 0
-    fig.text(0.28, 0.985, "Output-Space Refinement (3 Tail Cases)", ha="center", va="top", fontsize=7.8, fontweight="bold", color=PALETTE["vermillion"])
-    fig.text(0.76, 0.985, "Gated Adapter + Output-Refined (3 Tail Cases)", ha="center", va="top", fontsize=7.8, fontweight="bold", color=PALETTE["blue"])
+    fig.text(0.28, 0.985, "Output-Space Refinement (3 Tail Cases)", ha="center", va="top", fontsize=8.2, fontweight="bold", color=PALETTE["vermillion"])
+    fig.text(0.76, 0.985, "Gated Adapter + Output-Refined (3 Tail Cases)", ha="center", va="top", fontsize=8.2, fontweight="bold", color=PALETTE["blue"])
 
     h_v, l_v = axes[0, 0].get_legend_handles_labels()
     h_c, l_c = axes[0, 1].get_legend_handles_labels()
-    fig.legend(h_v, l_v, loc="upper left", bbox_to_anchor=(0.055, 0.955), ncol=4, fontsize=5.5, columnspacing=0.75)
-    fig.legend(h_c, l_c, loc="upper right", bbox_to_anchor=(0.99, 0.955), ncol=3, fontsize=5.3, columnspacing=0.65)
+    fig.legend(h_v, l_v, loc="upper left", bbox_to_anchor=(0.04, 0.955), ncol=2, fontsize=6.3, columnspacing=0.65)
+    fig.legend(h_c, l_c, loc="upper right", bbox_to_anchor=(0.99, 0.955), ncol=2, fontsize=6.2, columnspacing=0.60)
 
     return save_figure(fig, out_stem, formats=formats, dpi=dpi)
 
@@ -273,13 +280,13 @@ def make_figS03_old_vs_new_dc_scatter(
         ("deep_benchmark", "Deep Benchmark (dc: 5e-3 unchanged)"),
     ]
     methods = [
-        ("zero_shot_aligned", "Zero-Shot (Aligned)"),
-        ("output_refined_aligned", "Output-Refined (50-step)"),
-        ("adapter_output_refined_aligned", "Gated Adapter + Output-Ref."),
+        ("zero_shot_aligned", "Aligned Zero-Shot"),
+        ("output_refined_aligned", "Out.-Space Ref. (50)"),
+        ("adapter_output_refined_aligned", "Gated Adp. + Out.-Ref."),
     ]
 
-    fig, axes = plt.subplots(2, 3, figsize=(DOUBLE_COL_IN, mm_to_in(112.0)))
-    plt.subplots_adjust(wspace=0.26, hspace=0.38, left=0.085, right=0.985, top=0.865, bottom=0.095)
+    fig, axes = plt.subplots(2, 3, figsize=(DOUBLE_COL_IN, mm_to_in(122.0)))
+    plt.subplots_adjust(wspace=0.28, hspace=0.42, left=0.10, right=0.985, top=0.86, bottom=0.10)
 
     for r, (dk, row_lbl) in enumerate(rows):
         for c, (mk, mlbl) in enumerate(methods):
@@ -299,25 +306,26 @@ def make_figS03_old_vs_new_dc_scatter(
             ax.text(
                 0.04,
                 0.95,
-                f"Tail: {st['old_tail_pct']:.2f}% → {st['new_tail_pct']:.2f}%\n↓20%: {st['n_down_cross_20']} | ↑20%: {st['n_up_cross_20']}",
+                f"Tail: {st['old_tail_pct']:.2f}%→{st['new_tail_pct']:.2f}%\n↓20%: {st['n_down_cross_20']} | ↑20%: {st['n_up_cross_20']}",
                 transform=ax.transAxes,
                 ha="left",
                 va="top",
-                fontsize=5.7,
-                bbox=dict(boxstyle="round,pad=0.2", facecolor="white", edgecolor="#CCCCCC", alpha=0.92),
+                fontsize=6.4,
+                bbox=dict(boxstyle="round,pad=0.18", facecolor="white", edgecolor="#CCCCCC", alpha=0.92),
             )
             ax.set_xscale("log")
             ax.set_yscale("log")
             ax.set_xlim(0.15, 180.0)
             ax.set_ylim(0.15, 180.0)
-            ax.set_title(mlbl if r == 0 else f"{mlbl} (Deep)", fontsize=7.6)
+            ax.tick_params(labelsize=6.8)
+            p_lbl = f"({chr(97 + r * 3 + c)}) "
+            ax.set_title(f"{p_lbl}{mlbl}" if r == 0 else f"{p_lbl}{mlbl} (Deep)", fontsize=7.6)
             if r == 1:
-                ax.set_xlabel("Default dc=5e-3 HO Misfit (%)", fontsize=6.9)
+                ax.set_xlabel(r"Default $\Delta c=5\times 10^{-3}$ HO (%)", fontsize=7.4)
             if c == 0:
-                ax.set_ylabel(f"{'Shallow' if r == 0 else 'Deep'}\nConverged dc HO Misfit (%)", fontsize=6.9)
-            add_panel_label(ax, f"({chr(97 + r * 3 + c)})", x=-0.16, y=1.04)
+                ax.set_ylabel(f"{'Shallow' if r == 0 else 'Deep'}\n" + r"Converged $\Delta c$ HO (%)", fontsize=7.4)
 
-    fig.text(0.53, 0.98, "Default (dc=5e-3) vs Converged-Step Held-Out Misfit Across Regimes", ha="center", va="top", fontsize=8.3, fontweight="bold")
+    fig.text(0.53, 0.975, r"Default ($\Delta c=5\times 10^{-3}$) vs. Converged-Step Held-Out Misfit Across Regimes", ha="center", va="top", fontsize=8.6, fontweight="bold")
     return save_figure(fig, out_stem, formats=formats, dpi=dpi)
 
 
@@ -338,8 +346,8 @@ def make_figS04_safe_tta_alpha_sensitivity(
     alpha_keys = ["1", "1.25", "1.5", "2"]
     alphas = np.array([1.0, 1.25, 1.5, 2.0])
 
-    fig, axes = plt.subplots(2, 2, figsize=(DOUBLE_COL_IN, mm_to_in(126.0)))
-    plt.subplots_adjust(wspace=0.28, hspace=0.38, left=0.085, right=0.96, top=0.94, bottom=0.09)
+    fig, axes = plt.subplots(2, 2, figsize=(DOUBLE_COL_IN, mm_to_in(138.0)))
+    plt.subplots_adjust(wspace=0.30, hspace=0.40, left=0.095, right=0.95, top=0.94, bottom=0.09)
 
     val_specs = [
         ("longbeach_matched_val", "LongBeach-Matched (Val)", PALETTE["teal"], "o"),
@@ -350,7 +358,7 @@ def make_figS04_safe_tta_alpha_sensitivity(
     # Panel (a): Validation Δ Vs RMSE (%) with 95% cluster-bootstrap CIs
     ax = axes[0, 0]
     ax.axhline(0.0, color="#333333", lw=0.75, ls="--")
-    ax.axhline(2.0, color=PALETTE["vermillion"], lw=0.9, ls=":", label="Pre-registered +2.0% gate")
+    ax.axhline(2.0, color=PALETTE["vermillion"], lw=0.9, ls=":", label="Pre-specified +2.0% threshold")
     for dk, lbl, col, mk in val_specs:
         pts, lo, hi = [], [], []
         for ak in alpha_keys:
@@ -364,9 +372,8 @@ def make_figS04_safe_tta_alpha_sensitivity(
     ax.set_xticks(alphas)
     ax.set_xlabel(r"Discrepancy Threshold Multiplier $\alpha$")
     ax.set_ylabel("Δ Resolvable-Depth $V_s$ RMSE (%)")
-    ax.set_title("Validation Truth Gate Across α", fontsize=8.0)
-    ax.legend(loc="center left", bbox_to_anchor=(0.02, 0.37), fontsize=5.6)
-    add_panel_label(ax, "(a)", x=-0.13, y=1.04)
+    ax.set_title("(a) Validation Criterion Across α", fontsize=8.0, fontweight="bold")
+    ax.legend(loc="center left", bbox_to_anchor=(0.02, 0.37), fontsize=6.4)
 
     # Panel (b): LongBeach Tuning (30%) HO Misfit & Tail Rate vs alpha
     ax = axes[0, 1]
@@ -377,8 +384,8 @@ def make_figS04_safe_tta_alpha_sensitivity(
     ho_m = [lb["by_alpha"][ak]["mean_ho_median_across_ckpts"] * 100.0 for ak in alpha_keys]
     tl_m = [lb["by_alpha"][ak]["mean_tail_rate_gt_20pct_across_ckpts"] * 100.0 for ak in alpha_keys]
     l1, = ax.plot(alphas, ho_m, "-o", color=PALETTE["blue"], lw=1.45, label="Safe-TTA HO Median (%)")
-    l2 = ax.axhline(lb["zero_shot_aligned_ho_median_mean"] * 100.0, color="#333333", ls="--", lw=0.95, label="Zero-Shot (Aligned) HO")
-    l3 = ax.axhline(lb["output_refined_50_ho_median_mean"] * 100.0, color=PALETTE["orange"], ls=":", lw=1.05, label="Output-Refined (50-step) HO")
+    l2 = ax.axhline(lb["zero_shot_aligned_ho_median_mean"] * 100.0, color="#333333", ls="--", lw=0.95, label="Input-Aligned Zero-Shot HO")
+    l3 = ax.axhline(lb["output_refined_50_ho_median_mean"] * 100.0, color=PALETTE["orange"], ls=":", lw=1.05, label="Output-Space Refinement (50-step) HO")
     l4, = ax_r.plot(alphas, tl_m, "--s", color=PALETTE["vermillion"], lw=1.35, label="Tail Rate (>20% HO, %)")
     ax_r.set_ylim(-0.15, 2.0)
     ax.set_xticks(alphas)
@@ -387,9 +394,8 @@ def make_figS04_safe_tta_alpha_sensitivity(
     ax_r.set_ylabel("Tail Rate (>20% HO, %)", color=PALETTE["vermillion"])
     ax.tick_params(axis="y", labelcolor=PALETTE["blue"])
     ax_r.tick_params(axis="y", labelcolor=PALETTE["vermillion"])
-    ax.set_title("LongBeach (Tuning 30%): Fit vs Tail Risk", fontsize=8.0)
-    ax.legend([l1, l2, l3, l4], [h.get_label() for h in (l1, l2, l3, l4)], loc="center right", bbox_to_anchor=(0.98, 0.58), fontsize=5.6)
-    add_panel_label(ax, "(b)", x=-0.13, y=1.04)
+    ax.set_title("(b) LongBeach (30%): Fit vs Tail Risk", fontsize=8.0, fontweight="bold")
+    ax.legend([l1, l2, l3, l4], [h.get_label() for h in (l1, l2, l3, l4)], loc="center right", bbox_to_anchor=(0.98, 0.58), fontsize=6.3)
 
     # Panel (c): Discrepancy Stop Rate (%) vs alpha
     all_specs = val_specs + [("longbeach_tuning", "LongBeach (Tuning 30%)", PALETTE["purple"], "D")]
@@ -401,9 +407,8 @@ def make_figS04_safe_tta_alpha_sensitivity(
     ax.set_xlabel(r"Discrepancy Threshold Multiplier $\alpha$")
     ax.set_ylabel("Discrepancy Stop Rate (%)")
     ax.set_ylim(-3, 105)
-    ax.set_title("Discrepancy Early-Stop Rate", fontsize=8.0)
-    ax.legend(loc="lower right", fontsize=5.6)
-    add_panel_label(ax, "(c)", x=-0.13, y=1.04)
+    ax.set_title("(c) Discrepancy Early-Stop Rate", fontsize=8.0, fontweight="bold")
+    ax.legend(loc="lower right", fontsize=6.4)
 
     # Panel (d): Exact-Verification Revert Rate (%) vs alpha
     ax = axes[1, 1]
@@ -414,9 +419,8 @@ def make_figS04_safe_tta_alpha_sensitivity(
     ax.set_xlabel(r"Discrepancy Threshold Multiplier $\alpha$")
     ax.set_ylabel("Exact-Verification Revert Rate (%)")
     ax.set_ylim(-0.6, 15.5)
-    ax.set_title("Exact-Verification Revert Rate", fontsize=8.0)
-    ax.legend(loc="upper right", fontsize=5.8)
-    add_panel_label(ax, "(d)", x=-0.13, y=1.04)
+    ax.set_title("(d) Exact-Verification Revert Rate", fontsize=8.0, fontweight="bold")
+    ax.legend(loc="upper right", fontsize=6.4)
 
     return save_figure(fig, out_stem, formats=formats, dpi=dpi)
 
@@ -438,8 +442,8 @@ def make_figS05_field_spatial_misfit_and_data(
     z_lb = np.load(os.path.join(summary_dir, "field_slices_longbeach.npz"))
     z_cs = np.load(os.path.join(summary_dir, "field_slices_csrm.npz"))
 
-    fig = plt.figure(figsize=(DOUBLE_COL_IN, mm_to_in(138.0)))
-    gs = gridspec.GridSpec(2, 3, wspace=0.52, hspace=0.42, left=0.08, right=0.975, top=0.935, bottom=0.09)
+    fig = plt.figure(figsize=(DOUBLE_COL_IN, mm_to_in(152.0)))
+    gs = gridspec.GridSpec(2, 3, wspace=0.72, hspace=0.46, left=0.09, right=0.98, top=0.935, bottom=0.095)
 
     # Panel (a): LongBeach spatial ΔHO (Gated Adapter + Output-Refined minus Zero-Shot Aligned)
     ax = fig.add_subplot(gs[0, 0])
@@ -452,13 +456,12 @@ def make_figS05_field_spatial_misfit_and_data(
     ax.set_xticks([-118.20, -118.17, -118.14])
     ax.xaxis.set_major_formatter(mticker.FormatStrFormatter("%.2f"))
     cb = fig.colorbar(sc, ax=ax, fraction=0.048, pad=0.03)
-    cb.ax.tick_params(labelsize=5.4)
-    cb.set_label("ΔHO (pp)", fontsize=5.8)
-    ax.set_xlabel("Lon (°E)", fontsize=6.5)
-    ax.set_ylabel("Lat (°N)", fontsize=6.5)
-    ax.tick_params(labelsize=5.4)
-    ax.set_title("LongBeach: ΔHO (pp)", fontsize=7.5)
-    add_panel_label(ax, "(a)", x=-0.22, y=1.05)
+    cb.ax.tick_params(labelsize=6.2)
+    cb.set_label("ΔHO (pp)", fontsize=6.4, labelpad=1.5)
+    ax.set_xlabel("Lon (°E)", fontsize=7.0)
+    ax.set_ylabel("Lat (°N)", fontsize=7.0)
+    ax.tick_params(labelsize=6.2)
+    ax.set_title("(a) LongBeach: ΔHO (pp)", fontsize=7.8, fontweight="bold")
 
     # Panel (b): CSRM spatial ΔHO
     ax = fig.add_subplot(gs[0, 1])
@@ -468,13 +471,12 @@ def make_figS05_field_spatial_misfit_and_data(
     sc = ax.scatter(xy_cs[ok, 0], xy_cs[ok, 1], c=d_cs[ok], s=1.5, cmap="RdBu_r", vmin=-4.0, vmax=4.0, linewidths=0, rasterized=True)
     ax.grid(False)
     cb = fig.colorbar(sc, ax=ax, fraction=0.048, pad=0.03)
-    cb.ax.tick_params(labelsize=5.4)
-    cb.set_label("ΔHO (pp)", fontsize=5.8)
-    ax.set_xlabel("Lon (°E)", fontsize=6.5)
-    ax.set_ylabel("Lat (°N)", fontsize=6.5)
-    ax.tick_params(labelsize=5.5)
-    ax.set_title("CSRM: ΔHO (pp)", fontsize=7.5)
-    add_panel_label(ax, "(b)", x=-0.22, y=1.05)
+    cb.ax.tick_params(labelsize=6.2)
+    cb.set_label("ΔHO (pp)", fontsize=6.4, labelpad=1.5)
+    ax.set_xlabel("Lon (°E)", fontsize=7.0)
+    ax.set_ylabel("Lat (°N)", fontsize=7.0)
+    ax.tick_params(labelsize=6.2)
+    ax.set_title("(b) CSRM: ΔHO (pp)", fontsize=7.8, fontweight="bold")
 
     # Panel (c): LongBeach typical high-improvement station (#2059)
     ax = fig.add_subplot(gs[0, 2])
@@ -486,20 +488,20 @@ def make_figS05_field_spatial_misfit_and_data(
     ax.plot(T[km], ph[km], "o", color="#222222", ms=2.5, label="Obs. (kept)")
     ax.plot(T[hm], ph[hm], "D", mfc="white", mec="#222222", ms=3.1, mew=0.8, label="Obs. (HO)")
     for mk, lbl, col, ls in (
-        ("zero_shot_aligned", "ZS (Aligned)", PALETTE["black"], "--"),
-        ("low_dof_adapter", "Low-DOF Adp.", PALETTE["teal"], "-."),
+        ("zero_shot_aligned", "Aligned ZS", PALETTE["black"], "--"),
+        ("low_dof_adapter", "Low-DOF", PALETTE["teal"], "-."),
         ("adapter_output_refined_aligned", "Adp.+Out.", PALETTE["blue"], "-"),
     ):
         fp = z_lb[f"station_1__fwd_phase_{mk}"]
         ho_p = float(z_lb[f"station_1__ho_pct_{mk}"][0])
         ok_p = np.isfinite(fp) & (fp > 0)
         ax.plot(T[ok_p], fp[ok_p], ls=ls, color=col, lw=1.25, label=f"{lbl} ({ho_p:.2f}%)")
-    ax.set_xlabel("Period (s)", fontsize=6.5)
-    ax.set_ylabel("Phase Velocity (km/s)", fontsize=6.5)
-    ax.set_ylim(0.42, 1.24)
-    ax.set_title(f"LongBeach Station #{st_id} Fit", fontsize=7.5)
-    ax.legend(loc="upper left", fontsize=5.0, handlelength=1.35)
-    add_panel_label(ax, "(c)", x=-0.22, y=1.05)
+    ax.set_xlabel("Period (s)", fontsize=7.0)
+    ax.set_ylabel("Phase Velocity (km/s)", fontsize=7.0)
+    ax.tick_params(labelsize=6.4)
+    ax.set_ylim(0.42, 1.32)
+    ax.set_title(f"(c) LongBeach #{st_id} Fit", fontsize=7.8, fontweight="bold")
+    ax.legend(loc="upper left", fontsize=6.0, handlelength=1.1)
 
     # Panel (d): LongBeach-Matched Shallow Resampling Boxplots (5 period anchors)
     ax = fig.add_subplot(gs[1, 0])
@@ -526,12 +528,12 @@ def make_figS05_field_spatial_misfit_and_data(
         )
         bp["boxes"][0].set_label(lbl)
     ax.set_xticks(x)
-    ax.set_xticklabels([f"{a:.2f}s" for a in anchors], fontsize=6.1)
-    ax.set_xlabel("Anchor Period (s)", fontsize=6.6)
-    ax.set_ylabel("Phase Velocity (km/s)", fontsize=6.6)
-    ax.set_title("Velocity Distribution Resampling", fontsize=7.5)
-    ax.legend(loc="upper left", fontsize=5.4)
-    add_panel_label(ax, "(d)", x=-0.22, y=1.05)
+    ax.set_xticklabels([f"{a:.2f}" for a in anchors], fontsize=6.4)
+    ax.tick_params(axis="y", labelsize=6.4)
+    ax.set_xlabel("Anchor Period (s)", fontsize=7.0)
+    ax.set_ylabel("Phase Velocity (km/s)", fontsize=7.0)
+    ax.set_title("(d) Velocity Resampling", fontsize=7.8, fontweight="bold")
+    ax.legend(loc="upper left", fontsize=6.0)
 
     # Panel (e): Per-Period KS Drop
     ax = fig.add_subplot(gs[1, 1])
@@ -539,47 +541,46 @@ def make_figS05_field_spatial_misfit_and_data(
     t_c = [b["period_center_s"] for b in ks_bins]
     ks_pre = [b["ks_before_resampling"] for b in ks_bins]
     ks_post = [b["ks_after_resampling"] for b in ks_bins]
-    ax.plot(t_c, ks_pre, "-o", color=PALETTE["vermillion"], ms=3.2, label=f"Before (med={aln['per_period_ks_median_before']:.3f})")
-    ax.plot(t_c, ks_post, "-s", color=PALETTE["teal"], ms=3.2, label=f"After (med={aln['per_period_ks_median_after']:.3f})")
-    ax.axhline(aln["ks_threshold"], color="#444444", lw=0.85, ls="--", label="Target KS ≤ 0.20")
-    ax.set_xlabel("Period Center (s)", fontsize=6.6)
-    ax.set_ylabel("Two-Sample KS Statistic", fontsize=6.6)
-    ax.set_ylim(0, max(ks_pre) * 1.18)
-    ax.set_title("Per-Period KS Alignment Audit", fontsize=7.5)
-    ax.legend(loc="center right", bbox_to_anchor=(0.98, 0.42), fontsize=5.3)
-    add_panel_label(ax, "(e)", x=-0.22, y=1.05)
+    ax.plot(t_c, ks_pre, "-o", color=PALETTE["vermillion"], ms=3.2, label=f"Before ({aln['per_period_ks_median_before']:.3f})")
+    ax.plot(t_c, ks_post, "-s", color=PALETTE["teal"], ms=3.2, label=f"After ({aln['per_period_ks_median_after']:.3f})")
+    ax.axhline(aln["ks_threshold"], color="#444444", lw=0.85, ls="--", label="Target ≤ 0.20")
+    ax.set_xlabel("Period Center (s)", fontsize=7.0)
+    ax.set_ylabel("Two-Sample KS", fontsize=7.0)
+    ax.tick_params(labelsize=6.4)
+    ax.set_ylim(0, max(ks_pre) * 1.20)
+    ax.set_title("(e) Per-Period KS Audit", fontsize=7.8, fontweight="bold")
+    ax.legend(loc="center right", bbox_to_anchor=(0.98, 0.44), fontsize=6.0)
 
     # Panel (f): Classical Inversion Convergence Curves (LongBeach & CSRM)
     ax = fig.add_subplot(gs[1, 2])
     conv = cal["classical_inversion_convergence"]
     for dk, lbl, col, mk in (
-        ("longbeach", "LongBeach (Shallow)", PALETTE["blue"], "o"),
-        ("csrm", "CSRM (Deep)", PALETTE["vermillion"], "s"),
+        ("longbeach", "LongBeach", PALETTE["blue"], "o"),
+        ("csrm", "CSRM", PALETTE["vermillion"], "s"),
     ):
         tiers = conv[dk]["tiers"]
         nfev = [t["nfev_mean"] for t in tiers]
         ho = [t["ho_median"] * 100.0 for t in tiers]
         ax.plot(nfev, ho, f"-{mk}", color=col, lw=1.35, ms=3.5, label=lbl)
-        # Mark unconverged budget & formal 500-sta result
         ax.scatter([conv[dk]["unconverged_nfev_mean"]], [conv[dk]["unconverged_ho_median"] * 100.0], marker="x", s=34, color=col, zorder=6)
         ax.scatter([conv[dk]["selected_budget_nfev_mean"]], [conv[dk]["formal_500sta_ho_median"] * 100.0], marker="*", s=72, color=col, edgecolors="#111111", lw=0.5, zorder=7)
     ax.set_xscale("log")
-    ax.set_xlabel("Mean Forward Evaluations (nfev)")
-    ax.set_ylabel("Held-Out Misfit Median (%)")
-    ax.set_title("Classical Inversion Convergence", fontsize=7.5)
-    ax.legend(loc="upper right", fontsize=5.5)
+    ax.set_xlabel("Mean Forward Calls (nfev)", fontsize=7.0)
+    ax.set_ylabel("HO Misfit Median (%)", fontsize=7.0)
+    ax.tick_params(labelsize=6.4)
+    ax.set_title("(f) Classical Inv. Conv.", fontsize=7.8, fontweight="bold")
+    ax.legend(loc="upper right", fontsize=6.1)
     ax.text(
         0.96,
-        0.58,
-        "× Initial budget\n★ Converged 500-sta",
+        0.54,
+        "× Initial budget\n★ 500-sta final",
         transform=ax.transAxes,
         ha="right",
         va="center",
-        fontsize=5.3,
+        fontsize=6.0,
         color="#333333",
-        bbox=dict(boxstyle="round,pad=0.18", facecolor="white", edgecolor="#CCCCCC", alpha=0.9),
+        bbox=dict(boxstyle="round,pad=0.16", facecolor="white", edgecolor="#CCCCCC", alpha=0.9),
     )
-    add_panel_label(ax, "(f)", x=-0.22, y=1.05)
 
     return save_figure(fig, out_stem, formats=formats, dpi=dpi)
 

@@ -3,14 +3,14 @@ requires = ["setuptools>=68.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "swi-tta-diagnostics"
+name = "swi-tta"
 version = "1.0.0"
-description = "Diagnostic benchmark, physics-referee convergence audit, and publication figure suite for test-time adaptation in surface-wave dispersion inversion."
+description = "SWI-TTA: Noise-floor regime diagnostics, forward-solver convergence auditing, and operational test-time adaptation for deep surface-wave dispersion inversion."
 readme = "README.md"
 license = {text = "MIT"}
-requires-python = ">=3.11"
+requires-python = ">=3.10"
 authors = [
-    {name = "Rui Mao"}
+    {name = "SWI-TTA Authors"}
 ]
 keywords = [
     "geophysics",
@@ -26,6 +26,7 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Topic :: Scientific/Engineering :: Physics",
 ]
@@ -37,13 +38,15 @@ dependencies = [
     "torch>=2.1",
     "matplotlib>=3.8",
     "pyyaml>=6.0",
+    "pillow>=10.0",
     "requests>=2.31",
     "tqdm>=4.66",
 ]
 
 [project.urls]
-Homepage = "https://github.com/Luoyoooo/swi-tta-diagnostics"
-Repository = "https://github.com/Luoyoooo/swi-tta-diagnostics"
+Homepage = "https://luoyoooo.github.io/SWI-TTA/"
+Repository = "https://github.com/Luoyoooo/SWI-TTA"
+Documentation = "https://github.com/Luoyoooo/SWI-TTA/blob/main/docs/USER_GUIDE.md"
 
 [project.optional-dependencies]
 dev = [

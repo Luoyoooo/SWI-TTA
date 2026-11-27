@@ -1,4 +1,4 @@
-"""Publication table generators (Tables 1-4 and S1-S2) in Markdown and booktabs LaTeX.
+"""Publication table generators (Tables 1-4 and S1-S3) in Markdown and booktabs LaTeX.
 
 Every numerical entry is read programmatically from ``results_summary/``.
 """
@@ -8,6 +8,8 @@ from __future__ import annotations
 import json
 import os
 from typing import Any, Dict, List, Sequence, Tuple
+
+import numpy as np
 
 from swi_tta.visualization.style import sha256_file
 
@@ -27,6 +29,7 @@ def _tex_escape(text: str) -> str:
         .replace("σ̂", "$\\hat{\\sigma}$")
         .replace("Δ", "$\\Delta$")
         .replace("α", "$\\alpha$")
+        .replace("λ", "$\\lambda$")
         .replace("ρ", "$\\rho$")
         .replace("≤", "$\\le$")
         .replace("≥", "$\\ge$")
@@ -266,9 +269,12 @@ def make_table2_referee_convergence_and_tails(summary_dir: str, out_dir: str) ->
                 ]
             )
 
+    sh_n = int(rs["gt_noise_floor_default_vs_converged"]["shallow_benchmark"]["n_samples"])
+    dp_n = int(rs["gt_noise_floor_default_vs_converged"]["deep_benchmark"]["n_samples"])
     notes = (
         "Old columns use disba default dc = 5e-3 km/s; New columns use converged per-regime dc "
-        "(2.5e-5 km/s shallow, 5e-3 km/s deep). Ground-Truth counts show stations exceeding 20% held-out misfit out of 5,000 test profiles."
+        f"(2.5e-5 km/s shallow, 5e-3 km/s deep). Ground-Truth counts show stations exceeding 20% held-out misfit "
+        f"out of {sh_n:,} shallow and {dp_n:,} deep test profiles."
     )
     md = _render_markdown_table("Table 2. Exact disba Referee Step-Size Convergence Audit and Tail-Rate Revision", headers, rows, notes)
     tex = _render_latex_table(
@@ -468,8 +474,9 @@ def make_table4_safe_tta_validation_audit(summary_dir: str, out_dir: str) -> Dic
     )
 
     notes = (
-        "Pre-registered validation truth gate requires ΔResolvable-Depth Vs RMSE ≤ +2.0% on all three validation benchmarks simultaneously. "
-        "No α passed (0/4); α = 1.5 came closest to the +2.0% threshold (+2.78% shallow, +2.85% deep), while pre-registered default α = 1.25 is decomposed in detail."
+        "Validation criterion requires ΔResolvable-Depth Vs RMSE ≤ +2.0% on all three validation benchmarks simultaneously. "
+        "No α passed (0/4); α = 1.5 came closest to the +2.0% threshold (+2.78% shallow, +2.85% deep), while default α = 1.25 is decomposed in detail. "
+        "Deep >10 km ΔSqErr share is defined as ΔSSE_{z>10} / ΔSSE_res, which exceeds 100% when layers at z ≤ 10 km improve while layers at z > 10 km (below 10 km depth) degrade."
     )
     md = _render_markdown_table("Table 4. Pre-Registered Safe-TTA Validation Audit, Outcome-Group Decomposition, and Deep >5σ̂_D Attribution", headers, rows, notes)
     tex = _render_latex_table(
@@ -535,6 +542,8 @@ def make_tableS1_noise_floor_calibration(summary_dir: str, out_dir: str) -> Dict
         )
 
     notes = (
+        "Depth grids: Shallow D = 70 layers over 0–2.76 km (Δz = 0.04 km; bounds [0.08, 4.45] km/s; T in [0.20, 10.0] s, field 0.26–1.67 s); "
+        "Deep D = 301 layers over 0–300 km (Δz = 1.0 km; bounds [0.15, 4.98] km/s; T in [1.0, 100.0] s, field 8.0–70.0 s). "
         f"Calibrated L2 trust-region bounds Δ (km/s): "
         f"OpenSWI shallow = {trd['openswi_shallow']:.4f}, "
         f"OpenSWI deep = {trd['openswi_deep']:.4f}, "
@@ -619,8 +628,286 @@ def make_tableS2_signature_bins(summary_dir: str, out_dir: str) -> Dict[str, Dic
     return _write_pair(out_dir, "tableS2_signature_bins", md, tex)
 
 
+# ---------------------------------------------------------------------------
+# Table S3: Operational Four-Step Protocol Audit, Retrained-Only & Smoothing Ablation
+# ---------------------------------------------------------------------------
+
+
+def make_tableS3_protocol_and_retrained_audit(summary_dir: str, out_dir: str) -> Dict[str, Dict[str, object]]:
+    doc = _load_json(summary_dir, "operational_protocol_audit.json")
+    rec_npz_path = os.path.join(summary_dir, doc["invariants"]["all_records_file"])
+    recs = np.load(rec_npz_path)
+
+    # Part A: Closed-loop operational four-step protocol across all 14 cohorts
+    headers_a = [
+        "Cohort & Backbone",
+        "Rule",
+        "50-Step",
+        "Holdout ES",
+        "Protocol",
+        "Routed (Rev.)",
+        "disba Saved",
+    ]
+    rows_a: List[List[str]] = []
+    for c in doc["cohorts"]:
+        cid = c["cohort_id"]
+        all_c = c["all_checkpoints"]
+        ret_c = c.get("retrained_only")
+        # Cross-check routed fraction directly against minimal per-station NPZ record
+        rc_arr = recs[f"{cid}__route_code"]
+        rec_routed_pct = float(np.mean(rc_arr == 1) * 100.0)
+        assert abs(rec_routed_pct - all_c["routed_pct"]) < 0.05, (
+            f"Record mismatch for {cid}: npz={rec_routed_pct:.3f}% vs json={all_c['routed_pct']:.3f}%"
+        )
+        rule_str = "r_0 ≥ 2.0 + HES" if c["regime"] == "shallow" else "[1.25, 3.0] + HES"
+        if c["is_field"]:
+            s50 = "--"
+            shes = "--"
+            spr = (
+                f"HO {all_c['ho_median_zs']*100:.2f}→{all_c['ho_median_protocol']*100:.2f}% "
+                f"(r_ref {all_c['r_ref_zs']:.3f}→{all_c['r_ref_protocol']:.3f})"
+            )
+            rt_s = f"{all_c['routed_pct']:.1f}% ({all_c['reverted_pct_of_all']:.2f}%)"
+        else:
+            has_ret = (ret_c is not None) and (c["group"] == "diagnostic") and (ret_c["n_checkpoints"] != all_c["n_checkpoints"])
+            def _fmt_pair(key: str) -> str:
+                v_all = all_c.get(key)
+                if v_all is None:
+                    return "--"
+                if has_ret and ret_c is not None and ret_c.get(key) is not None:
+                    return f"{v_all:+.2f}% / {ret_c[key]:+.2f}%"
+                return f"{v_all:+.2f}%"
+            s50 = _fmt_pair("step50_delta_rmse_pct")
+            shes = _fmt_pair("holdout_es_delta_rmse_pct")
+            spr = _fmt_pair("protocol_delta_rmse_pct")
+            rt_s = f"{all_c['routed_pct']:.1f}% ({all_c['reverted_pct_of_all']:.2f}%)"
+        lbl = c["display_label"]
+        if (not c["is_field"]) and c["group"] == "diagnostic" and ret_c is not None and ret_c["n_checkpoints"] != all_c["n_checkpoints"]:
+            lbl = f"{lbl} (All/Ret.)"
+        rows_a.append(
+            [
+                lbl,
+                rule_str,
+                s50,
+                shes,
+                spr,
+                rt_s,
+                f"{all_c['disba_call_savings_pct']:+.1f}%",
+            ]
+        )
+
+    # Part B: Retrained-only benchmark sensitivity
+    headers_b = ["Pipeline", "LB-Matched", "Shallow Bench.", "Deep Bench.", "Deep Repeat", "vs. All"]
+    rows_b = [
+        [r["pipeline"], r["lb_matched"], r["shallow"], r["deep"], r["deep_repeat"], r["vs_all"]]
+        for r in doc["retrained_only_benchmark_table"]
+    ]
+
+    # Part C: Deep high-misfit smoothing ablation (split w/o RB and w/ RB columns per N4)
+    headers_c = [
+        "Setting (lr, λ_prior)",
+        "ΔRMSE (w/o RB)",
+        "ΔRMSE (w/ RB)",
+        "Med. Sta. Δ",
+        "Kept / HO Med",
+        ">10 km ΔSSE Share",
+        "Roughness",
+    ]
+    rows_c = [
+        [
+            r["setting"],
+            f"{r['delta_no_rb_pct']:+.2f}%",
+            f"{r['delta_with_rb_pct']:+.2f}%",
+            f"{r['med_station_delta_pct']:+.2f}%",
+            f"{r['kept_med_pct']:.2f}% / {r['ho_med_pct']:.2f}%",
+            f"{r['gt_10km_sse_share_pct']:.1f}%",
+            f"{r['roughness_ratio']:.2f}×",
+        ]
+        for r in doc["deep_high_misfit_smoothing_ablation"]["rows"]
+    ]
+    dk = doc["deep_high_misfit_smoothing_ablation"]["dunkin_independent_check"]
+    notes = (
+        "Part A reports live end-to-end execution of swi_tta.adaptation.safe_tta.run_operational_protocol "
+        "(validation-locked r_0 routing + unfrozen Holdout ES + converged full-kept disba rollback; "
+        "every routed fraction cross-verified against operational_protocol_records.npz). "
+        "Part C separates ΔRMSE without rollback (w/o RB) and with exact disba rollback (w/ RB); "
+        ">10 km ΔSSE share = ΔSSE_{z>10} / ΔSSE_res exceeds 100% (e.g., 239.0%) when shallow layers (z ≤ 10 km) improve while z > 10 km degrades. "
+        f"Independent 6×6 Dunkin compound-matrix check on sample #{dk['sample_idx']}: "
+        f"{dk['periods_solved']}/{dk['periods_total']} periods solved, max |Δc| = {dk['max_abs_delta_c_km_s']:.2e} km/s "
+        f"({dk['max_rel_diff_pct']:.6f}% relative difference), confirming {dk['converged_ho_misfit_pct']:.2f}% vs {dk['default_ho_misfit_pct']:.2f}% HO misfit."
+    )
+
+    md = (
+        _render_markdown_table("Table S3 (Part A). Closed-Loop Operational Four-Step Protocol Across All 14 Cohorts", headers_a, rows_a)
+        + _render_markdown_table("Table S3 (Part B). Retrained-Only Sensitivity Counterpart to Table 1", headers_b, rows_b)
+        + _render_markdown_table("Table S3 (Part C). Post-Hoc Deep r_0 > 5 Smoothing Ablation (2,062 Pairs) & Dunkin Verification", headers_c, rows_c, notes)
+    )
+
+    # Render combined 3-part booktabs LaTeX matching cas-sc single-column manuscript style
+    tex_label_map = {
+        "val_lb_matched": "LB-Matched (Val, OSW)",
+        "val_shallow": "Shallow Bench. (Val, OSW)",
+        "val_deep": "Deep Bench. (Val, OSW)",
+        "primary_lb_matched": "LB-Matched (Test, OSW)",
+        "primary_shallow": "Shallow Bench. (Test, OSW)",
+        "primary_deep": "Deep Bench. (Test, OSW)",
+        "diag_shallow_multi_openswi": "Sh. Multi-Struct. (OSW, All/Ret.)",
+        "diag_shallow_ps_openswi": "Sh. Prior-Shift (OSW, All/Ret.)",
+        "diag_deep_lith_openswi": "Deep Lith. (OSW, All/Ret.)",
+        "diag_shallow_multi_dispformer": "Sh. Multi-Struct. (DF)",
+        "diag_shallow_ps_dispformer": "Sh. Prior-Shift (DF)",
+        "diag_deep_lith_dispformer": "Deep Lith. (DF, All/Ret.)",
+        "field_longbeach_report": "LongBeach Report (OSW, Field)",
+        "field_csrm_report": "CSRM Report (OSW, Field)",
+    }
+
+    tex_headers_a = [
+        "Cohort \\& Backbone",
+        "Rule",
+        "50-Step",
+        "Holdout ES",
+        "Protocol",
+        "Routed (Rev.)",
+        "\\texttt{disba} Saved",
+    ]
+    tex_lines: List[str] = [
+        "\\begin{table}[width=\\textwidth,pos=htbp]",
+        "\\caption{Closed-loop evaluation of four-step operational protocol across fourteen cohorts (Part~A), Retrained-only benchmark sensitivity (Part~B), and deep high-misfit smoothing ablation with independent Dunkin compound-matrix solver verification (Part~C).}",
+        "\\label{tab:supp_protocol_retrained_ablation}",
+        "\\scriptsize",
+        "\\setlength{\\tabcolsep}{1.8pt}",
+        "\\noindent\\textbf{Part A: Closed-loop operational four-step protocol summary (live execution across all 14 cohorts)}\\\\[2pt]",
+        "\\begin{tabular*}{\\textwidth}{@{\\extracolsep{\\fill}}llccccc}",
+        "\\toprule",
+        " & ".join(tex_headers_a) + " \\\\",
+        "\\midrule",
+    ]
+    prev_group = None
+    for c in doc["cohorts"]:
+        cid = c["cohort_id"]
+        grp = c["group"]
+        if prev_group is not None and grp != prev_group:
+            tex_lines.append("\\midrule")
+        prev_group = grp
+        all_c = c["all_checkpoints"]
+        ret_c = c.get("retrained_only")
+        lbl_tex = tex_label_map.get(cid, _tex_escape(c["display_label"]))
+        rule_tex = "$r_0 \\ge 2.0$ + HES" if c["regime"] == "shallow" else "$[1.25, 3.0]$ + HES"
+        rt_tex = f"{all_c['routed_pct']:.1f}\\% ({all_c['reverted_pct_of_all']:.2f}\\%)"
+        sav_tex = f"{all_c['disba_call_savings_pct']:+.1f}\\%"
+        if c["is_field"]:
+            ho0 = all_c["ho_median_zs"] * 100.0
+            ho1 = all_c["ho_median_protocol"] * 100.0
+            r0f = all_c["r_ref_zs"]
+            r1f = all_c["r_ref_protocol"]
+            mid_tex = (
+                f"\\multicolumn{{3}}{{c}}{{\\textbf{{HO {ho0:.2f}$\\to${ho1:.2f}\\% "
+                f"($r_{{\\text{{ref}}}}$ {r0f:.3f}$\\to${r1f:.3f})}}}}"
+            )
+            tex_lines.append(f"{lbl_tex} & {rule_tex} & {mid_tex} & {rt_tex} & {sav_tex} \\\\")
+        else:
+            has_ret = (
+                (ret_c is not None)
+                and (grp == "diagnostic")
+                and (ret_c["n_checkpoints"] != all_c["n_checkpoints"])
+            )
+            def _fmt_tex_pair(key: str, bold: bool = False) -> str:
+                v_all = all_c.get(key)
+                if v_all is None:
+                    return "--"
+                if has_ret and ret_c is not None and ret_c.get(key) is not None:
+                    s = f"{v_all:+.2f}\\% / {ret_c[key]:+.2f}\\%"
+                else:
+                    s = f"{v_all:+.2f}\\%"
+                return f"\\textbf{{{s}}}" if bold else s
+            tex_lines.append(
+                f"{lbl_tex} & {rule_tex} & {_fmt_tex_pair('step50_delta_rmse_pct')} & "
+                f"{_fmt_tex_pair('holdout_es_delta_rmse_pct')} & "
+                f"{_fmt_tex_pair('protocol_delta_rmse_pct', bold=True)} & {rt_tex} & {sav_tex} \\\\"
+            )
+
+    tex_lines.extend(
+        [
+            "\\bottomrule",
+            "\\end{tabular*}",
+            "",
+            "\\vspace{4pt}",
+            "\\noindent\\textbf{Part B: Retrained-only counterpart to main-text Table~\\ref{tab:benchmark_overview} ($3$ shallow, $6$ deep clean seeds)}\\\\[2pt]",
+            "\\begin{tabular*}{\\textwidth}{@{\\extracolsep{\\fill}}lccccc}",
+            "\\toprule",
+            " & ".join(_tex_escape(h) for h in headers_b) + " \\\\",
+            "\\midrule",
+        ]
+    )
+    for r in rows_b:
+        tex_lines.append(" & ".join(_tex_escape(x) for x in r) + " \\\\")
+
+    tex_headers_c = [
+        "Setting (lr, $\\lambda_{\\text{prior}}$)",
+        "$\\Delta$RMSE (w/o RB)",
+        "$\\Delta$RMSE (w/ RB)",
+        "Med.\\ Sta.\\ $\\Delta$",
+        "Kept / HO Med",
+        "$>10$\\,km $\\Delta$SSE Share",
+        "Roughness",
+    ]
+    tex_lines.extend(
+        [
+            "\\bottomrule",
+            "\\end{tabular*}",
+            "",
+            "\\vspace{4pt}",
+            "\\noindent\\textbf{Part C: Post-hoc Deep Benchmark (Val) $r_0 > 5$ smoothing ablation ($2\\,062$ pairs) \\& independent solver check}\\\\[2pt]",
+            "\\begin{tabular*}{\\textwidth}{@{\\extracolsep{\\fill}}lcccccc}",
+            "\\toprule",
+            " & ".join(tex_headers_c) + " \\\\",
+            "\\midrule",
+        ]
+    )
+    for r in rows_c:
+        tex_lines.append(" & ".join(_tex_escape(x) for x in r) + " \\\\")
+
+    # Pull exact Primary Test Retrained-only protocol values dynamically for footnote
+    by_cid = {c["cohort_id"]: c for c in doc["cohorts"]}
+    ret_lb_test = by_cid["primary_lb_matched"]["retrained_only"]["protocol_delta_rmse_pct"]
+    ret_sh_test = by_cid["primary_shallow"]["retrained_only"]["protocol_delta_rmse_pct"]
+    ret_dp_test = by_cid["primary_deep"]["retrained_only"]["protocol_delta_rmse_pct"]
+
+    dc_val = dk["max_abs_delta_c_km_s"]
+    dc_mant, dc_exp = f"{dc_val:.2e}".split("e")
+    dc_tex = f"{dc_mant}\\times 10^{{{int(dc_exp)}}}"
+
+    tex_notes = (
+        "OSW: OpenSWI; DF: DispFormer; HES: Holdout ES. "
+        "Part~A executes \\texttt{swi\\_tta.adaptation.safe\\_tta.run\\_operational\\_protocol} end-to-end "
+        "(validation-locked $r_0$ routing + unfrozen Holdout ES + converged full-kept \\texttt{disba} rollback; "
+        "routed fractions cross-verified against \\texttt{operational\\_protocol\\_records.npz}). "
+        "Aggregation matches main-text tables: ratio of checkpoint means on primary test benchmarks (Table~\\ref{tab:benchmark_overview}) and "
+        "mean of per-checkpoint relative changes on validation and diagnostic cohorts (Tables~\\ref{tab:cross_backbone_diagnostics}--\\ref{tab:safe_tta_audit}). "
+        f"Primary test Retrained-only protocol: {ret_lb_test:+.2f}\\% (LB-Matched), "
+        f"{ret_sh_test:+.2f}\\% (Shallow Bench.), and {ret_dp_test:+.2f}\\% (Deep Bench.). "
+        "Part~C separates $\\Delta$RMSE without rollback (w/o RB) and with exact \\texttt{disba} rollback (w/ RB); "
+        "$>10$\\,km $\\Delta$SSE share ($\\Delta\\text{SSE}_{z>10} / \\Delta\\text{SSE}_{\\text{res}}$) exceeds $100\\%$ "
+        "(e.g., $239.0\\%$) when $z \\le 10$\\,km improves while $z > 10$\\,km degrades. "
+        f"Independent $6\\times 6$ Dunkin compound-matrix check on sample \\#{dk['sample_idx']}: "
+        f"{dk['periods_solved']}/{dk['periods_total']} periods solved, "
+        f"$\\max|\\Delta c| = {dc_tex}$\\,km/s "
+        f"(${dk['max_rel_diff_pct']:.6f}\\%$ relative difference), confirming "
+        f"${dk['converged_ho_misfit_pct']:.2f}\\%$ vs.\\ ${dk['default_ho_misfit_pct']:.2f}\\%$ HO misfit."
+    )
+    tex_lines.extend(
+        [
+            "\\bottomrule",
+            "\\end{tabular*}",
+            f"\\par\\vspace{{3pt}}\\noindent\\footnotesize{{{tex_notes}}}",
+            "\\end{table}\n",
+        ]
+    )
+    return _write_pair(out_dir, "tableS3_protocol_and_retrained_audit", md, "\n".join(tex_lines))
+
+
 def generate_all_tables(summary_dir: str, tables_dir: str) -> Dict[str, Dict[str, Dict[str, object]]]:
-    """Generate all manuscript tables (Tables 1-4 and S1-S2) in Markdown and LaTeX."""
+    """Generate all manuscript tables (Tables 1-4 and S1-S3) in Markdown and LaTeX."""
     builders = [
         ("table1_benchmark_comparison", make_table1_benchmark_comparison),
         ("table2_referee_convergence_and_tails", make_table2_referee_convergence_and_tails),
@@ -628,6 +915,7 @@ def generate_all_tables(summary_dir: str, tables_dir: str) -> Dict[str, Dict[str
         ("table4_safe_tta_validation_audit", make_table4_safe_tta_validation_audit),
         ("tableS1_noise_floor_calibration", make_tableS1_noise_floor_calibration),
         ("tableS2_signature_bins", make_tableS2_signature_bins),
+        ("tableS3_protocol_and_retrained_audit", make_tableS3_protocol_and_retrained_audit),
     ]
     out: Dict[str, Dict[str, Dict[str, object]]] = {}
     for name, fn in builders:

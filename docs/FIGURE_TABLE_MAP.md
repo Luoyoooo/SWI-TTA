@@ -8,7 +8,7 @@ All manuscript figures and tables are reproduced purely on CPU via two single-co
 # Reproduce Graphical Abstract, Figures 1-9, and Figures S1-S5 (.pdf, .png @ 600 DPI, .svg)
 python scripts/reproduce_all_figures.py
 
-# Reproduce Tables 1-4 and Supplementary Tables S1-S2 (.md and booktabs .tex)
+# Reproduce Tables 1-4 and Supplementary Tables S1-S3 (.md and booktabs .tex)
 python scripts/reproduce_tables.py
 ```
 
@@ -47,3 +47,4 @@ python scripts/reproduce_tables.py
 | **Table 4** | `tables/table4_safe_tta_validation_audit.{md,tex}` | `make_table4_safe_tta_validation_audit` | `safe_tta_validation_audit.json` |
 | **Table S1** | `tables/tableS1_noise_floor_calibration.{md,tex}` | `make_tableS1_noise_floor_calibration` | `calibration_and_domains.json` |
 | **Table S2** | `tables/tableS2_signature_bins.{md,tex}` | `make_tableS2_signature_bins` | `cross_backbone_diagnostics.json` |
+| **Table S3** | `tables/tableS3_protocol_and_retrained_audit.{md,tex}` | `make_tableS3_protocol_and_retrained_audit` | `operational_protocol_audit.json`, `operational_protocol_records.npz` |

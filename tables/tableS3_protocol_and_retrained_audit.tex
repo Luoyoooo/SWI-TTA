@@ -1,0 +1,65 @@
+\begin{table}[width=\textwidth,pos=htbp]
+\caption{Closed-loop evaluation of four-step operational protocol across fourteen cohorts (Part~A), Retrained-only benchmark sensitivity (Part~B), and deep high-misfit smoothing ablation with independent Dunkin compound-matrix solver verification (Part~C).}
+\label{tab:supp_protocol_retrained_ablation}
+\scriptsize
+\setlength{\tabcolsep}{1.8pt}
+\noindent\textbf{Part A: Closed-loop operational four-step protocol summary (live execution across all 14 cohorts)}\\[2pt]
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}llccccc}
+\toprule
+Cohort \& Backbone & Rule & 50-Step & Holdout ES & Protocol & Routed (Rev.) & \texttt{disba} Saved \\
+\midrule
+LB-Matched (Val, OSW) & $r_0 \ge 2.0$ + HES & -59.14\% & -58.00\% & \textbf{-57.46\%} & 93.6\% (0.00\%) & -11.2\% \\
+Shallow Bench. (Val, OSW) & $r_0 \ge 2.0$ + HES & -3.04\% & -10.99\% & \textbf{-23.16\%} & 36.7\% (0.11\%) & +50.9\% \\
+Deep Bench. (Val, OSW) & $[1.25, 3.0]$ + HES & +8.01\% & -3.85\% & \textbf{-3.51\%} & 12.7\% (0.15\%) & +77.2\% \\
+\midrule
+LB-Matched (Test, OSW) & $r_0 \ge 2.0$ + HES & -52.01\% & -50.51\% & \textbf{-50.18\%} & 94.5\% (0.00\%) & -12.1\% \\
+Shallow Bench. (Test, OSW) & $r_0 \ge 2.0$ + HES & -6.74\% & -- & \textbf{-25.81\%} & 37.6\% (0.12\%) & +50.0\% \\
+Deep Bench. (Test, OSW) & $[1.25, 3.0]$ + HES & +21.86\% & -3.29\% & \textbf{-3.30\%} & 13.0\% (0.13\%) & +76.9\% \\
+\midrule
+Sh. Multi-Struct. (OSW, All/Ret.) & $r_0 \ge 2.0$ + HES & -4.48\% / +4.73\% & -12.15\% / -2.54\% & \textbf{-22.86\% / -13.93\%} & 42.9\% (0.17\%) & +44.2\% \\
+Sh. Prior-Shift (OSW, All/Ret.) & $r_0 \ge 2.0$ + HES & -39.07\% / -35.74\% & -39.34\% / -34.66\% & \textbf{-40.48\% / -35.80\%} & 73.0\% (0.04\%) & +11.3\% \\
+Deep Lith. (OSW, All/Ret.) & $[1.25, 3.0]$ + HES & +10.59\% / +10.80\% & -1.50\% / -1.98\% & \textbf{-3.63\% / -4.18\%} & 24.2\% (0.05\%) & +64.6\% \\
+Sh. Multi-Struct. (DF) & $r_0 \ge 2.0$ + HES & -13.87\% & -15.66\% & \textbf{-15.49\%} & 63.1\% (0.05\%) & +22.2\% \\
+Sh. Prior-Shift (DF) & $r_0 \ge 2.0$ + HES & -19.81\% & -18.81\% & \textbf{-17.48\%} & 71.7\% (0.01\%) & +12.7\% \\
+Deep Lith. (DF, All/Ret.) & $[1.25, 3.0]$ + HES & -1.00\% / -0.34\% & -7.42\% / -9.01\% & \textbf{-5.45\% / -6.98\%} & 33.7\% (0.07\%) & +54.2\% \\
+\midrule
+LongBeach Report (OSW, Field) & $r_0 \ge 2.0$ + HES & \multicolumn{3}{c}{\textbf{HO 3.75$\to$0.82\% ($r_{\text{ref}}$ 0.551$\to$0.713)}} & 98.1\% (0.04\%) & -16.1\% \\
+CSRM Report (OSW, Field) & $[1.25, 3.0]$ + HES & \multicolumn{3}{c}{\textbf{HO 1.23$\to$1.10\% ($r_{\text{ref}}$ 0.686$\to$0.707)}} & 21.6\% (0.02\%) & +67.5\% \\
+\bottomrule
+\end{tabular*}
+
+\vspace{4pt}
+\noindent\textbf{Part B: Retrained-only counterpart to main-text Table~\ref{tab:benchmark_overview} ($3$ shallow, $6$ deep clean seeds)}\\[2pt]
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lccccc}
+\toprule
+Pipeline & LB-Matched & Shallow Bench. & Deep Bench. & Deep Repeat & vs. All \\
+\midrule
+Zero-Shot (Raw) & 0.1257 (-2.46\%) & 0.0614 (+99.21\%) & 0.1837 (+40.52\%) & 0.00000 km/s & Same \\
+Input-Aligned Zero-Shot & 0.1288 (+0.00\%) & 0.0308 (+0.00\%) & 0.1307 (+0.00\%) & 0.00000 km/s & Base \\
+Ungated Adapter (Raw) & 0.0721 (-44.00\%) & 0.0399 (+29.67\%) & 0.2101 (+60.69\%) & 0.00903 km/s & Same \\
+Gated Adapter (Raw) & 0.0744 (-42.24\%) & 0.0408 (+32.41\%) & 0.1589 (+21.58\%) & 0.00921 km/s & Same \\
+Soft-Gated Output-Refined (Raw) & 0.0571 (-55.68\%) & 0.0591 (+91.86\%) & 0.1724 (+31.92\%) & 0.00004 km/s & Same \\
+Output-Refined (Raw) & 0.0550 (-57.29\%) & 0.0510 (+65.50\%) & 0.1820 (+39.22\%) & 0.00000 km/s & Same \\
+Adapter + Output-Refined (Raw) & 0.0530 (-58.86\%) & 0.0520 (+68.84\%) & 0.1816 (+38.95\%) & 0.00943 km/s & Same \\
+Output-Space Refinement & 0.0594 (-53.90\%) & 0.0326 (+5.87\%) & 0.1622 (+24.05\%) & 0.00000 km/s & Sh. flips + \\
+Low-DOF Adapter & 0.0705 (-45.29\%) & 0.0327 (+6.12\%) & 0.1401 (+7.18\%) & 0.00743 km/s & Sh. flips + \\
+Gated Adapter + Output-Refined & 0.0510 (-60.43\%) & 0.0315 (+2.35\%) & 0.1702 (+30.18\%) & 0.00619 km/s & Sh. flips + \\
+\bottomrule
+\end{tabular*}
+
+\vspace{4pt}
+\noindent\textbf{Part C: Post-hoc Deep Benchmark (Val) $r_0 > 5$ smoothing ablation ($2\,062$ pairs) \& independent solver check}\\[2pt]
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lcccccc}
+\toprule
+Setting (lr, $\lambda_{\text{prior}}$) & $\Delta$RMSE (w/o RB) & $\Delta$RMSE (w/ RB) & Med.\ Sta.\ $\Delta$ & Kept / HO Med & $>10$\,km $\Delta$SSE Share & Roughness \\
+\midrule
+Baseline (0.02, 0.05) & +58.58\% & +57.96\% & +98.30\% & 4.39\% / 3.35\% & 99.0\% & 0.95$\times$ \\
+Strong (0.02, 0.50) & +49.50\% & +47.76\% & +95.66\% & 4.33\% / 3.20\% & 89.3\% & 0.46$\times$ \\
+Stronger (0.02, 2.00) & +38.87\% & +36.58\% & +86.01\% & 4.49\% / 3.00\% & 56.8\% & 0.31$\times$ \\
+Heavy (0.02, 5.00) & +36.60\% & +33.81\% & +80.34\% & 5.12\% / 3.16\% & 26.1\% & 0.26$\times$ \\
+Small step + smooth (0.005, 0.50) & +13.20\% & +12.95\% & +28.65\% & 5.40\% / 3.04\% & 239.0\% & 0.72$\times$ \\
+Small step + heavy (0.005, 2.00) & +10.00\% & +9.55\% & +25.05\% & 6.07\% / 2.98\% & 41.5\% & 0.60$\times$ \\
+\bottomrule
+\end{tabular*}
+\par\vspace{3pt}\noindent\footnotesize{OSW: OpenSWI; DF: DispFormer; HES: Holdout ES. Part~A executes \texttt{swi\_tta.adaptation.safe\_tta.run\_operational\_protocol} end-to-end (validation-locked $r_0$ routing + unfrozen Holdout ES + converged full-kept \texttt{disba} rollback; routed fractions cross-verified against \texttt{operational\_protocol\_records.npz}). Aggregation matches main-text tables: ratio of checkpoint means on primary test benchmarks (Table~\ref{tab:benchmark_overview}) and mean of per-checkpoint relative changes on validation and diagnostic cohorts (Tables~\ref{tab:cross_backbone_diagnostics}--\ref{tab:safe_tta_audit}). Primary test Retrained-only protocol: -52.38\% (LB-Matched), -13.88\% (Shallow Bench.), and -3.83\% (Deep Bench.). Part~C separates $\Delta$RMSE without rollback (w/o RB) and with exact \texttt{disba} rollback (w/ RB); $>10$\,km $\Delta$SSE share ($\Delta\text{SSE}_{z>10} / \Delta\text{SSE}_{\text{res}}$) exceeds $100\%$ (e.g., $239.0\%$) when $z \le 10$\,km improves while $z > 10$\,km degrades. Independent $6\times 6$ Dunkin compound-matrix check on sample \#9391: 132/132 periods solved, $\max|\Delta c| = 7.79\times 10^{-7}$\,km/s ($0.000087\%$ relative difference), confirming $0.65\%$ vs.\ $63.84\%$ HO misfit.}
+\end{table}

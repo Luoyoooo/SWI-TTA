@@ -18,22 +18,27 @@ from swi_tta.adaptation.gated_cycle import (
     run_gated_cycle_tta,
 )
 from swi_tta.adaptation.safe_tta import (
+    DEFAULT_ROUTING_BOUNDS,
     DEFAULT_VELOCITY_BOUNDS,
+    compute_max_frozen_delta,
     compute_resolvable_depth_from_kept,
     create_stop_period_split,
     run_fixed_step_early_stopping,
     run_holdout_early_stopping,
     run_ideal_early_stopping,
+    run_operational_protocol,
     run_output_refinement_from_profile,
     run_safe_tta,
 )
 
 __all__ = [
+    "DEFAULT_ROUTING_BOUNDS",
     "DEFAULT_VELOCITY_BOUNDS",
     "TAU_QUANTILE_GRID",
     "build_valid_channel_mask",
     "compute_cycle_loss_from_outputs",
     "compute_gate_weights",
+    "compute_max_frozen_delta",
     "compute_r_depth",
     "compute_r_depth_per_station",
     "compute_resolvable_depth_from_kept",
@@ -44,6 +49,7 @@ __all__ = [
     "run_holdout_early_stopping",
     "run_ideal_early_stopping",
     "run_norm_stats_tta",
+    "run_operational_protocol",
     "run_output_refinement_from_profile",
     "run_output_space_refinement",
     "run_safe_tta",

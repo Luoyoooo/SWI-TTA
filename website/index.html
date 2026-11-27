@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SWI-TTA — Noise-Floor Regimes and Forward-Solver Pitfalls in Surface-Wave TTA</title>
+  <meta name="description" content="Official project page for SWI-TTA: Noise-floor regimes and forward-solver pitfalls in test-time adaptation for deep surface-wave dispersion inversion (Computers &amp; Geosciences).">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Minimal Sticky Navigation -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#top"><span class="brand-dot"></span>SWI-TTA</a>
+      <nav class="nav-links" aria-label="Primary sections">
+        <a href="#overview">Overview</a>
+        <a href="#solver">Solver Audit</a>
+        <a href="#regimes">Noise Regimes</a>
+        <a href="#field">Field Arrays</a>
+        <a href="#protocol">4-Step Protocol</a>
+        <a href="#quickstart">Quick Start</a>
+        <a href="#citation">Citation</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section (Minimalist Academic Light Theme) -->
+  <section id="top" class="hero">
+    <div class="container">
+      <div class="venue-pill">Computers &amp; Geosciences &middot; Open-Source Diagnostic Suite</div>
+      <h1>Noise-Floor Regimes and Forward-Solver Pitfalls in Test-Time Adaptation for Deep Surface-Wave Dispersion Inversion</h1>
+      <p class="authors">Authors <em>(to be finalized prior to publication)</em></p>
+      <p class="affiliations">[Institution / Affiliation Placeholder]</p>
+
+      <div class="action-row">
+        <a class="btn" href="https://github.com/Luoyoooo/SWI-TTA" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+          Code (GitHub)
+        </a>
+        <a class="btn btn-outline" href="https://github.com/Luoyoooo/SWI-TTA/blob/main/docs/USER_GUIDE.md" target="_blank" rel="noopener">
+          User Guide
+        </a>
+        <a class="btn btn-outline" href="https://github.com/Luoyoooo/SWI-TTA/tree/main/tutorials" target="_blank" rel="noopener">
+          CPU Tutorials
+        </a>
+        <a class="btn btn-outline" href="https://github.com/Luoyoooo/SWI-TTA/blob/main/docs/PROTOCOL.md" target="_blank" rel="noopener">
+          4-Step Protocol
+        </a>
+        <a class="btn btn-outline" href="https://huggingface.co/datasets/LiuFeng2317/OpenSWI" target="_blank" rel="noopener">
+          OpenSWI Data
+        </a>
+        <a class="btn btn-outline" href="#citation">
+          BibTeX
+        </a>
+      </div>
+
+      <!-- Graphical Abstract Teaser -->
+      <div class="teaser-card">
+        <img
+          class="figure-img"
+          src="assets/figures/graphical_abstract.png"
+          onerror="this.onerror=null;this.src='../figures/graphical_abstract.png';"
+          alt="SWI-TTA Graphical Abstract summarizing forward-solver root skipping, noise-floor semi-convergence, and the four-step operational protocol."
+        >
+        <p class="figure-caption">
+          <strong>Overview (click any figure to enlarge).</strong> Left: refining <code>disba</code> root-search step <code>&Delta;c</code> from <code>5.0&times;10<sup>&minus;3</sup></code> to <code>2.5&times;10<sup>&minus;5</sup> km/s</code> eliminates false Mode-0&rarr;Mode-1 jumps on shallow low-velocity zones (LVZs). Center: even under converged scoring, per-station refinement obeys semi-convergence governed by initial misfit relative to the noise floor (<code>r<sub>0</sub></code>). Right: regime-aware <code>r<sub>0</sub></code> routing paired with unfrozen Holdout ES and exact rollback mitigates near-floor overfitting without target <em>V<sub>s</sub></em> labels.
+        </p>
+      </div>
+
+      <!-- Four Headline KPI Cards -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-value kpi-vermilion">9.35% &rarr; 1.36%</div>
+          <div class="kpi-label">Artificial shallow &gt;20% tail collapsed via converged <code>disba</code> step <code>2.5&times;10<sup>&minus;5</sup> km/s</code></div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-value kpi-teal">&minus;57.79%</div>
+          <div class="kpi-label">Resolvable-Depth <em>V<sub>s</sub></em> RMSE reduction under strong shallow prior shift</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-value kpi-blue">14 / 14 Cohorts</div>
+          <div class="kpi-label">All 63 checkpoints net-improved in closed-loop operational protocol execution</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-value kpi-teal">+67.5% Saved</div>
+          <div class="kpi-label">Exact <code>disba</code> forward evaluations saved on CSRM field array via <code>r<sub>0</sub></code> routing</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Abstract & Four-Step Problem Chain -->
+  <section id="overview" class="section section-alt">
+    <div class="container">
+      <p class="section-eyebrow">Abstract &amp; Diagnostic Problem Chain</p>
+      <h2 class="section-title">How Far Can Dispersion Misfit Reduction Be Trusted?</h2>
+      <div class="question-callout">
+        &ldquo;Without shear-wave velocity (<em>V<sub>s</sub></em>) ground truth on field arrays, how far can held-out dispersion misfit reduction be trusted as evidence of subsurface velocity improvement?&rdquo;
+      </div>
+      <p class="abstract-text">
+        Pretrained neural networks invert Rayleigh-wave dispersion curves orders of magnitude faster than classical global optimization, but their accuracy degrades when target arrays shift in period sampling, sedimentary velocity priors, or lithospheric structure. Two obstacles confound label-free test-time adaptation (TTA): coarse root bracketing in matrix-propagator forward solvers can misidentify modal branches on low-velocity zones, and ill-posed dispersion kernels exhibit semi-convergence near observational noise levels. Across ten TTA pipelines, two Transformer backbones (OpenSWI-Transformer and DispFormer), six synthetic domains, and two field arrays (LongBeach and the China Seismological Reference Model, CSRM), <strong>SWI-TTA</strong> establishes converged forward-solver auditing, quantifies noise-floor-normalized regime signatures, and implements an open-source, CPU-reproducible four-step diagnostic protocol.
+      </p>
+
+      <div class="chain-grid">
+        <div class="chain-card">
+          <span class="chain-num">Step 1 &middot; Sec. 3</span>
+          <h3>Is Forward Scoring Converged?</h3>
+          <p>Eliminate <code>disba</code> Mode-0&rarr;Mode-1 root skipping on shallow LVZ profiles (verified to <code>0.000087%</code> by independent 6&times;6 Dunkin matrix).</p>
+        </div>
+        <div class="chain-card">
+          <span class="chain-num">Step 2 &middot; Sec. 4</span>
+          <h3>Does Lower Misfit Mean Better <em>V<sub>s</sub></em>?</h3>
+          <p>Isolate zero-leakage period alignment; demonstrate that lowering deep held-out misfit (<code>1.681%&rarr;1.668%</code>) degrades <em>V<sub>s</sub></em> RMSE by <code>+21.86%</code>.</p>
+        </div>
+        <div class="chain-card">
+          <span class="chain-num">Step 3 &middot; Sec. 5</span>
+          <h3>What Governs TTA Direction?</h3>
+          <p>Link adaptation sign to noise-normalized initial misfit <code>r<sub>0</sub><sup>GT</sup></code> across both backbones and controlled <code>0.5&times;&ndash;4.0&times;</code> noise scans.</p>
+        </div>
+        <div class="chain-card">
+          <span class="chain-num">Step 4 &middot; Sec. 6</span>
+          <h3>What Works Without Labels?</h3>
+          <p>Diagnose why single-threshold Morozov stopping fails (<code>0/4</code>) and validate regime-aware <code>r<sub>0</sub></code> routing + unfrozen Holdout ES + rollback.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 1: Forward-Solver Audit -->
+  <section id="solver" class="section">
+    <div class="container" data-tab-group="solver">
+      <p class="section-eyebrow">Section 3 &middot; Forward-Solver Convergence Audit</p>
+      <h2 class="section-title">Hidden Pitfall: Coarse Root Bracketing Skips Mode 0 on Shallow LVZs</h2>
+      <p class="section-lead">
+        Under <code>disba</code>&rsquo;s default search step (<code>&Delta;c = 5.0&times;10<sup>&minus;3</sup> km/s</code>), quasi-degenerate osculation between Mode 0 and Mode 1 in shallow profiles containing sub-resolvable low-velocity zones triggers catastrophic artificial misfit tails. Refining solely to <code>&Delta;c = 2.5&times;10<sup>&minus;5</sup> km/s</code> recovers Mode 0 without changing a single velocity layer.
+      </p>
+
+      <div class="lvz-strip" aria-label="Six representative shallow LVZ profiles">
+        <div class="lvz-chip"><strong>#9391 (CurveVelA)</strong><span class="bad">63.84%</span> &rarr; <span class="good">0.65%</span></div>
+        <div class="lvz-chip"><strong>#708 (FlatVelA)</strong><span class="bad">51.6%</span> &rarr; <span class="good">1.91%</span></div>
+        <div class="lvz-chip"><strong>#3735 (FlatFaultA)</strong><span class="bad">80.6%</span> &rarr; <span class="good">1.87%</span></div>
+        <div class="lvz-chip"><strong>#7197 (CurveVelA)</strong><span class="bad">64.3%</span> &rarr; <span class="good">1.70%</span></div>
+        <div class="lvz-chip"><strong>#6848 (CurveVelA)</strong><span class="bad">102.5%</span> &rarr; <span class="good">1.73%</span></div>
+        <div class="lvz-chip"><strong>#9762 (CurveVelA)</strong><span class="bad">80.7%</span> &rarr; <span class="good">1.81%</span></div>
+      </div>
+
+      <div class="tab-bar">
+        <button class="tab-btn active" data-tab-target="solver-fig3">Tail Collapse &amp; #9391 Audit (Fig. 3)</button>
+        <button class="tab-btn" data-tab-target="solver-figS1">Six Shallow LVZ Profiles (Fig. S1)</button>
+        <button class="tab-btn" data-tab-target="solver-figS2">Default vs. Converged Scatter (Fig. S2)</button>
+      </div>
+
+      <div class="panel-card">
+        <div class="tab-pane active" data-tab-id="solver-fig3">
+          <img class="figure-img" src="assets/figures/main/fig03_disba_root_skipping.png" onerror="this.onerror=null;this.src='../figures/main/fig03_disba_root_skipping.png';" alt="Figure 3: disba root skipping and tail collapse">
+          <p class="figure-caption"><strong>Figure 3.</strong> Fixed-profile Mode-0 recovery on representative LVZ profile <code>#9391</code> (<code>63.84%&rarr;0.65%</code>; independent 6&times;6 Dunkin check: <code>max |&Delta;c| = 7.79&times;10<sup>&minus;7</sup> km/s</code>, <code>0.000087%</code> relative difference) and population-wide collapse of shallow &gt;20% tails across step sizes.</p>
+        </div>
+        <div class="tab-pane" data-tab-id="solver-figS1">
+          <img class="figure-img" src="assets/figures/supplementary/figS02_lvz_counterfactual_examples.png" onerror="this.onerror=null;this.src='../figures/supplementary/figS02_lvz_counterfactual_examples.png';" alt="Figure S1: Six shallow LVZ counterfactual examples">
+          <p class="figure-caption"><strong>Supplementary Figure S1.</strong> Exact <code>&Delta;c = 2.5&times;10<sup>&minus;5</sup> km/s</code> fundamental-mode recovery vs. coarse-step Mode-1 jumps and LVZ-raised counterfactuals across all six representative shallow LVZ profiles.</p>
+        </div>
+        <div class="tab-pane" data-tab-id="solver-figS2">
+          <img class="figure-img" src="assets/figures/supplementary/figS03_old_vs_new_dc_scatter.png" onerror="this.onerror=null;this.src='../figures/supplementary/figS03_old_vs_new_dc_scatter.png';" alt="Figure S2: Old vs converged dc scatter">
+          <p class="figure-caption"><strong>Supplementary Figure S2.</strong> Station-level scatter comparing default <code>&Delta;c = 5.0&times;10<sup>&minus;3</sup></code> vs. converged <code>2.5&times;10<sup>&minus;5</sup> km/s</code> held-out misfit across shallow (tail collapses) and deep (3,500 audited profiles unchanged) regimes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2: Noise-Floor Semi-Convergence & Cross-Backbone Diagnostics -->
+  <section id="regimes" class="section section-alt">
+    <div class="container" data-tab-group="regimes">
+      <p class="section-eyebrow">Sections 4 &ndash; 6.1 &middot; Benchmark Divergence &amp; Semi-Convergence</p>
+      <h2 class="section-title">Noise-Floor Regimes Govern Adaptation Across Backbones</h2>
+      <p class="section-lead">
+        Once forward scoring is converged, stratifying stations by initial exact misfit normalized by the noise floor (<code>r<sub>0</sub><sup>GT</sup> = m<sub>0</sub> / &sigma;<sub>GT</sub></code>) separates below-floor null-space noise overfitting, intermediate-shift structural recovery, and deep extreme-outlier instability across both OpenSWI-Transformer and DispFormer.
+      </p>
+
+      <div class="tab-bar">
+        <button class="tab-btn active" data-tab-target="reg-fig2">Benchmark Divergence (Fig. 2)</button>
+        <button class="tab-btn" data-tab-target="reg-fig4">OpenSWI 3-Domain Regimes (Fig. 4)</button>
+        <button class="tab-btn" data-tab-target="reg-fig5">Cross-Backbone vs. DispFormer (Fig. 5)</button>
+        <button class="tab-btn" data-tab-target="reg-fig6">Noise Scan 0.5&times;&ndash;4.0&times; (Fig. 6)</button>
+        <button class="tab-btn" data-tab-target="reg-fig7">Safe-TTA Failure Attribution (Fig. 7)</button>
+      </div>
+
+      <div class="panel-card">
+        <div class="tab-pane active" data-tab-id="reg-fig2">
+          <img class="figure-img" src="assets/figures/main/fig02_benchmark_overview.png" onerror="this.onerror=null;this.src='../figures/main/fig02_benchmark_overview.png';" alt="Figure 2: Three-benchmark performance comparison">
+          <p class="figure-caption"><strong>Figure 2.</strong> Input alignment removes major cross-grid error at zero gradient cost. Subsequent TTA cuts <em>V<sub>s</sub></em> RMSE by <code>&minus;57.79%</code> under strong prior shift (LongBeach-Matched), yet degrades Deep Benchmark RMSE by <code>+21.86%</code> even while held-out dispersion misfit decreases from <code>1.681%</code> to <code>1.668%</code>.</p>
+        </div>
+        <div class="tab-pane" data-tab-id="reg-fig4">
+          <img class="figure-img" src="assets/figures/main/fig04_openswi_signature_curves.png" onerror="this.onerror=null;this.src='../figures/main/fig04_openswi_signature_curves.png';" alt="Figure 4: OpenSWI three-domain noise-floor signature curves">
+          <p class="figure-caption"><strong>Figure 4.</strong> Noise-floor-normalized regime signatures on OpenSWI-Transformer across Shallow Multi-Structure, Shallow Prior-Shift, and Deep Lithospheric domains, contrasting 50-step refinement against label-free Holdout ES and oracle Ideal ES.</p>
+        </div>
+        <div class="tab-pane" data-tab-id="reg-fig5">
+          <img class="figure-img" src="assets/figures/main/fig05_cross_backbone_signatures.png" onerror="this.onerror=null;this.src='../figures/main/fig05_cross_backbone_signatures.png';" alt="Figure 5: Cross-backbone OpenSWI vs DispFormer comparison">
+          <p class="figure-caption"><strong>Figure 5.</strong> Architecture-independent three-regime transitions across OpenSWI-Transformer and DispFormer, including consistent below-floor degradation in <code>[0, 1)</code> on clean retrained seeds (<code>+13.25%</code> OpenSWI, <code>+15.24%</code> DispFormer).</p>
+        </div>
+        <div class="tab-pane" data-tab-id="reg-fig6">
+          <img class="figure-img" src="assets/figures/main/fig06_noise_amplitude_scan.png" onerror="this.onerror=null;this.src='../figures/main/fig06_noise_amplitude_scan.png';" alt="Figure 6: Controlled noise amplitude scan 0.5x to 4.0x">
+          <p class="figure-caption"><strong>Figure 6.</strong> Scaling observational noise from <code>0.5&times;</code> to <code>4.0&times;</code> on identical profiles flips 50-step refinement monotonically from <code>&minus;9.56%</code> gain to <code>+46.93%</code> harm while unlabeled classical calibration <code>&sigma;&#770;<sub>D</sub></code> tracks true noise linearly (<code>0.929&ndash;0.953&times;</code>) and Holdout ES improves every noise level.</p>
+        </div>
+        <div class="tab-pane" data-tab-id="reg-fig7">
+          <img class="figure-img" src="assets/figures/main/fig07_safe_tta_failure_attribution.png" onerror="this.onerror=null;this.src='../figures/main/fig07_safe_tta_failure_attribution.png';" alt="Figure 7: Single-threshold discrepancy stopping failure attribution">
+          <p class="figure-caption"><strong>Figure 7.</strong> Why single-threshold Morozov discrepancy stopping (<code>m<sub>i</sub> &le; &alpha;&sigma;&#770;<sub>D</sub></code>) fails simultaneous shallow and deep validation (<code>0/4</code>): shallow transition-band (<code>1 &lt; r<sub>0</sub> &le; 2</code>) overshoot demands <code>&alpha; &ge; 2.0</code>, whereas deep <code>r<sub>0</sub> &gt; 5</code> outliers inject &gt;10 km crustal oscillations.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3: Field Array Evidence -->
+  <section id="field" class="section">
+    <div class="container" data-tab-group="field">
+      <p class="section-eyebrow">Section 6.2 &middot; Field Array Consistency</p>
+      <h2 class="section-title">Contrasting Field Regimes: LongBeach Nodal Array vs. CSRM Grid</h2>
+      <p class="section-lead">
+        On <strong>LongBeach Report</strong> (3,705 stations; operational <code>r<sub>0</sub> &approx; 6.3&times;</code>), adaptation recovers the NW&ndash;SE Newport&ndash;Inglewood fault-zone ridge and lowers held-out misfit from <code>3.75%</code> to <code>0.82%</code>. On <strong>CSRM Report</strong> (8,842 grid points; <code>r<sub>0</sub> &approx; 0.91&times;</code>), zero-shot already sits near the noise floor, while unconstrained per-station updates inject mid-crustal speckle (e.g., Tibetan Plateau point <code>#10067</code>).
+      </p>
+
+      <div class="tab-bar">
+        <button class="tab-btn active" data-tab-target="field-fig8">LongBeach Depth Slices (Fig. 8)</button>
+        <button class="tab-btn" data-tab-target="field-fig9">CSRM Slices &amp; #10067 Profile (Fig. 9)</button>
+        <button class="tab-btn" data-tab-target="field-figS5">Spatial Misfit &amp; Data Audit (Fig. S5)</button>
+      </div>
+
+      <div class="panel-card">
+        <div class="tab-pane active" data-tab-id="field-fig8">
+          <img class="figure-img" src="assets/figures/main/fig08_longbeach_slices.png" onerror="this.onerror=null;this.src='../figures/main/fig08_longbeach_slices.png';" alt="Figure 8: LongBeach Report horizontal Vs depth slices">
+          <p class="figure-caption"><strong>Figure 8.</strong> Horizontal <em>V<sub>s</sub></em> slices across LongBeach Report (0.12&ndash;0.48 km): adapted pipelines correct zero-shot sedimentary over-prediction (<code>r<sub>ref</sub> = 0.551 &rarr; 0.713</code> under protocol; <code>0.718</code> single-stage) and delineate the Newport&ndash;Inglewood fault-zone high-velocity contrast.</p>
+        </div>
+        <div class="tab-pane" data-tab-id="field-fig9">
+          <img class="figure-img" src="assets/figures/main/fig09_csrm_slices_and_station.png" onerror="this.onerror=null;this.src='../figures/main/fig09_csrm_slices_and_station.png';" alt="Figure 9: CSRM slices and Tibetan Plateau station #10067">
+          <p class="figure-caption"><strong>Figure 9.</strong> CSRM Report lithospheric slices (15&ndash;90 km) and Tibetan Plateau grid point <code>#10067</code> (86.80&deg;E, 28.60&deg;N), illustrating how per-station refinement near the noise floor converts a localized 10&ndash;14 s bump into spurious 10&ndash;30 km crustal oscillations.</p>
+          <p class="map-disclaimer">Map lines delineate study areas and do not necessarily depict accepted national boundaries.</p>
+        </div>
+        <div class="tab-pane" data-tab-id="field-figS5">
+          <img class="figure-img" src="assets/figures/supplementary/figS05_field_spatial_misfit_and_data.png" onerror="this.onerror=null;this.src='../figures/supplementary/figS05_field_spatial_misfit_and_data.png';" alt="Figure S5: Field spatial misfit maps and marginal alignment diagnostics">
+          <p class="figure-caption"><strong>Supplementary Figure S5.</strong> Spatial held-out misfit changes on LongBeach and CSRM, LongBeach-Matched per-period phase-velocity marginal alignment (median KS <code>0.507&rarr;0.089</code>), and classical inversion evaluation-budget convergence.</p>
+          <p class="map-disclaimer">Map lines delineate study areas and do not necessarily depict accepted national boundaries.</p>
+        </div>
+      </div>
+
+      <!-- Interactive CSRM Debiasing Explorer -->
+      <div class="debias-box">
+        <div class="debias-header">
+          <h3>Interactive CSRM Routing Sensitivity Under Downward &sigma;&#770;<sub>D</sub> Debiasing (&sigma;&#770;<sub>D</sub> = <span id="debias-sigma">1.356%</span>)</h3>
+          <div class="tab-bar" style="margin:0;">
+            <button class="tab-btn active" data-debias="1.0x">Calibrated 1.0&times;</button>
+            <button class="tab-btn" data-debias="1.5x">Debiased 1.5&times;</button>
+            <button class="tab-btn" data-debias="1.87x">Debiased 1.87&times;</button>
+          </div>
+        </div>
+        <div class="stacked-bar" role="img" aria-label="CSRM station routing breakdown">
+          <div id="seg-zs" class="bar-seg seg-zs" style="width:70.9%;">Zero-Shot 70.9%</div>
+          <div id="seg-hes" class="bar-seg seg-hes" style="width:21.6%;">Holdout ES 21.6%</div>
+          <div id="seg-flag" class="bar-seg seg-flag" style="width:7.4%;">7.4%</div>
+        </div>
+        <div class="debias-legend">
+          <span><span class="swatch seg-zs"></span>Retain Zero-Shot (<code>r<sub>0</sub> &lt; 1.25</code>)</span>
+          <span><span class="swatch seg-hes"></span>Refine via Unfrozen Holdout ES (<code>1.25 &le; r<sub>0</sub> &le; 3.0</code>)</span>
+          <span><span class="swatch seg-flag"></span>Flag Outlier for Audit (<code>r<sub>0</sub> &gt; 3.0</code>)</span>
+        </div>
+        <p id="debias-note" class="figure-caption" style="margin-top:0.55rem;"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 4: Four-Step Operational Protocol & 14-Cohort Audit -->
+  <section id="protocol" class="section section-alt">
+    <div class="container">
+      <p class="section-eyebrow">Section 6.2 &amp; Table S3 &middot; Reproducible Operational Workflow</p>
+      <h2 class="section-title">Four-Step Operational Protocol &amp; Closed-Loop 14-Cohort Audit</h2>
+      <p class="section-lead">
+        Implemented in <code>swi_tta.adaptation.safe_tta.run_operational_protocol</code>: (1) zero-leakage input alignment, (2) converged <code>disba</code> verification and <code>&sigma;&#770;<sub>D</sub></code> calibration, (3) validation-locked regime-aware <code>r<sub>0</sub></code> screening, and (4) unfrozen internal 80/20 Holdout ES with exact full-kept rollback (hard freezing at <code>z &gt; &lambda;<sub>max</sub>/3</code> is disabled by default after full validation ablation revealed an <code>18.84 pp</code> shallow penalty).
+      </p>
+
+      <div class="panel-card" style="margin-bottom:1.45rem;">
+        <img class="figure-img" src="assets/figures/main/fig01_workflow_and_protocol.png" onerror="this.onerror=null;this.src='../figures/main/fig01_workflow_and_protocol.png';" alt="Figure 1: Zero-leakage workflow and four-step operational protocol">
+        <p class="figure-caption"><strong>Figure 1.</strong> Zero-leakage evaluation workflow (a) and regime-aware four-step operational TTA protocol (b) implemented in <code>SWI-TTA</code>.</p>
+      </div>
+
+      <div class="tab-bar" aria-label="Filter 14 cohorts">
+        <button class="tab-btn active" data-cohort-filter="all">All Cohorts (14)</button>
+        <button class="tab-btn" data-cohort-filter="validation">Validation (3)</button>
+        <button class="tab-btn" data-cohort-filter="primary_synthetic">Primary Test (3)</button>
+        <button class="tab-btn" data-cohort-filter="diagnostic">Cross-Backbone Diag. (6)</button>
+        <button class="tab-btn" data-cohort-filter="field_report">Field Arrays (2)</button>
+      </div>
+
+      <div class="table-wrap">
+        <table class="audit-table">
+          <thead>
+            <tr>
+              <th>Cohort &amp; Backbone</th>
+              <th>Routing Rule</th>
+              <th>50-Step</th>
+              <th>Holdout ES</th>
+              <th>4-Step Protocol</th>
+              <th>Routed (Rev.)</th>
+              <th>disba Saved</th>
+            </tr>
+          </thead>
+          <tbody id="protocol-tbody"></tbody>
+        </table>
+      </div>
+      <p class="figure-caption">
+        Live closed-loop execution hydrated directly from <code>results_summary/operational_protocol_audit.json</code>. Every synthetic checkpoint (63/63 across all cohorts) achieves net <em>V<sub>s</sub></em> RMSE reduction; on DispFormer, unrouted Holdout ES edges the OpenSWI-validated bounds by <code>0.17&ndash;1.97 pp</code> while routed screening cuts exact <code>disba</code> calls by <code>12.7%&ndash;54.2%</code>.
+      </p>
+    </div>
+  </section>
+
+  <!-- Section 5: Quick Start & Minimal Python API -->
+  <section id="quickstart" class="section">
+    <div class="container">
+      <p class="section-eyebrow">Pure-CPU Reproducibility (&lt; 30 s)</p>
+      <h2 class="section-title">Quick Start &amp; Minimal Python API</h2>
+      <p class="section-lead">
+        Verify the shallow LVZ root-skipping demo live on CPU, run all 22 unit/invariant tests, and regenerate every figure and table in the paper without a GPU or raw dataset downloads.
+      </p>
+
+      <div class="code-grid">
+        <div class="code-card">
+          <div class="code-card-head">
+            <span>Bash &middot; 30-Second CPU Verification &amp; Reproduction</span>
+            <button class="copy-btn" data-copy-target="code-bash">Copy</button>
+          </div>
+          <pre id="code-bash">git clone https://github.com/Luoyoooo/SWI-TTA.git
+cd SWI-TTA
+pip install -r requirements.txt &amp;&amp; pip install -e ".[dev]"
+
+# Live LVZ root-skipping demo (63.84% -&gt; 0.65%) &amp; SHA-256 check (&lt;1 s)
+python scripts/verify_install.py
+
+# Full unit, invariant, zero-leakage &amp; hygiene suite (~5 s)
+pytest -v
+
+# Reproduce all 7 tables and 15 figures purely on CPU (~22 s)
+python scripts/reproduce_tables.py
+python scripts/reproduce_all_figures.py</pre>
+        </div>
+
+        <div class="code-card">
+          <div class="code-card-head">
+            <span>Python &middot; Converged Scoring &amp; Operational Protocol</span>
+            <button class="copy-btn" data-copy-target="code-py">Copy</button>
+          </div>
+          <pre id="code-py">from swi_tta.physics.disba_referee import (
+    DEFAULT_SHALLOW_DC_KM_S, forward_dispersion_diag,
+)
+from swi_tta.adaptation.safe_tta import run_operational_protocol
+
+# 1. Regime-converged fundamental-mode Rayleigh scoring (2.5e-5 km/s shallow)
+diag = forward_dispersion_diag(vs, depth_km, periods_s, dc=DEFAULT_SHALLOW_DC_KM_S)
+
+# 2. Four-step protocol (r_0 routing + unfrozen Holdout ES + rollback)
+vs_out, info = run_operational_protocol(
+    vs_init_aligned, surrogate_ens, depth_km,
+    periods, phase_vel, group_vel, obs_mask, kept_mask,
+    domain="shallow", sigma_hat_d=0.00932,
+    dc_shallow=DEFAULT_SHALLOW_DC_KM_S, disba_workers=4,
+)</pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 6: BibTeX Citation -->
+  <section id="citation" class="section section-alt">
+    <div class="container">
+      <p class="section-eyebrow">Citation</p>
+      <h2 class="section-title">BibTeX</h2>
+      <div class="code-card">
+        <div class="code-card-head">
+          <span>BibTeX &middot; Computers &amp; Geosciences</span>
+          <button class="copy-btn" data-copy-target="code-bib">Copy</button>
+        </div>
+        <pre id="code-bib">@article{switta2026cg,
+  title   = {Noise-floor regimes and forward-solver pitfalls in test-time adaptation for deep surface-wave dispersion inversion},
+  author  = {{SWI-TTA Authors}},
+  journal = {Computers \&amp; Geosciences},
+  year    = {2026},
+  url     = {https://github.com/Luoyoooo/SWI-TTA},
+  note    = {Software archive: SWI-TTA (v1.0.0)}
+}</pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p><strong>SWI-TTA</strong> is released under the <a href="https://github.com/Luoyoooo/SWI-TTA/blob/main/LICENSE" target="_blank" rel="noopener">MIT License</a>. Upstream dispersion datasets originate from OpenSWI (CC BY 4.0).</p>
+      <p>Minimalist academic project page layout inspired by <a href="https://nerfies.github.io/" target="_blank" rel="noopener">NeRFies</a> and <a href="https://nitrogen.minedojo.org/" target="_blank" rel="noopener">NitroGen</a>.</p>
+    </div>
+  </footer>
+
+  <!-- Full-Resolution Figure Lightbox -->
+  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Enlarged figure preview">
+    <img id="lightbox-img" src="" alt="">
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

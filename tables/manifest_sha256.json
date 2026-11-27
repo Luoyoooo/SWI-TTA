@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "n_tables": 6,
-  "total_size_bytes": 37118,
+  "n_tables": 7,
+  "total_size_bytes": 49107,
   "tables": {
     "table1_benchmark_comparison": {
       "md": {
@@ -18,13 +18,13 @@
     "table2_referee_convergence_and_tails": {
       "md": {
         "relative_path": "table2_referee_convergence_and_tails.md",
-        "size_bytes": 1934,
-        "sha256": "8a2dd0cdc6af3de14b8e2cfc9881abaca77d04e89bb27241c08cf2f42c297a22"
+        "size_bytes": 1959,
+        "sha256": "73d386daf0619f442cd4a60cfad4ce0fabfa786e67a8a9094c2a64d46889c1c1"
       },
       "tex": {
         "relative_path": "table2_referee_convergence_and_tails.tex",
-        "size_bytes": 2162,
-        "sha256": "59c913ee08a0c076929c9a1e1aab085b58c2e47224e2fbdaa50e5e32050872d8"
+        "size_bytes": 2187,
+        "sha256": "d40473c32cbd807a56936254e273b1291f2188b811dc78914bf44cfe337feb6d"
       }
     },
     "table3_cross_backbone_diagnostics": {
@@ -42,25 +42,25 @@
     "table4_safe_tta_validation_audit": {
       "md": {
         "relative_path": "table4_safe_tta_validation_audit.md",
-        "size_bytes": 1659,
-        "sha256": "eba4db02cd18d89ea0f1996f6489a3b33e00996e462b027d182dc5496018ed13"
+        "size_bytes": 1803,
+        "sha256": "6f3022cf0203fbcfaaf725c9f364ed48bfe3352759c952ecc4e93b7c604b5ca4"
       },
       "tex": {
         "relative_path": "table4_safe_tta_validation_audit.tex",
-        "size_bytes": 1985,
-        "sha256": "d9fd9887e9ba42bfcda1758448e21fda36e47e4ebdb3a8a76eb7910b12f76b1c"
+        "size_bytes": 2152,
+        "sha256": "db16321b69ae7b7b74835457b04abb4f47c552006f0dda71c03854db7c48d6ee"
       }
     },
     "tableS1_noise_floor_calibration": {
       "md": {
         "relative_path": "tableS1_noise_floor_calibration.md",
-        "size_bytes": 1420,
-        "sha256": "8bed9c0399f493556123bc89ff02280d9109efec504fe717aa3ec644b6d26ab1"
+        "size_bytes": 1676,
+        "sha256": "8b10b08edb8992faf68b6ae4e5a654051e3b20ab95d6f60be9792ed13fdb9bd6"
       },
       "tex": {
         "relative_path": "tableS1_noise_floor_calibration.tex",
-        "size_bytes": 1734,
-        "sha256": "785d20088669a6af6ac32f7597651d6c4bc06164b28aaae14ec90c970f4aa2a3"
+        "size_bytes": 1998,
+        "sha256": "996e50909a7ccccdde37652dc2dd9eaa488cb4e227d9b8cd3992012d52f82c04"
       }
     },
     "tableS2_signature_bins": {
@@ -73,6 +73,18 @@
         "relative_path": "tableS2_signature_bins.tex",
         "size_bytes": 8250,
         "sha256": "e56adc9add6ff0ef346eb6ff77f02d78f112a752775792663d6390566e5252f7"
+      }
+    },
+    "tableS3_protocol_and_retrained_audit": {
+      "md": {
+        "relative_path": "tableS3_protocol_and_retrained_audit.md",
+        "size_bytes": 4712,
+        "sha256": "4ed94da57c09fdd901d1e492dabe7e7665da1e56d7bfe00f8653d936b87310cb"
+      },
+      "tex": {
+        "relative_path": "tableS3_protocol_and_retrained_audit.tex",
+        "size_bytes": 6396,
+        "sha256": "7bd302979e1fc389527dbf0cea284675eb13edeb0f98f788dd135ce5ca03d70e"
       }
     }
   }

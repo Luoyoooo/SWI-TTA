@@ -27,8 +27,11 @@ jobs:
       - name: Run unit test suite and release hygiene audit
         run: pytest -v
 
-      - name: Run 30-second CPU installation and LVZ root-skipping demo
-        run: python scripts/verify_install.py
+      - name: Run 30-second CPU installation and live LVZ root-skipping demo
+        run: |
+          python scripts/verify_install.py
+          python scripts/run_root_convergence.py --demo-lvz
+          python scripts/run_operational_protocol.py --summary-check
 
       - name: Reproduce publication tables (Markdown & LaTeX)
         run: python scripts/reproduce_tables.py --out-dir /tmp/ci_tables

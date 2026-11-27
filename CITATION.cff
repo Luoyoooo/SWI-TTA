@@ -1,28 +1,25 @@
 cff-version: 1.2.0
-title: "swi-tta-diagnostics: Diagnostic Framework for Test-Time Adaptation in Surface-Wave Dispersion Inversion"
-message: "If you use this software, benchmark diagnostics, or figure-reproduction scripts in your research, please cite the accompanying manuscript and archived release."
+title: "SWI-TTA: Noise-Floor Regimes and Forward-Solver Auditing for Deep Surface-Wave Test-Time Adaptation"
+message: "If you use SWI-TTA, its converged forward-solver diagnostics, or figure-reproduction scripts in your research, please cite the accompanying manuscript and software archive."
 type: software
 version: "1.0.0"
-date-released: "2026-11-23"
+date-released: "2026-11-27"
 license: MIT
-repository-code: "https://github.com/Luoyoooo/swi-tta-diagnostics"
-url: "https://github.com/Luoyoooo/swi-tta-diagnostics"
+repository-code: "https://github.com/Luoyoooo/SWI-TTA"
+url: "https://luoyoooo.github.io/SWI-TTA/"
 keywords:
   - surface-wave dispersion inversion
   - test-time adaptation
-  - disba root-finding convergence
-  - seismic velocity tomography
-  - noise-floor diagnostics
-  - geophysics machine learning
+  - modal root finding
+  - observational noise floor
+  - computational seismology
+  - scientific machine learning
 authors:
-  - family-names: "Mao"
-    given-names: "Rui"
-    affiliation: "Corresponding Author (complete affiliation prior to publication)"
+  - name: "SWI-TTA Authors"
 preferred-citation:
   type: article
-  title: "When Does Test-Time Adaptation Help or Harm Deep Surface-Wave Dispersion Inversion? Noise-Floor Regimes, Forward-Solver Pitfalls, and Cross-Backbone Diagnostics"
+  title: "Noise-floor regimes and forward-solver pitfalls in test-time adaptation for deep surface-wave dispersion inversion"
   journal: "Computers & Geosciences"
   year: 2026
   authors:
-    - family-names: "Mao"
-      given-names: "Rui"
+    - name: "SWI-TTA Authors"

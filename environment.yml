@@ -1,4 +1,4 @@
-name: swi-tta-diagnostics
+name: swi-tta
 channels:
   - conda-forge
   - defaults

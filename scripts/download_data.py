@@ -52,7 +52,7 @@ def _hf_remote_subpath(local_rel: str) -> str:
 def download_file(url: str, dest: Path, timeout: int = 120) -> None:
     dest.parent.mkdir(parents=True, exist_ok=True)
     tmp_path = dest.with_suffix(dest.suffix + ".part")
-    req = urllib.request.Request(url, headers={"User-Agent": "swi-tta-diagnostics/1.0"})
+    req = urllib.request.Request(url, headers={"User-Agent": "SWI-TTA/1.0"})
     with urllib.request.urlopen(req, timeout=timeout) as resp, tmp_path.open("wb") as out:
         while True:
             chunk = resp.read(1 << 20)

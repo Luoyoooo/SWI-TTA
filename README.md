@@ -1,188 +1,174 @@
-# `swi-tta-diagnostics`: Physics-Referee and Noise-Floor Regime Diagnostics for Surface-Wave Test-Time Adaptation
+<div align="center">
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-0072B2.svg)](LICENSE)
-[![Python 3.11](https://img.shields.io/badge/Python-3.10%20%7C%203.11-009E73.svg)](pyproject.toml)
-[![Journal: Computers & Geosciences](https://img.shields.io/badge/Target%20Journal-Computers%20%26%20Geosciences-D55E00.svg)](docs/CODE_AVAILABILITY_BLOCK.md)
-[![CPU Reproducible](https://img.shields.io/badge/Figures%20%26%20Tables-CPU%20Reproducible-56B4E9.svg)](docs/FIGURE_TABLE_MAP.md)
+<h1>SWI-TTA</h1>
 
-Official software companion for **diagnostic evaluation, exact physics-referee convergence auditing, and noise-floor regime characterization of test-time adaptation (TTA) in deep-learning surface-wave dispersion inversion**.
+<h3>Noise-Floor Regimes and Forward-Solver Pitfalls in Test-Time Adaptation<br>for Deep Surface-Wave Dispersion Inversion</h3>
+
+<p><em>Computers &amp; Geosciences</em> (Submitted Manuscript &amp; Open-Source Diagnostic Suite)</p>
+
+<p>
+  <a href="https://luoyoooo.github.io/SWI-TTA/"><strong>🌐 Project Page</strong></a> &nbsp;|&nbsp;
+  <a href="docs/USER_GUIDE.md"><strong>📘 User Guide</strong></a> &nbsp;|&nbsp;
+  <a href="tutorials/"><strong>🚀 Tutorials</strong></a> &nbsp;|&nbsp;
+  <a href="docs/PROTOCOL.md"><strong>🧭 4-Step Protocol</strong></a> &nbsp;|&nbsp;
+  <a href="docs/FIGURE_TABLE_MAP.md"><strong>📊 Figures &amp; Tables</strong></a> &nbsp;|&nbsp;
+  <a href="data/DATA_AVAILABILITY.md"><strong>🤗 OpenSWI Data</strong></a>
+</p>
+
+<p>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-0072B2.svg?style=flat-square" alt="MIT License"></a>
+  <a href="pyproject.toml"><img src="https://img.shields.io/badge/Python-3.10%20%7C%203.11-009E73.svg?style=flat-square" alt="Python 3.10 | 3.11"></a>
+  <a href="https://github.com/Luoyoooo/SWI-TTA/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/Luoyoooo/SWI-TTA/ci.yml?branch=main&style=flat-square&label=CPU%20CI" alt="CPU CI"></a>
+  <a href="docs/FIGURE_TABLE_MAP.md"><img src="https://img.shields.io/badge/Figures%20%26%20Tables-Pure%20CPU%20Reproducible-D55E00.svg?style=flat-square" alt="Pure CPU Reproducible"></a>
+</p>
+
+<br>
+
+<img src="figures/graphical_abstract.png" width="100%" alt="SWI-TTA Graphical Abstract">
+
+<p><em><strong>Core diagnostic question:</strong> Without shear-wave velocity (V<sub>s</sub>) ground truth on field arrays, how far can dispersion misfit reduction be trusted?</em></p>
+
+</div>
 
 ---
 
-## Research Overview and Key Quantitative Findings
+## Overview & Key Findings
 
-Pretrained neural surface-wave inversion models (such as OpenSWI and DispFormer) can exhibit severe performance degradation when applied to field arrays with altered period grids, velocity distributions, or geological structures. Although forward-loss test-time adaptation (TTA) consistently lowers observed and held-out dispersion misfits, our systematic diagnostic study reveals two governing physical mechanisms that determine when TTA genuinely improves shear-wave velocity ($V_s$) recovery versus when it degrades accuracy:
+Pretrained neural surface-wave inversion models (such as **OpenSWI-Transformer** and **DispFormer**) invert dispersion curves orders of magnitude faster than classical global optimization, yet their predictions degrade under period-grid, sedimentary-prior, or lithospheric shifts. Across **10 TTA pipelines**, **2 Transformer backbones**, **6 synthetic domains**, and **2 field arrays** (LongBeach and CSRM), **SWI-TTA** establishes three governing diagnostic mechanisms:
 
-1. **Hidden Evaluation Pitfall (`disba` Root-Skipping in Shallow Low-Velocity Zones)**: Evaluating shallow profiles containing deep low-velocity zones (LVZs) under `disba`'s default phase-velocity search step (`dc = 0.005 km/s`) causes fundamental-mode root skipping onto Mode 1, inflating >20% tail-failure rates artificially (`Output-Space Refinement`: **9.35% → 1.36%**; `Gated Adapter + Output-Refined`: **8.30% → 0.01%**; `Ground Truth`: **0.16% → 0.00%**). Refining to the converged step **`dc = 2.5e-5 km/s`** (shallow) while retaining **`dc = 5.0e-3 km/s`** (deep) eliminates artificial root-skipping within `< 0.1%` residual uncertainty.
-2. **Noise-Floor-Normalized Regime Signature Across Backbones**: When stations are stratified by initial exact misfit normalized by the observational noise floor, both **OpenSWI** and **DispFormer** exhibit consistent three-regime behavior:
-   - **Below / near the noise floor (`r_0 < 2.0` shallow; `r_0 < 1.25` deep)**: Forward-loss refinement fits observation noise and degrades Resolvable-Depth $V_s$ RMSE (median `+156.7%` in `[0, 1)` on Shallow Multi-Structure; `+13.25%` OpenSWI and `+15.24%` DispFormer on Deep Lithospheric when excluding the official checkpoint).
-   - **Above the noise floor (`r_0 >= 2.0` shallow; `1.25 <= r_0 <= 3.0` deep)**: Forward-loss refinement yields consistent $V_s$ gains (`-39.07%` overall on Shallow Prior-Shift), and **Holdout ES** captures substantial accuracy improvements across both backbones (`-12.15%` OpenSWI and `-15.66%` DispFormer on Shallow Multi-Structure; `-1.50%` OpenSWI and `-7.42%` DispFormer on Deep Lithospheric) without oracle stopping.
-   - **Controlled noise-amplitude scaling (`0.5×` to `4.0×`)**: Unlabeled classical-inversion noise-floor calibration ($\hat{\sigma}_D$) tracks the ground-truth noise floor linearly (`0.929–0.953×`), while 50-step TTA transitions monotonically from `-9.56%` (`0.5×`) gain to `+46.93%` (`4.0×`) degradation and **Holdout ES** improves every level (`-15.04%` to `+12.51%`, flipping `2.0×` from `+12.38%` to `-2.76%`).
-3. **Why Naive Discrepancy Stopping Alone Fails**: A pre-registered validation audit of single-threshold discrepancy stopping (`Pre-Registered Safe-TTA`, $\alpha \in \{1.0, 1.25, 1.5, 2.0\}$) fails the `<= +2.0%` multi-domain truth gate (`0/4` passing) due to near-floor escape in shallow benchmarks and deep crustal (`>10 km`) over-correction on high-misfit (`> 5\hat{\sigma}_D`) model failures.
+- **Converged Forward-Solver Auditing Eliminates Artificial LVZ Tails**: Coarse phase-velocity stepping (`dc = 5.0e-3 km/s`) in `disba` skips Mode 0 onto Mode 1 on shallow profiles containing deep low-velocity zones (LVZs). Refining to **`dc = 2.5e-5 km/s`** (shallow) while keeping **`dc = 5.0e-3 km/s`** (deep) collapses artificial `>20%` held-out misfit tails (`Output-Space Refinement`: **9.35% → 1.36%**; `Gated Adapter + Output-Refined`: **8.30% → 0.01%**; representative `#9391`: **63.84% → 0.65%**, verified to `0.000087%` against an independent 6×6 Dunkin compound-matrix solver).
+- **Semi-Convergence Near the Observational Noise Floor**: Even under converged forward scoring, refining near or below the noise floor lowers held-out dispersion misfit while degrading $V_s$ accuracy (`+21.86%` RMSE degradation on Deep Benchmark; `+156.67%` median degradation in `[0, 1)` on Shallow Multi-Structure; controlled noise scan flips from `-9.56%` at `0.5×` to `+46.93%` at `4.0×`). Under strong prior shift, adaptation reduces $V_s$ RMSE by up to **`-57.79%`**.
+- **Regime-Aware Four-Step Operational Protocol**: Single-threshold Morozov discrepancy stopping fails simultaneous multi-domain validation (`0/4` passing across $\alpha \in \{1.0, 1.25, 1.5, 2.0\}$). Combining validation-locked operational $r_0 = m_0 / \hat{\sigma}_D$ screening (`r_0 >= 2.0` shallow; `1.25 <= r_0 <= 3.0` deep) with unfrozen internal 80/20 **Holdout ES** and exact converged `disba` rollback improves all **63 checkpoints across 14 cohorts** while saving up to **`77.2%`** of exact forward-solver calls (**`67.5%`** on CSRM Report).
 
-### Quantitative Summary Across Benchmarks and Diagnostics
+---
 
-| Evaluation Domain | Key Diagnostic Metric | Reference Value |
+## 30-Second Quick Start (Pure CPU)
+
+No GPU or multi-gigabyte dataset download is required to verify the physics audit, run unit tests, and reproduce every manuscript figure and table.
+
+```bash
+git clone https://github.com/Luoyoooo/SWI-TTA.git
+cd SWI-TTA
+python -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt && pip install -e ".[dev]"
+
+# 1. Pure-CPU installation check + live shallow LVZ root-skipping demo (< 1 s)
+python scripts/verify_install.py
+
+# 2. Full unit, invariant, zero-leakage, and hygiene test suite (~5 s)
+pytest -v
+
+# 3. Inspect closed-loop 14-cohort operational protocol summary (< 1 s)
+python scripts/run_operational_protocol.py --summary-check
+
+# 4. Reproduce all 15 figures (PDF/PNG/SVG) and 7 tables (MD/LaTeX) on CPU (~22 s)
+python scripts/reproduce_tables.py
+python scripts/reproduce_all_figures.py
+```
+
+---
+
+## Minimal Python API
+
+```python
+from swi_tta.physics.disba_referee import (
+    DEFAULT_SHALLOW_DC_KM_S,
+    forward_dispersion_diag,
+)
+from swi_tta.adaptation.safe_tta import run_operational_protocol
+
+# 1. Verify converged fundamental-mode Rayleigh dispersion on a shallow profile
+diag = forward_dispersion_diag(vs_profile, depth_km, periods_s, mode=0, dc=DEFAULT_SHALLOW_DC_KM_S)
+
+# 2. Execute the four-step operational protocol (r_0 routing + unfrozen Holdout ES + rollback)
+vs_adapted, info = run_operational_protocol(
+    vs_init_aligned, surrogate_ensemble, depth_km,
+    periods, phase_vel, group_vel, obs_mask, kept_mask,
+    domain="shallow", sigma_hat_d=0.00932, dc_shallow=DEFAULT_SHALLOW_DC_KM_S, disba_workers=4,
+)
+print(f"Routed: {info['routed_fraction']*100:.1f}% | disba saved: {info['disba_call_savings_vs_unrouted_hes_pct']:+.1f}%")
+```
+
+See [`docs/USER_GUIDE.md`](docs/USER_GUIDE.md) for complete input/output schemas, CLI flags, and Python API details, and [`tutorials/`](tutorials/) for 3 runnable pure-CPU Jupyter notebooks.
+
+---
+
+## Key Quantitative Benchmarks
+
+| Benchmark / Audit | Key Diagnostic Metric | Verified Result |
 | :--- | :--- | :--- |
-| **Shallow Benchmark (`disba` Referee Audit)** | Tail rate (`>20%` HO): Default `dc=5e-3` → Converged `dc=2.5e-5` | `Output-Refined (50-step)`: **9.35% → 1.36%**; `Gated Adapter + Output-Ref.`: **8.30% → 0.01%** |
-| **LongBeach-Matched Shallow** | Resolvable-Depth $V_s$ RMSE (`Input-Aligned Zero-Shot` → `Gated Adapter + Output-Ref.`) | **0.1179 → 0.0498 km/s** (**-57.79%**) |
-| **LongBeach (Report 70%, 3,705 stations)** | Held-Out Dispersion Misfit median (`Input-Aligned Zero-Shot` → `Gated Adapter + Output-Ref.`) | **3.75% → 0.83%** (`Classical Inversion`: **0.66%**) |
-| **CSRM (Report, 8,842 grid points)** | Held-Out Dispersion Misfit median (`Input-Aligned Zero-Shot` → `Low-DOF Adapter`) | **1.23% → 0.96%** (`Classical Inversion`: **1.43%**) |
-| **Shallow Multi-Structure (Held-Out)** | OpenSWI Δ $V_s$ RMSE: `50-step` / `Holdout ES` / `Ideal ES` | **-4.48%** / **-12.15%** / **-36.47%** |
-| **Shallow Prior-Shift (81.54% StyleA)** | OpenSWI Δ $V_s$ RMSE: `50-step` / `Holdout ES` / `Ideal ES` | **-39.07%** / **-39.34%** / **-49.18%** |
-| **Deep Lithospheric (Held-Out)** | Calibrated $\hat{\sigma}_D$ vs GT floor; Retrained-only `[0, 1)` ΔRMSE | $\hat{\sigma}_D =$ **0.02417** (**1.82×** vs `0.01329`); OpenSWI **+13.25%**, DispFormer **+15.24%** |
-| **Noise Amplitude Scan (`0.5×`–`4.0×`)** | $\hat{\sigma}_D / \text{GT}$ tracking ratio; `50-step` ΔRMSE shift | **0.929–0.953×**; **-9.56% (`0.5×`) → +46.93% (`4.0×`)** |
+| **Shallow LVZ Audit (`disba` Step)** | `>20%` HO tail: `dc=5e-3` → `dc=2.5e-5` (`#9391`) | Out.-Space Ref.: **9.35% → 1.36%**; Gated Adp.+Out.: **8.30% → 0.01%** (**63.84% → 0.65%**) |
+| **LongBeach-Matched (Test)** | Resolvable-Depth $V_s$ RMSE (`Aligned ZS` → `Gated Adp.+Out.` / `Protocol`) | **0.1179 → 0.0498 km/s (-57.79%)** / **0.0588 km/s (-50.18%)** |
+| **Shallow Benchmark (Test)** | `50-Step` vs `4-Step Protocol` (All / Retrained-only) | **-6.74% / +5.87%** → **-25.81% / -13.88%** (`+50.0%` `disba` saved) |
+| **Deep Benchmark (Test)** | `50-Step` vs `4-Step Protocol` (All / Retrained-only) | **+21.86% / +24.05%** → **-3.30% / -3.83%** (`+76.9%` `disba` saved) |
+| **Cross-Backbone Diagnostics** | OpenSWI / DispFormer `4-Step Protocol` (Sh. Multi, Sh. Prior, Deep Lith.) | OpenSWI: **-22.86% / -40.48% / -3.63%**; DispFormer: **-15.49% / -17.48% / -5.45%** |
+| **Noise Amplitude Scan (`0.5×–4.0×`)** | $\hat{\sigma}_D / \sigma_{\text{GT}}$ tracking; `50-Step` vs `Holdout ES` | **0.929–0.953×**; `50-Step` **-9.56% → +46.93%**; `Holdout ES` **-15.04% → +12.51%** |
+| **LongBeach Report (3,705 sta.)** | `4-Step Protocol` HO median ($r_{\text{ref}}$ vs Fu et al., 2022) | **3.75% → 0.82%** (`0.00%` tail; $r_{\text{ref}}$ **0.551 → 0.713**; `98.1%` routed) |
+| **CSRM Report (8,842 grid pts)** | `4-Step Protocol` HO median ($r_{\text{ref}}$ vs Xiao et al., 2024) | **1.23% → 1.10%** ($r_{\text{ref}}$ **0.686 → 0.707**; `70.9%` zero-shot; **`+67.5%`** `disba` saved) |
+
+---
+
+## Documentation & Tutorials
+
+- **User Guide** ([`docs/USER_GUIDE.md`](docs/USER_GUIDE.md)): Complete specification of data formats, units, CLI flags, Python APIs, and expected behaviors.
+- **Interactive Tutorials** ([`tutorials/`](tutorials/)): Three pure-CPU notebooks covering LVZ root-skipping auditing, zero-leakage & operational protocol execution, and figure/table reproduction.
+- **Operational Decision Protocol** ([`docs/PROTOCOL.md`](docs/PROTOCOL.md)): Step-by-step deployment guidelines and freeze-depth ablation rationale.
+- **Figure & Table Provenance** ([`docs/FIGURE_TABLE_MAP.md`](docs/FIGURE_TABLE_MAP.md)): Exact item-to-generator mapping for all 15 figures and 7 tables.
+- **Data Availability** ([`data/DATA_AVAILABILITY.md`](data/DATA_AVAILABILITY.md)): Upstream OpenSWI CC BY 4.0 access instructions and SHA-256 verification (`scripts/download_data.py`).
 
 ---
 
 ## Repository Structure
 
 ```text
-swi-tta-diagnostics/
-├── README.md                         # Project guide, reproduction map, and C&G code availability
+SWI-TTA/
+├── README.md                         # Project overview, Quick Start, and C&G code availability
 ├── LICENSE                           # MIT License
-├── CITATION.cff                      # Citation File Format (CFF 1.2.0)
-├── pyproject.toml                    # Editable package build (package name: swi_tta)
+├── CITATION.cff                      # Machine-readable citation metadata (CFF 1.2.0)
+├── pyproject.toml                    # Editable package build (import package: swi_tta)
 ├── environment.yml                   # Conda environment specification
-├── requirements.txt                  # Core Python dependencies
-├── requirements-lock.txt             # Exact tested package versions
-├── configs/                          # Portable relative-path YAML configurations
-│   ├── forward_referee.yaml          # Converged disba step sizes & empirical relations
-│   ├── calibration.yaml              # Calibrated noise floors (sigma_hat_D) & trust-region Delta
-│   ├── benchmark_domains.yaml        # Benchmark domains, split manifests & period grids
-│   ├── methods.yaml                  # Adaptation hyperparameters & public naming catalog
-│   └── figures.yaml                  # Elsevier / C&G typography, palette & export settings
-├── src/swi_tta/                      # Core installable Python library
-│   ├── physics/                      # Exact disba forward referee & root-search diagnostics
-│   ├── data/                         # OpenSWI loaders, deterministic splits & zero-leakage alignment
-│   ├── models/                       # OpenSWI / DispFormer backbones, forward surrogates & adapters
-│   ├── adaptation/                   # Zero-Shot, BN-Only TTA, Output Refinement, Holdout ES, Safe-TTA
-│   ├── evaluation/                   # Resolvable-depth Vs RMSE, held-out misfit & field evaluation
-│   └── visualization/                # Publication figures (Figs 1-9, S1-S5, GA) & LaTeX/MD tables
-├── scripts/                          # Reproducible CLI entry points
-│   ├── verify_install.py             # <=30 s pure-CPU smoke test + live LVZ root-skipping demo
-│   ├── reproduce_all_figures.py      # One-command CPU regeneration of all 15 publication figures
-│   ├── reproduce_tables.py           # One-command CPU regeneration of Tables 1-4 and S1-S2
-│   ├── download_data.py              # Official HuggingFace OpenSWI downloader + SHA-256 verifier
-│   ├── run_root_convergence.py       # Per-regime disba step-size convergence audit CLI
-│   ├── run_diagnostics.py            # Noise-floor signature diagnostics CLI (GPU / summary)
-│   └── run_mechanism_audit.py        # Safe-TTA validation & attribution audit CLI
-├── data/                             # Small deterministic split manifests & upstream checksums
-│   ├── DATA_AVAILABILITY.md          # OpenSWI CC BY 4.0 access & dataset documentation
-│   ├── checksums_sha256.txt          # SHA-256 verification list for all 66 upstream OpenSWI files
-│   └── splits/                       # Spatial-block & stratified held-out period JSON manifests
-├── results_summary/                  # Compact 5.04 MB CPU reproduction archive + manifest_sha256.json
-├── figures/                          # Pre-rendered Graphical Abstract, main/ (Figs 1-9), supplementary/ (S1-S5)
-├── tables/                           # Generated Markdown & booktabs LaTeX tables (Tables 1-4, S1-S2)
-├── docs/                             # Operational protocol, figure/table map & C&G submission block
-└── tests/                            # Unit, invariant, zero-leakage, reproduction & hygiene pytest suite
-```
-
----
-
-## Installation and 30-Second CPU Verification
-
-### Option 1: Editable `pip` Installation (Recommended)
-
-```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-pip install -e .
-```
-
-### Option 2: Conda Environment
-
-```bash
-conda env create -f environment.yml
-conda activate swi-tta-diagnostics
-pip install --no-deps -e .
-```
-
-### Pure-CPU Smoke Verification (`< 1 s` Typical Runtime)
-
-Verify the installation, summary archive SHA-256 digests, zero-leakage alignment, and run a **live CPU reproduction of the shallow LVZ `disba` root-skipping pitfall** (`dc = 0.005` yielding `63.84%` held-out misfit vs converged `dc = 2.5e-5` recovering `0.65%`):
-
-```bash
-python scripts/verify_install.py
-pytest -v
-```
-
----
-
-## One-Command Manuscript Figure and Table Reproduction (Pure CPU)
-
-All manuscript figures (Graphical Abstract, Figures 1–9, Figures S1–S5 in `.pdf`, 600-DPI `.png`, and editable `.svg`) and tables (Tables 1–4 and Tables S1–S2 in `.md` and `booktabs` `.tex`) reproduce deterministically on CPU directly from `results_summary/` with zero GPU or raw dataset downloads:
-
-```bash
-python scripts/reproduce_all_figures.py
-python scripts/reproduce_tables.py
-```
-
-| Manuscript Item | Output Location | Reproduction Command |
-| :--- | :--- | :--- |
-| **Graphical Abstract (5:2, 2700×1080 px)** | `figures/graphical_abstract.{pdf,png,svg}` | `python scripts/reproduce_all_figures.py` |
-| **Figure 1** (Workflow & 4-Step Safe-TTA Protocol) | `figures/main/fig01_workflow_and_protocol.{pdf,png,svg}` | `python scripts/reproduce_all_figures.py` |
-| **Figure 2** (Three-Benchmark Overview) | `figures/main/fig02_benchmark_overview.{pdf,png,svg}` | `python scripts/reproduce_all_figures.py` |
-| **Figure 3** (`disba` Root-Skipping & Tail Collapse) | `figures/main/fig03_disba_root_skipping.{pdf,png,svg}` | `python scripts/reproduce_all_figures.py` |
-| **Figure 4** (OpenSWI 3-Domain Signature Curves) | `figures/main/fig04_openswi_signature_curves.{pdf,png,svg}` | `python scripts/reproduce_all_figures.py` |
-| **Figure 5** (OpenSWI vs DispFormer Cross-Backbone) | `figures/main/fig05_cross_backbone_signatures.{pdf,png,svg}` | `python scripts/reproduce_all_figures.py` |
-| **Figure 6** (Noise Amplitude Scan `0.5×–4.0×`) | `figures/main/fig06_noise_amplitude_scan.{pdf,png,svg}` | `python scripts/reproduce_all_figures.py` |
-| **Figure 7** (Pre-Registered Safe-TTA Attribution) | `figures/main/fig07_safe_tta_failure_attribution.{pdf,png,svg}` | `python scripts/reproduce_all_figures.py` |
-| **Figure 8** (LongBeach Report Depth Slices) | `figures/main/fig08_longbeach_slices.{pdf,png,svg}` | `python scripts/reproduce_all_figures.py` |
-| **Figure 9** (CSRM Slices & Station `#10067` Profile) | `figures/main/fig09_csrm_slices_and_station.{pdf,png,svg}` | `python scripts/reproduce_all_figures.py` |
-| **Figures S1–S5** (Supplementary Diagnostics) | `figures/supplementary/figS01..S05.{pdf,png,svg}` | `python scripts/reproduce_all_figures.py` |
-| **Tables 1–4 & Tables S1–S2** (Markdown & LaTeX) | `tables/table{1..4,S1,S2}.{md,tex}` | `python scripts/reproduce_tables.py` |
-
-See [`docs/FIGURE_TABLE_MAP.md`](docs/FIGURE_TABLE_MAP.md) for the complete item-to-input provenance table and [`docs/PROTOCOL.md`](docs/PROTOCOL.md) for the practitioner four-step Safe-TTA decision protocol.
-
----
-
-## Optional Full-Data & GPU Workflows
-
-Users wishing to download the full upstream OpenSWI archives (CC BY 4.0) and run end-to-end convergence or adaptation audits on new checkpoints can use:
-
-```bash
-# 1. Fetch official OpenSWI field/synthetic data from HuggingFace with SHA-256 verification
-python scripts/download_data.py --subset real
-
-# 2. Run per-regime disba step-size convergence audit (CPU demo or custom NPZ)
-python scripts/run_root_convergence.py --demo-lvz
-
-# 3. Inspect or execute cross-backbone diagnostics & Safe-TTA mechanism audits
-python scripts/run_diagnostics.py --summary-check
-python scripts/run_mechanism_audit.py --summary-check
+├── requirements.txt / -lock.txt      # Core & pinned Python dependencies
+├── src/swi_tta/                      # Core Python package (physics, data, models, adaptation, eval, viz)
+├── scripts/                          # 8 CLI entry points (CPU verification, protocol, figures, tables, data)
+├── configs/                          # Portable YAML configs (forward solver, calibration, domains, methods)
+├── tutorials/                        # 3 pure-CPU Jupyter notebooks for typical workflows
+├── docs/                             # USER_GUIDE.md, PROTOCOL.md, FIGURE_TABLE_MAP.md, CODE_AVAILABILITY_BLOCK.md
+├── website/                          # Minimalist static project page (auto-deployed via GitHub Pages)
+├── data/                             # Deterministic spatial/period split manifests & upstream SHA-256 checksums
+├── results_summary/                  # SHA-256-verified compact summary & per-station protocol audit archive
+├── figures/                          # Pre-rendered Graphical Abstract, Figs 1-9, Figs S1-S5 (PDF/PNG/SVG)
+├── tables/                           # Generated Tables 1-4 and S1-S3 (Markdown & booktabs LaTeX)
+└── tests/                            # 22 unit, invariant, zero-leakage, reproduction & hygiene pytest checks
 ```
 
 ---
 
 ## Computer Code Availability
 
-- **Name of the code/library**: `swi-tta-diagnostics` (Python package: `swi_tta`, v1.0.0)
-- **Contact**: Corresponding author (`corresponding.author@institution.edu`; GitHub issue tracker at the repository URL below)
-- **Hardware requirements**: Multi-core CPU with 4 GB RAM for installation verification, unit testing, and complete reproduction of all manuscript figures and tables (< 30 s). Optional CUDA-capable GPU (>= 8 GB VRAM) for full-scale neural adaptation on raw OpenSWI archives.
-- **Program language**: Python (3.10–3.11)
-- **Software required**: `numpy`, `scipy`, `torch`, `disba` (>= 0.7.0), `matplotlib`, `pyyaml`, `pillow`, `pytest` (exact versions locked in `requirements-lock.txt` and `environment.yml`).
-- **Program size**: 0.41 MB for source code, scripts, configurations, documentation, and tests (`src/`, `scripts/`, `configs/`, `docs/`, `tests/`, root metadata); 5.04 MB for the compact reproduction archive (`results_summary/`); 2.86 MB for split manifests and checksums (`data/`); 25.4 MB for pre-rendered publication figures (`figures/`) and tables (`tables/`); 33.7 MB total repository working tree.
-- **The source codes are available for downloading at the link**: <https://github.com/Luoyoooo/swi-tta-diagnostics>
+- **Name of the code/library**: `SWI-TTA` (Python package: `swi_tta`, v1.0.0; MIT License)
+- **Contact**: Corresponding author (contact details to be finalized prior to publication; GitHub issue tracker at the link below)
+- **Hardware requirements**: Multi-core CPU with 4 GB RAM reproduces installation checks, the live shallow LVZ root-skipping demo (`< 1 s`), unit tests, tutorials, and all 15 figures and 7 tables in `< 30 s`; an NVIDIA GPU (`>= 8 GB` VRAM) is optional for full raw-archive neural adaptation.
+- **Program language & dependencies**: Python (`3.10–3.11`) with `numpy`, `scipy`, `torch`, `disba` (`>= 0.7.0`), `numba`, `matplotlib`, `pyyaml`, `pillow`, `requests`, `tqdm`, and `pytest` (pinned in `requirements-lock.txt` and `environment.yml`).
+- **Program size**: `0.56 MB` source/scripts/configs/docs/tutorials/website/tests; `14.76 MB` SHA-256-verified summary & per-station protocol archive (`results_summary/`, 11 files); `2.86 MB` split manifests/checksums (`data/`); `25.25 MB` pre-rendered figures and tables (`43.42 MB` total working tree).
+- **Source code & project page**: <https://github.com/Luoyoooo/SWI-TTA> | <https://luoyoooo.github.io/SWI-TTA/>
 
 ---
 
 ## Citation
 
-If you use this diagnostic framework, converged `disba` referee protocol, or benchmark splits in your research, please cite this repository (see [`CITATION.cff`](CITATION.cff)):
+If you use **SWI-TTA**, its converged `disba` auditing protocol, or benchmark splits in your research, please cite:
 
 ```bibtex
-@article{mao2026switta,
-  title   = {When Does Test-Time Adaptation Help or Harm Deep Surface-Wave Dispersion Inversion? Noise-Floor Regimes, Forward-Solver Pitfalls, and Cross-Backbone Diagnostics},
-  author  = {Mao, Rui},
+@article{switta2026cg,
+  title   = {Noise-floor regimes and forward-solver pitfalls in test-time adaptation for deep surface-wave dispersion inversion},
+  author  = {{SWI-TTA Authors}},
   journal = {Computers \& Geosciences},
   year    = {2026},
-  url     = {https://github.com/Luoyoooo/swi-tta-diagnostics},
-  note    = {Software archive: swi-tta-diagnostics (v1.0.0)}
+  url     = {https://github.com/Luoyoooo/SWI-TTA},
+  note    = {Software archive: SWI-TTA (v1.0.0)}
 }
 ```
 
 ## Acknowledgements
 
-We gratefully acknowledge the authors of **OpenSWI** (Liu et al., 2025) for open-access surface-wave datasets and baselines, the developers of **DispFormer** and **`disba`** (Luu, 2021) for fast surface-wave dispersion modeling, and the teams behind the **LongBeach** (Lin et al., 2013) and **CSRM** reference velocity models.
+We gratefully acknowledge the authors of **OpenSWI** (Liu et al., 2024, 2026) for open-access surface-wave datasets and baselines, the developers of **DispFormer** (Liu et al., 2025) and **`disba`** (Luu, 2021), and the teams behind the **LongBeach** (Lin et al., 2013; Fu et al., 2022) and **CSRM** (Xiao et al., 2024) reference tomography models.

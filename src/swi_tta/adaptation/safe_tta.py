@@ -39,6 +39,34 @@ DEFAULT_VELOCITY_BOUNDS: Dict[str, Tuple[float, float]] = {
     "deep": (0.15, 4.98),
 }
 
+DEFAULT_ROUTING_BOUNDS: Dict[str, Tuple[float, Optional[float]]] = {
+    "shallow": (2.0, None),
+    "deep": (1.25, 3.0),
+}
+
+_UNSET = object()
+
+
+def compute_max_frozen_delta(
+    vs_out: np.ndarray,
+    vs_init: np.ndarray,
+    depths: np.ndarray,
+    z_res_kept: np.ndarray,
+) -> np.ndarray:
+    """Compute per-station maximum absolute change strictly deeper than ``z_res_kept``."""
+    v_out = np.asarray(vs_out, dtype=np.float64)
+    v_in = np.asarray(vs_init, dtype=np.float64)
+    d_arr = np.asarray(depths, dtype=np.float64).reshape(-1)
+    zr = np.asarray(z_res_kept, dtype=np.float64).reshape(-1)
+    n_sta = v_out.shape[0]
+    frozen_mask = d_arr[None, :] > (zr[:, None] + 1e-9)
+    abs_diff = np.abs(v_out - v_in)
+    out = np.zeros(n_sta, dtype=np.float64)
+    for i in range(n_sta):
+        if np.any(frozen_mask[i]):
+            out[i] = float(np.max(abs_diff[i, frozen_mask[i]]))
+    return out
+
 
 def _normalize_kept_mask_2ch(
     obs_mask: np.ndarray,
@@ -102,6 +130,7 @@ def create_stop_period_split(
     seed: int = 20261121,
     keep_endpoints: bool = True,
     min_valid_points: int = 5,
+    station_indices: Optional[Sequence[int]] = None,
 ) -> Tuple[np.ndarray, np.ndarray]:
     """Deterministically split each station's kept periods into optimization and internal stop sets."""
     km_2ch = _normalize_kept_mask_2ch(obs_mask, kept_mask, remove_group=(not compute_group))
@@ -111,8 +140,16 @@ def create_stop_period_split(
 
     channels = (0, 1) if compute_group else (0,)
     base_seed = int(seed)
+    sta_ids = (
+        np.arange(n_sta, dtype=np.int64)
+        if station_indices is None
+        else np.asarray(station_indices, dtype=np.int64).reshape(-1)
+    )
+    if sta_ids.size != n_sta:
+        raise ValueError(f"station_indices length {sta_ids.size} != n_sta {n_sta}")
 
     for i in range(n_sta):
+        sid_i = int(sta_ids[i])
         for ch in channels:
             valid_idx = np.where(km_2ch[i, :, ch])[0]
             nv = int(valid_idx.size)
@@ -122,7 +159,7 @@ def create_stop_period_split(
             n_stop = min(int(round(float(stop_ratio) * nv)), int(candidates.size))
             if n_stop <= 0:
                 continue
-            sta_seed = (base_seed + i * 1000003 + ch * 97) & 0x7FFFFFFF
+            sta_seed = (base_seed + sid_i * 1000003 + ch * 97) & 0x7FFFFFFF
             rng = np.random.RandomState(sta_seed)
             picked = rng.choice(candidates, size=n_stop, replace=False)
             stop_mask[i, picked, ch] = True
@@ -641,6 +678,9 @@ def run_output_refinement_from_profile(
     kept_mask: np.ndarray,
     domain: str,
     *,
+    depths: Optional[np.ndarray] = None,
+    z_res_kept: Optional[np.ndarray] = None,
+    enable_zres_freeze: bool = False,
     lr: float = 0.02,
     num_steps: int = 50,
     lambda_prior: float = 0.05,
@@ -651,7 +691,12 @@ def run_output_refinement_from_profile(
     device: str = "cpu",
     remove_group: Optional[bool] = None,
 ) -> Tuple[np.ndarray, Dict[str, Any]]:
-    """Unconstrained station-independent output refinement from precomputed initial profiles."""
+    """Station-independent output refinement from precomputed initial profiles.
+
+    When ``enable_zres_freeze=True``, gradients and updates are strictly zeroed for
+    all layers deeper than ``z_res_kept`` so frozen layers remain bit-identical to
+    ``vs_init_aligned``.
+    """
     torch.manual_seed(int(seed))
     if domain not in ("shallow", "deep"):
         raise ValueError(f"domain must be 'shallow' or 'deep'; got {domain!r}")
@@ -659,12 +704,30 @@ def run_output_refinement_from_profile(
     v_lo, v_hi = DEFAULT_VELOCITY_BOUNDS[domain] if v_bounds is None else (float(v_bounds[0]), float(v_bounds[1]))
 
     vs_init = np.asarray(vs_init_aligned, dtype=np.float32)
-    n_sta = vs_init.shape[0]
+    n_sta, n_layers = vs_init.shape
 
     per_clean, ph_clean, gp_clean, km_2ch = _scrub_to_kept_only(
         periods, phase_vel, group_vel, obs_mask, kept_mask, remove_group=rm_grp
     )
     all_masked_np = ~np.any(km_2ch, axis=(1, 2))
+
+    editable_mask_np: Optional[np.ndarray] = None
+    z_res_used: Optional[np.ndarray] = None
+    d_arr: Optional[np.ndarray] = None
+    if enable_zres_freeze:
+        if depths is None:
+            raise ValueError("depths must be provided when enable_zres_freeze=True")
+        d_arr = np.asarray(depths, dtype=np.float64).reshape(-1)
+        if d_arr.size != n_layers:
+            raise ValueError(f"depths length {d_arr.size} != profile layers {n_layers}")
+        z_res_used = (
+            compute_resolvable_depth_from_kept(per_clean, ph_clean, km_2ch, km_2ch, d_arr)
+            if z_res_kept is None
+            else np.asarray(z_res_kept, dtype=np.float64).reshape(-1)
+        )
+        if z_res_used.size != n_sta:
+            raise ValueError(f"z_res_kept length {z_res_used.size} != n_sta {n_sta}")
+        editable_mask_np = d_arr[None, :] <= (z_res_used[:, None] + 1e-9)
 
     ens.eval().to(device)
     for p in ens.parameters():
@@ -693,12 +756,20 @@ def run_output_refinement_from_profile(
             dobs_t = torch.from_numpy(d_obs_2ch[s:e]).to(device)
             km_t = torch.from_numpy(km_2ch[s:e]).to(device)
             all_m = torch.from_numpy(all_masked_np[s:e]).to(device)
+            edit_t = (
+                torch.from_numpy(editable_mask_np[s:e]).to(device)
+                if editable_mask_np is not None
+                else None
+            )
 
             if 0 in snapshots:
                 with torch.no_grad():
-                    v0_sn = torch.clamp(vs0_t, min=v_lo, max=v_hi)
-                    if torch.any(all_m):
-                        v0_sn[all_m] = 0.0
+                    if edit_t is not None:
+                        v0_sn = vs0_t.clone()
+                    else:
+                        v0_sn = torch.clamp(vs0_t, min=v_lo, max=v_hi)
+                        if torch.any(all_m):
+                            v0_sn[all_m] = 0.0
                     snapshots[0][s:e] = v0_sn.cpu().numpy()
 
             vm = build_valid_channel_mask(per_t, dobs_t, km_t)
@@ -711,26 +782,40 @@ def run_output_refinement_from_profile(
             opt = torch.optim.Adam([delta], lr=float(lr))
             for st_idx in range(1, int(num_steps) + 1):
                 opt.zero_grad(set_to_none=True)
-                vs_cur = torch.clamp(vs0_t + delta, min=v_lo, max=v_hi)
+                vs_proj = torch.clamp(vs0_t + delta, min=v_lo, max=v_hi)
+                vs_cur = torch.where(edit_t, vs_proj, vs0_t) if edit_t is not None else vs_proj
                 mn, _, _ = ens.predict_with_uncertainty(vs_cur, pq_t)
                 pred_m = torch.where(vm, mn, d_safe)
                 rel_sq = ((pred_m - d_safe) / d_safe) ** 2
                 loss_c_i = (vm_f * rel_sq).sum(dim=(1, 2)) / n_val_denom * has_val_i
                 prior_i = float(lambda_prior) * compute_r_depth_per_station(vs_cur, domain) if lambda_prior > 0 else 0.0
-                loss = (loss_c_i + prior_i).sum()
+                loss = ((loss_c_i + prior_i) * has_val_i).sum()
                 loss.backward()
+                if delta.grad is not None and edit_t is not None:
+                    delta.grad.masked_fill_(~edit_t, 0.0)
                 opt.step()
+                if edit_t is not None:
+                    with torch.no_grad():
+                        delta.data.masked_fill_(~edit_t, 0.0)
 
                 if st_idx in snapshots:
                     with torch.no_grad():
                         vs_sn = torch.clamp(vs0_t + delta, min=v_lo, max=v_hi)
-                        if torch.any(all_m):
+                        if edit_t is not None:
+                            vs_sn = torch.where(edit_t, vs_sn, vs0_t)
+                            if torch.any(all_m):
+                                vs_sn[all_m] = vs0_t[all_m]
+                        elif torch.any(all_m):
                             vs_sn[all_m] = 0.0
                         snapshots[st_idx][s:e] = vs_sn.cpu().numpy()
 
             with torch.no_grad():
                 vs_fin = torch.clamp(vs0_t + delta, min=v_lo, max=v_hi)
-                if torch.any(all_m):
+                if edit_t is not None:
+                    vs_fin = torch.where(edit_t, vs_fin, vs0_t)
+                    if torch.any(all_m):
+                        vs_fin[all_m] = vs0_t[all_m]
+                elif torch.any(all_m):
                     vs_fin[all_m] = 0.0
                 vs_refined[s:e] = vs_fin.cpu().numpy()
 
@@ -741,16 +826,21 @@ def run_output_refinement_from_profile(
     finally:
         _restore_deterministic_cuda(prev_flags)
 
-    return vs_refined, {
+    out_info: Dict[str, Any] = {
         "method": "output_space_refinement",
         "domain": domain,
         "num_steps": int(num_steps),
         "lr": float(lr),
         "lambda_prior": float(lambda_prior),
+        "enable_zres_freeze": bool(enable_zres_freeze),
         "t_gpu_refine_sec": t_ref,
         "peak_vram_gb": float(peak_b / (1024 ** 3)),
         **({"step_snapshots": snapshots} if snapshot_steps is not None else {}),
     }
+    if enable_zres_freeze and d_arr is not None and z_res_used is not None:
+        out_info["z_res_kept"] = z_res_used
+        out_info["max_frozen_delta"] = compute_max_frozen_delta(vs_refined, vs_init, d_arr, z_res_used)
+    return vs_refined, out_info
 
 
 def run_holdout_early_stopping(
@@ -777,25 +867,44 @@ def run_holdout_early_stopping(
     stop_split_ratio: float = 0.20,
     stop_split_seed: int = 20261121,
     stop_split_keep_endpoints: bool = True,
+    station_indices: Optional[Sequence[int]] = None,
+    enable_zres_freeze: bool = False,
+    freeze_depth_factor: float = 1.0,
+    enable_exact_verification: bool = False,
+    m_init_kept: Optional[np.ndarray] = None,
+    init_complete: Optional[np.ndarray] = None,
     seed: int = 0,
     device: str = "cpu",
     remove_group: Optional[bool] = None,
     compute_group: Optional[bool] = None,
     disba_workers: int = 4,
+    executor: Optional[ProcessPoolExecutor] = None,
     phase_dispersion_cls: Any = PhaseDispersion,
     group_dispersion_cls: Any = GroupDispersion,
 ) -> Tuple[np.ndarray, Dict[str, Any]]:
-    """Per-station internal Holdout ES using 20% of kept periods evaluated via ``disba``."""
+    """Per-station internal Holdout ES using 20% of kept periods evaluated via ``disba``.
+
+    Optional safety guards (enabled by default in ``run_operational_protocol``):
+    - ``enable_zres_freeze``: freezes layers deeper than ``z_res_kept`` (zero update).
+    - ``enable_exact_verification``: evaluates the selected snapshot on all kept periods
+      with exact converged ``disba`` and reverts to ``vs_init_aligned`` if empty,
+      incomplete, non-finite, or failing to lower full kept-period misfit.
+    """
     t_total0 = time.perf_counter()
     if domain not in ("shallow", "deep"):
         raise ValueError(f"domain must be 'shallow' or 'deep'; got {domain!r}")
     rm_grp = (domain == "shallow") if remove_group is None else bool(remove_group)
     comp_grp = (domain == "deep") if compute_group is None else bool(compute_group)
     d_arr = np.asarray(depths, dtype=np.float64).reshape(-1)
+    vs_init = np.asarray(vs_init_aligned, dtype=np.float32)
+    n_sta = int(len(vs_init))
 
     per_clean, ph_clean, gp_clean, km_2ch = _scrub_to_kept_only(
         periods, phase_vel, group_vel, obs_mask, kept_mask, remove_group=rm_grp
     )
+    any_kept_station = np.any(km_2ch, axis=(1, 2))
+    z_res_kept = compute_resolvable_depth_from_kept(per_clean, ph_clean, km_2ch, km_2ch, d_arr)
+
     train_kept_mask, stop_mask = create_stop_period_split(
         km_2ch,
         km_2ch,
@@ -803,6 +912,7 @@ def run_holdout_early_stopping(
         stop_ratio=float(stop_split_ratio),
         seed=int(stop_split_seed),
         keep_endpoints=bool(stop_split_keep_endpoints),
+        station_indices=station_indices,
     )
 
     snapshot_steps = list(range(0, int(num_steps) + 1, int(check_interval)))
@@ -810,7 +920,7 @@ def run_holdout_early_stopping(
         snapshot_steps.append(int(num_steps))
 
     _, ref_info = run_output_refinement_from_profile(
-        vs_init_aligned=vs_init_aligned,
+        vs_init_aligned=vs_init,
         ens=ens,
         periods=per_clean,
         phase_vel=ph_clean,
@@ -818,6 +928,9 @@ def run_holdout_early_stopping(
         obs_mask=km_2ch,
         kept_mask=train_kept_mask,
         domain=domain,
+        depths=d_arr,
+        z_res_kept=z_res_kept * float(freeze_depth_factor),
+        enable_zres_freeze=bool(enable_zres_freeze),
         lr=lr,
         num_steps=num_steps,
         lambda_prior=lambda_prior,
@@ -830,7 +943,6 @@ def run_holdout_early_stopping(
     )
     snaps = ref_info["step_snapshots"]
 
-    n_sta = int(len(vs_init_aligned))
     dc_val = resolve_regime_dc(domain, dc=dc, dc_shallow=dc_shallow, dc_deep=dc_deep, dc_cfg=dc_cfg)
     eff_workers = min(int(disba_workers), MAX_DISBA_WORKERS)
     custom_cls = (phase_dispersion_cls is not PhaseDispersion) or (group_dispersion_cls is not GroupDispersion)
@@ -844,9 +956,18 @@ def run_holdout_early_stopping(
     t_disba_sec = 0.0
     n_disba_calls = 0
 
-    executor: Optional[ProcessPoolExecutor] = None
-    if (not custom_cls) and eff_workers > 1 and n_sta > 16:
-        executor = ProcessPoolExecutor(max_workers=eff_workers, initializer=_mp_worker_init)
+    own_executor = executor is None and (not custom_cls) and eff_workers > 1 and n_sta > 16
+    exec_pool: Optional[ProcessPoolExecutor] = (
+        ProcessPoolExecutor(max_workers=eff_workers, initializer=_mp_worker_init)
+        if own_executor
+        else executor
+    )
+
+    reverted = np.zeros(n_sta, dtype=bool)
+    revert_reason: List[str] = ["none"] * n_sta
+    m_init_arr = np.full(n_sta, np.nan, dtype=np.float64)
+    init_comp_arr = np.ones(n_sta, dtype=bool)
+    m_final_kept = np.full(n_sta, np.nan, dtype=np.float64)
 
     try:
         for st in snapshot_steps:
@@ -860,7 +981,7 @@ def run_holdout_early_stopping(
                 compute_group=comp_grp,
                 dc=dc_val,
                 workers=eff_workers,
-                executor=executor,
+                executor=exec_pool,
                 phase_dispersion_cls=phase_dispersion_cls,
                 group_dispersion_cls=group_dispersion_cls,
             )
@@ -870,29 +991,117 @@ def run_holdout_early_stopping(
             mf[~ev_st["is_complete_obs"]] = np.inf
             mf[~np.isfinite(mf)] = np.inf
             stop_misfit_history[st] = mf
+
+        best_step = np.full(n_sta, int(snapshot_steps[0]), dtype=np.int32)
+        best_val = np.full(n_sta, np.inf, dtype=np.float64)
+        vs_out = vs_init.copy()
+
+        for st in snapshot_steps:
+            mf_st = stop_misfit_history[st]
+            better = has_stop_pts & (mf_st < best_val)
+            if np.any(better):
+                best_val[better] = mf_st[better]
+                best_step[better] = int(st)
+                if int(st) == 0:
+                    vs_out[better] = vs_init[better]
+                else:
+                    vs_out[better] = snaps[st][better]
+
+        vs_out[~has_stop_pts] = vs_init[~has_stop_pts]
+        best_step[~has_stop_pts] = 0
+
+        if enable_exact_verification:
+            if m_init_kept is not None and init_complete is not None:
+                m_init_arr = np.asarray(m_init_kept, dtype=np.float64).copy()
+                init_comp_arr = np.asarray(init_complete, dtype=bool).copy()
+            else:
+                ev0 = _eval_disba_subset_diag(
+                    vs_init,
+                    d_arr,
+                    per_clean,
+                    ph_clean,
+                    gp_clean,
+                    km_2ch,
+                    compute_group=comp_grp,
+                    dc=dc_val,
+                    workers=eff_workers,
+                    executor=exec_pool,
+                    phase_dispersion_cls=phase_dispersion_cls,
+                    group_dispersion_cls=group_dispersion_cls,
+                )
+                t_disba_sec += ev0["elapsed_sec"]
+                n_disba_calls += ev0["n_calls"]
+                m_init_arr = ev0["misfit_ps"]
+                init_comp_arr = ev0["is_complete_obs"] & np.isfinite(m_init_arr)
+
+            m_final_kept[:] = m_init_arr
+            init_bad = (~init_comp_arr) | (~any_kept_station)
+            for i in np.where(init_bad)[0].tolist():
+                vs_out[i] = vs_init[i]
+                best_step[i] = 0
+                revert_reason[i] = "initial_incomplete_skipped"
+
+            nz_mask = (~init_bad) & (best_step > 0)
+            nz_idx = np.where(nz_mask)[0]
+            if nz_idx.size > 0:
+                ev_fin = _eval_disba_subset_diag(
+                    vs_out[nz_idx],
+                    d_arr,
+                    per_clean[nz_idx],
+                    ph_clean[nz_idx],
+                    gp_clean[nz_idx],
+                    km_2ch[nz_idx],
+                    compute_group=comp_grp,
+                    dc=dc_val,
+                    workers=eff_workers,
+                    executor=exec_pool,
+                    phase_dispersion_cls=phase_dispersion_cls,
+                    group_dispersion_cls=group_dispersion_cls,
+                )
+                t_disba_sec += ev_fin["elapsed_sec"]
+                n_disba_calls += ev_fin["n_calls"]
+                m_cand = ev_fin["misfit_ps"]
+                c_obs = ev_fin["is_complete_obs"]
+                is_emp = ev_fin["is_empty"]
+                for k_i, gi in enumerate(nz_idx.tolist()):
+                    if bool(is_emp[k_i]):
+                        vs_out[gi] = vs_init[gi]
+                        reverted[gi] = True
+                        revert_reason[gi] = "disba_empty_return"
+                        m_final_kept[gi] = m_init_arr[gi]
+                    elif not bool(c_obs[k_i]):
+                        vs_out[gi] = vs_init[gi]
+                        reverted[gi] = True
+                        revert_reason[gi] = "disba_incomplete_return"
+                        m_final_kept[gi] = m_init_arr[gi]
+                    elif not np.isfinite(m_cand[k_i]):
+                        vs_out[gi] = vs_init[gi]
+                        reverted[gi] = True
+                        revert_reason[gi] = "nonfinite_misfit"
+                        m_final_kept[gi] = m_init_arr[gi]
+                    elif float(m_cand[k_i]) >= float(m_init_arr[gi]):
+                        vs_out[gi] = vs_init[gi]
+                        reverted[gi] = True
+                        revert_reason[gi] = "misfit_not_improved"
+                        m_final_kept[gi] = m_init_arr[gi]
+                    else:
+                        m_final_kept[gi] = float(m_cand[k_i])
     finally:
-        if executor is not None:
-            executor.shutdown(wait=True)
+        if own_executor and exec_pool is not None:
+            exec_pool.shutdown(wait=True)
 
-    best_step = np.full(n_sta, int(snapshot_steps[0]), dtype=np.int32)
-    best_val = np.full(n_sta, np.inf, dtype=np.float64)
-    vs_out = snaps[snapshot_steps[0]].copy()
-
-    for st in snapshot_steps:
-        mf_st = stop_misfit_history[st]
-        better = has_stop_pts & (mf_st < best_val)
-        if np.any(better):
-            best_val[better] = mf_st[better]
-            best_step[better] = int(st)
-            vs_out[better] = snaps[st][better]
-
-    vs_out[~has_stop_pts] = np.asarray(vs_init_aligned, dtype=np.float32)[~has_stop_pts]
+    max_frozen_delta = compute_max_frozen_delta(vs_out, vs_init, d_arr, z_res_kept)
+    reason_counts: Dict[str, int] = {}
+    for r in revert_reason:
+        reason_counts[r] = reason_counts.get(r, 0) + 1
     t_total_sec = float(time.perf_counter() - t_total0)
 
     return vs_out, {
         "method": "holdout_es",
         "domain": domain,
         "dc": dc_val,
+        "enable_zres_freeze": bool(enable_zres_freeze),
+        "enable_exact_verification": bool(enable_exact_verification),
         "stop_split_ratio": float(stop_split_ratio),
         "stop_split_seed": int(stop_split_seed),
         "snapshot_steps": snapshot_steps,
@@ -901,6 +1110,15 @@ def run_holdout_early_stopping(
         "stop_misfit_history": stop_misfit_history,
         "train_kept_mask": train_kept_mask,
         "stop_mask": stop_mask,
+        "z_res_kept": z_res_kept,
+        "max_frozen_delta": max_frozen_delta,
+        "m_init_kept": m_init_arr,
+        "m_final_kept": m_final_kept,
+        "reverted": reverted,
+        "n_reverted": int(np.sum(reverted)),
+        "revert_rate": float(np.mean(reverted)) if n_sta else 0.0,
+        "revert_reason": revert_reason,
+        "revert_reason_counts": reason_counts,
         "n_stations": n_sta,
         "n_disba_calls": int(n_disba_calls),
         "t_gpu_refine_sec": float(ref_info["t_gpu_refine_sec"]),
@@ -908,6 +1126,332 @@ def run_holdout_early_stopping(
         "t_total_sec": t_total_sec,
         "peak_vram_gb": float(ref_info["peak_vram_gb"]),
     }
+
+
+def run_operational_protocol(
+    vs_init_aligned: np.ndarray,
+    ens: SurrogateEnsemble,
+    depths: np.ndarray,
+    periods: np.ndarray,
+    phase_vel: np.ndarray,
+    group_vel: np.ndarray,
+    obs_mask: np.ndarray,
+    kept_mask: np.ndarray,
+    domain: str,
+    *,
+    sigma_hat_d: float,
+    r0_low: Optional[float] = None,
+    r0_high: Any = _UNSET,
+    enable_zres_freeze: bool = False,
+    freeze_depth_factor: float = 1.0,
+    enable_holdout_es: bool = True,
+    enable_exact_verification: bool = True,
+    dc: Optional[float] = None,
+    dc_shallow: Optional[float] = None,
+    dc_deep: Optional[float] = None,
+    dc_cfg: Optional[Dict[str, Any]] = None,
+    lr: float = 0.02,
+    num_steps: int = 50,
+    check_interval: int = 5,
+    lambda_prior: float = 0.05,
+    v_bounds: Optional[Tuple[float, float]] = None,
+    batch_size: int = 512,
+    stop_split_ratio: float = 0.20,
+    stop_split_seed: int = 20261121,
+    stop_split_keep_endpoints: bool = True,
+    seed: int = 0,
+    device: str = "cpu",
+    remove_group: Optional[bool] = None,
+    compute_group: Optional[bool] = None,
+    disba_workers: int = 4,
+    phase_dispersion_cls: Any = PhaseDispersion,
+    group_dispersion_cls: Any = GroupDispersion,
+) -> Tuple[np.ndarray, Dict[str, Any]]:
+    """Execute the full four-step operational TTA protocol from aligned zero-shot profiles.
+
+    Steps executed per station:
+    1. Strictly scrub held-out evaluation periods (zero leakage) and resolve converged ``dc``.
+    2. Evaluate initial exact kept-period misfit ``m_0`` and compute ``r_0 = m_0 / sigma_hat_d``.
+    3. Route stations using regime-aware validation-locked bounds (default: shallow ``r_0 >= 2.0``,
+       deep ``1.25 <= r_0 <= 3.0``; near-floor and deep ``r_0 > 3.0`` retain ``vs_init_aligned``).
+    4. On routed stations only, run output-space refinement (without hard ``z > z_res``
+       freezing by default, because Rayleigh sensitivity extends beyond ``lambda_max / 3``;
+       optional freezing at ``freeze_depth_factor * z_res_kept`` is available via
+       ``enable_zres_freeze=True``), select the iteration via internal 80/20 Holdout ES
+       (when ``enable_holdout_es=True``), and verify final full kept-period misfit with
+       converged ``disba``, reverting to ``vs_init_aligned`` on empty/incomplete/non-finite
+       returns or non-improving misfit.
+    """
+    t_total0 = time.perf_counter()
+    if domain not in ("shallow", "deep"):
+        raise ValueError(f"domain must be 'shallow' or 'deep'; got {domain!r}")
+    if float(sigma_hat_d) <= 0.0 or not np.isfinite(float(sigma_hat_d)):
+        raise ValueError(f"sigma_hat_d must be positive finite; got {sigma_hat_d!r}")
+
+    def_lo, def_hi = DEFAULT_ROUTING_BOUNDS[domain]
+    lo_bound = float(def_lo if r0_low is None else r0_low)
+    hi_bound: Optional[float] = def_hi if r0_high is _UNSET else (None if r0_high is None else float(r0_high))
+
+    rm_grp = (domain == "shallow") if remove_group is None else bool(remove_group)
+    comp_grp = (domain == "deep") if compute_group is None else bool(compute_group)
+    d_arr = np.asarray(depths, dtype=np.float64).reshape(-1)
+    vs_init = np.asarray(vs_init_aligned, dtype=np.float32)
+    if vs_init.ndim != 2:
+        raise ValueError(f"vs_init_aligned must be 2D (N, D); got {vs_init.shape}")
+    n_sta, n_layers = vs_init.shape
+    if d_arr.size != n_layers:
+        raise ValueError(f"depths length {d_arr.size} != profile layers {n_layers}")
+
+    per_clean, ph_clean, gp_clean, km_2ch = _scrub_to_kept_only(
+        periods, phase_vel, group_vel, obs_mask, kept_mask, remove_group=rm_grp
+    )
+    any_kept_station = np.any(km_2ch, axis=(1, 2))
+    z_res_kept = compute_resolvable_depth_from_kept(per_clean, ph_clean, km_2ch, km_2ch, d_arr)
+    z_freeze_eff = z_res_kept * float(freeze_depth_factor)
+
+    dc_val = resolve_regime_dc(domain, dc=dc, dc_shallow=dc_shallow, dc_deep=dc_deep, dc_cfg=dc_cfg)
+    eff_workers = min(int(disba_workers), MAX_DISBA_WORKERS)
+    custom_cls = (phase_dispersion_cls is not PhaseDispersion) or (group_dispersion_cls is not GroupDispersion)
+
+    snapshot_steps = list(range(0, int(num_steps) + 1, int(check_interval)))
+    if int(num_steps) not in snapshot_steps:
+        snapshot_steps.append(int(num_steps))
+
+    executor: Optional[ProcessPoolExecutor] = None
+    if (not custom_cls) and eff_workers > 1 and n_sta > 16:
+        executor = ProcessPoolExecutor(max_workers=eff_workers, initializer=_mp_worker_init)
+
+    t_gpu_sec = 0.0
+    t_disba_sec = 0.0
+    n_disba_calls = 0
+    peak_vram_gb = 0.0
+
+    vs_out = vs_init.copy()
+    selected_step = np.zeros(n_sta, dtype=np.int32)
+    reverted = np.zeros(n_sta, dtype=bool)
+    revert_reason: List[str] = ["none"] * n_sta
+    route_action: List[str] = ["retain_zs"] * n_sta
+
+    try:
+        ev0 = _eval_disba_subset_diag(
+            vs_init,
+            d_arr,
+            per_clean,
+            ph_clean,
+            gp_clean,
+            km_2ch,
+            compute_group=comp_grp,
+            dc=dc_val,
+            workers=eff_workers,
+            executor=executor,
+            phase_dispersion_cls=phase_dispersion_cls,
+            group_dispersion_cls=group_dispersion_cls,
+        )
+        t_disba_sec += ev0["elapsed_sec"]
+        n_disba_calls += ev0["n_calls"]
+
+        m_init_kept = ev0["misfit_ps"]
+        init_comp = ev0["is_complete_obs"] & np.isfinite(m_init_kept)
+        r0 = m_init_kept / float(sigma_hat_d)
+        m_final_kept = m_init_kept.copy()
+
+        init_bad = (~init_comp) | (~any_kept_station)
+        routed_mask = np.zeros(n_sta, dtype=bool)
+        for i in range(n_sta):
+            if init_bad[i]:
+                route_action[i] = "init_incomplete_skipped"
+                revert_reason[i] = "initial_incomplete_skipped"
+            elif r0[i] < lo_bound:
+                route_action[i] = "retain_zs"
+            elif hi_bound is not None and r0[i] > hi_bound:
+                route_action[i] = "flag_outlier"
+            else:
+                route_action[i] = "refine_hes" if enable_holdout_es else "refine_50step"
+                routed_mask[i] = True
+
+        routed_idx = np.where(routed_mask)[0]
+        if routed_idx.size > 0:
+            if enable_holdout_es:
+                vs_r, r_info = run_holdout_early_stopping(
+                    vs_init_aligned=vs_init[routed_idx],
+                    ens=ens,
+                    depths=d_arr,
+                    periods=per_clean[routed_idx],
+                    phase_vel=ph_clean[routed_idx],
+                    group_vel=gp_clean[routed_idx],
+                    obs_mask=km_2ch[routed_idx],
+                    kept_mask=km_2ch[routed_idx],
+                    domain=domain,
+                    dc=dc_val,
+                    lr=lr,
+                    num_steps=num_steps,
+                    check_interval=check_interval,
+                    lambda_prior=lambda_prior,
+                    v_bounds=v_bounds,
+                    batch_size=batch_size,
+                    stop_split_ratio=stop_split_ratio,
+                    stop_split_seed=stop_split_seed,
+                    stop_split_keep_endpoints=stop_split_keep_endpoints,
+                    station_indices=routed_idx,
+                    enable_zres_freeze=bool(enable_zres_freeze),
+                    freeze_depth_factor=float(freeze_depth_factor),
+                    enable_exact_verification=bool(enable_exact_verification),
+                    m_init_kept=m_init_kept[routed_idx],
+                    init_complete=init_comp[routed_idx],
+                    seed=seed,
+                    device=device,
+                    remove_group=rm_grp,
+                    compute_group=comp_grp,
+                    disba_workers=eff_workers,
+                    executor=executor,
+                    phase_dispersion_cls=phase_dispersion_cls,
+                    group_dispersion_cls=group_dispersion_cls,
+                )
+                vs_out[routed_idx] = vs_r
+                selected_step[routed_idx] = r_info["selected_step"]
+                reverted[routed_idx] = r_info["reverted"]
+                m_final_kept[routed_idx] = r_info["m_final_kept"]
+                for k_i, gi in enumerate(routed_idx.tolist()):
+                    revert_reason[gi] = str(r_info["revert_reason"][k_i])
+                t_gpu_sec += float(r_info["t_gpu_refine_sec"])
+                t_disba_sec += float(r_info["t_disba_check_sec"])
+                n_disba_calls += int(r_info["n_disba_calls"])
+                peak_vram_gb = max(peak_vram_gb, float(r_info["peak_vram_gb"]))
+            else:
+                vs_r, r_info = run_output_refinement_from_profile(
+                    vs_init_aligned=vs_init[routed_idx],
+                    ens=ens,
+                    periods=per_clean[routed_idx],
+                    phase_vel=ph_clean[routed_idx],
+                    group_vel=gp_clean[routed_idx],
+                    obs_mask=km_2ch[routed_idx],
+                    kept_mask=km_2ch[routed_idx],
+                    domain=domain,
+                    depths=d_arr,
+                    z_res_kept=z_freeze_eff[routed_idx],
+                    enable_zres_freeze=bool(enable_zres_freeze),
+                    lr=lr,
+                    num_steps=num_steps,
+                    lambda_prior=lambda_prior,
+                    v_bounds=v_bounds,
+                    batch_size=batch_size,
+                    snapshot_steps=None,
+                    seed=seed,
+                    device=device,
+                    remove_group=rm_grp,
+                )
+                t_gpu_sec += float(r_info["t_gpu_refine_sec"])
+                peak_vram_gb = max(peak_vram_gb, float(r_info["peak_vram_gb"]))
+                vs_out[routed_idx] = vs_r
+                selected_step[routed_idx] = int(num_steps)
+                if enable_exact_verification:
+                    ev_fin = _eval_disba_subset_diag(
+                        vs_r,
+                        d_arr,
+                        per_clean[routed_idx],
+                        ph_clean[routed_idx],
+                        gp_clean[routed_idx],
+                        km_2ch[routed_idx],
+                        compute_group=comp_grp,
+                        dc=dc_val,
+                        workers=eff_workers,
+                        executor=executor,
+                        phase_dispersion_cls=phase_dispersion_cls,
+                        group_dispersion_cls=group_dispersion_cls,
+                    )
+                    t_disba_sec += ev_fin["elapsed_sec"]
+                    n_disba_calls += ev_fin["n_calls"]
+                    m_cand = ev_fin["misfit_ps"]
+                    c_obs = ev_fin["is_complete_obs"]
+                    is_emp = ev_fin["is_empty"]
+                    for k_i, gi in enumerate(routed_idx.tolist()):
+                        if bool(is_emp[k_i]):
+                            vs_out[gi] = vs_init[gi]
+                            reverted[gi] = True
+                            revert_reason[gi] = "disba_empty_return"
+                            m_final_kept[gi] = m_init_kept[gi]
+                        elif not bool(c_obs[k_i]):
+                            vs_out[gi] = vs_init[gi]
+                            reverted[gi] = True
+                            revert_reason[gi] = "disba_incomplete_return"
+                            m_final_kept[gi] = m_init_kept[gi]
+                        elif not np.isfinite(m_cand[k_i]):
+                            vs_out[gi] = vs_init[gi]
+                            reverted[gi] = True
+                            revert_reason[gi] = "nonfinite_misfit"
+                            m_final_kept[gi] = m_init_kept[gi]
+                        elif float(m_cand[k_i]) >= float(m_init_kept[gi]):
+                            vs_out[gi] = vs_init[gi]
+                            reverted[gi] = True
+                            revert_reason[gi] = "misfit_not_improved"
+                            m_final_kept[gi] = m_init_kept[gi]
+                        else:
+                            m_final_kept[gi] = float(m_cand[k_i])
+    finally:
+        if executor is not None:
+            executor.shutdown(wait=True)
+
+    max_frozen_delta = compute_max_frozen_delta(vs_out, vs_init, d_arr, z_res_kept)
+    route_counts: Dict[str, int] = {}
+    for ra in route_action:
+        route_counts[ra] = route_counts.get(ra, 0) + 1
+    reason_counts: Dict[str, int] = {}
+    for rr in revert_reason:
+        reason_counts[rr] = reason_counts.get(rr, 0) + 1
+
+    n_routed = int(np.sum(routed_mask))
+    unrouted_hes_calls = int(n_sta * len(snapshot_steps))
+    call_savings_pct = (
+        float((unrouted_hes_calls - n_disba_calls) / unrouted_hes_calls * 100.0)
+        if unrouted_hes_calls > 0
+        else 0.0
+    )
+    t_total_sec = float(time.perf_counter() - t_total0)
+
+    info: Dict[str, Any] = {
+        "method": "operational_four_step_protocol",
+        "domain": domain,
+        "dc": dc_val,
+        "sigma_hat_d": float(sigma_hat_d),
+        "r0_low": lo_bound,
+        "r0_high": hi_bound,
+        "switches": {
+            "enable_zres_freeze": bool(enable_zres_freeze),
+            "freeze_depth_factor": float(freeze_depth_factor),
+            "enable_holdout_es": bool(enable_holdout_es),
+            "enable_exact_verification": bool(enable_exact_verification),
+        },
+        "lr": float(lr),
+        "num_steps": int(num_steps),
+        "check_interval": int(check_interval),
+        "lambda_prior": float(lambda_prior),
+        "n_stations": n_sta,
+        "n_routed": n_routed,
+        "routed_fraction": float(n_routed / n_sta) if n_sta else 0.0,
+        "route_counts": route_counts,
+        "n_reverted": int(np.sum(reverted)),
+        "revert_rate_all": float(np.mean(reverted)) if n_sta else 0.0,
+        "revert_rate_routed": float(np.sum(reverted) / n_routed) if n_routed else 0.0,
+        "revert_reason_counts": reason_counts,
+        "max_frozen_delta_overall": float(np.max(max_frozen_delta)) if n_sta else 0.0,
+        "n_disba_calls": int(n_disba_calls),
+        "unrouted_holdout_es_disba_calls": unrouted_hes_calls,
+        "disba_call_savings_vs_unrouted_hes_pct": call_savings_pct,
+        "t_gpu_refine_sec": t_gpu_sec,
+        "t_disba_check_sec": t_disba_sec,
+        "t_total_sec": t_total_sec,
+        "peak_vram_gb": peak_vram_gb,
+        "r0": r0,
+        "m_init_kept": m_init_kept,
+        "m_final_kept": m_final_kept,
+        "route_action": np.asarray(route_action, dtype="<U32"),
+        "selected_step": selected_step,
+        "z_res_kept": z_res_kept,
+        "max_frozen_delta": max_frozen_delta,
+        "reverted": reverted,
+        "revert_reason": np.asarray(revert_reason, dtype="<U32"),
+    }
+    return vs_out, info
 
 
 def run_fixed_step_early_stopping(

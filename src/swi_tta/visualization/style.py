@@ -13,10 +13,12 @@ import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 
 # Exact Elsevier / Computers & Geosciences print widths (mm -> inches)
+# Set DOUBLE_COL_MM to 166 mm (~471 pt, ~0.96x scaling on cas-sc 455 pt textwidth)
+# so native Matplotlib lettering renders at >= 6.4-8.0 pt post-scaling without shrinking.
 MM_PER_INCH: float = 25.4
 SINGLE_COL_MM: float = 90.0
 ONE_HALF_COL_MM: float = 140.0
-DOUBLE_COL_MM: float = 190.0
+DOUBLE_COL_MM: float = 166.0
 
 SINGLE_COL_IN: float = SINGLE_COL_MM / MM_PER_INCH
 ONE_HALF_COL_IN: float = ONE_HALF_COL_MM / MM_PER_INCH
@@ -44,15 +46,15 @@ PALETTE: Dict[str, str] = {
 # Canonical method styling (color, marker, linestyle, short display label)
 METHOD_STYLE: Dict[str, Tuple[str, str, str, str]] = {
     "zero_shot_raw": ("#7F7F7F", "o", ":", "Zero-Shot (Raw)"),
-    "zero_shot_aligned": ("#1A1A1A", "s", "-", "Zero-Shot (Aligned)"),
+    "zero_shot_aligned": ("#1A1A1A", "s", "-", "Input-Aligned Zero-Shot"),
     "ungated_adapter_raw": ("#8C564B", "v", "--", "Ungated Adapter (Raw)"),
     "gated_adapter_raw": ("#E69F00", "^", "--", "Gated Adapter (Raw)"),
-    "soft_gated_output_refined_raw": ("#CC79A7", "P", "-.", "Soft-Gated Output-Ref. (Raw)"),
+    "soft_gated_output_refined_raw": ("#CC79A7", "P", "-.", "Soft-Gated Output-Refined (Raw)"),
     "output_refined_raw": ("#56B4E9", "D", "--", "Output-Refined (Raw)"),
-    "adapter_output_refined_raw": ("#9467BD", "X", "-.", "Adapter + Output-Ref. (Raw)"),
-    "output_refined_aligned": ("#D55E00", "o", "-", "Output-Refined (50-step)"),
+    "adapter_output_refined_raw": ("#9467BD", "X", "-.", "Adapter + Output-Refined (Raw)"),
+    "output_refined_aligned": ("#D55E00", "o", "-", "Output-Space Refinement"),
     "low_dof_adapter": ("#009E73", "^", "-", "Low-DOF Adapter"),
-    "adapter_output_refined_aligned": ("#0072B2", "*", "-", "Gated Adapter + Output-Ref."),
+    "adapter_output_refined_aligned": ("#0072B2", "*", "-", "Gated Adapter + Output-Refined"),
 }
 
 
@@ -68,15 +70,15 @@ def apply_cg_style() -> None:
             "font.family": "sans-serif",
             "font.sans-serif": ["DejaVu Sans", "Arial", "Helvetica"],
             "mathtext.fontset": "dejavusans",
-            "font.size": 8.0,
-            "axes.titlesize": 8.5,
+            "font.size": 8.5,
+            "axes.titlesize": 9.0,
             "axes.titleweight": "bold",
-            "axes.labelsize": 8.0,
+            "axes.labelsize": 8.5,
             "axes.labelcolor": "#1A1A1A",
-            "xtick.labelsize": 7.2,
-            "ytick.labelsize": 7.2,
-            "legend.fontsize": 7.0,
-            "legend.title_fontsize": 7.2,
+            "xtick.labelsize": 7.8,
+            "ytick.labelsize": 7.8,
+            "legend.fontsize": 7.4,
+            "legend.title_fontsize": 7.6,
             "legend.frameon": True,
             "legend.framealpha": 0.92,
             "legend.edgecolor": "#CCCCCC",

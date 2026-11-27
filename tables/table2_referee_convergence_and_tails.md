@@ -17,4 +17,4 @@
 | Deep: Low-DOF Adapter | 5.0e-3 | 2.59% | 2.59% | +0.00 | 1.564 | 1.564 | 0.318 / 0.274 |
 | Deep: Gated Adapter + Output-Refined | 5.0e-3 | 0.84% | 0.84% | +0.00 | 1.588 | 1.588 | 0.374 / 0.358 |
 
-*Old columns use disba default dc = 5e-3 km/s; New columns use converged per-regime dc (2.5e-5 km/s shallow, 5e-3 km/s deep). Ground-Truth counts show stations exceeding 20% held-out misfit out of 5,000 test profiles.*
+*Old columns use disba default dc = 5e-3 km/s; New columns use converged per-regime dc (2.5e-5 km/s shallow, 5e-3 km/s deep). Ground-Truth counts show stations exceeding 20% held-out misfit out of 21,469 shallow and 10,626 deep test profiles.*

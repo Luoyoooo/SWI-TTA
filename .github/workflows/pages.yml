@@ -1,0 +1,51 @@
+name: Deploy Project Website to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "website/**"
+      - "figures/**"
+      - "results_summary/operational_protocol_audit.json"
+      - ".github/workflows/pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Stage static website bundle with synced figures and audit JSON
+        run: |
+          mkdir -p _site/assets/figures/main _site/assets/figures/supplementary _site/assets/data
+          cp -r website/* _site/
+          cp figures/graphical_abstract.png _site/assets/figures/graphical_abstract.png
+          cp figures/main/*.png _site/assets/figures/main/
+          cp figures/supplementary/*.png _site/assets/figures/supplementary/
+          cp results_summary/operational_protocol_audit.json _site/assets/data/operational_protocol_audit.json
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "_site"
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

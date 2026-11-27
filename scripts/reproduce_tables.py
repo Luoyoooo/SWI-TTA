@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Reproduce Tables 1-4 and Supplementary Tables S1-S2 in Markdown and LaTeX purely on CPU."""
+"""Reproduce Tables 1-4 and Supplementary Tables S1-S3 in Markdown and LaTeX purely on CPU."""
 
 from __future__ import annotations
 

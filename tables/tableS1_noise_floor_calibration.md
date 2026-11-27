@@ -15,4 +15,4 @@
 | Noise Scan 2.0× | Shallow | 100 | 2.5e-05 | 0.01845 | 0.01935 | 0.95× |
 | Noise Scan 4.0× | Shallow | 100 | 2.5e-05 | 0.03759 | 0.03969 | 0.95× |
 
-*Calibrated L2 trust-region bounds Δ (km/s): OpenSWI shallow = 0.2445, OpenSWI deep = 0.0821, DispFormer shallow = 0.1713, DispFormer deep = 0.0784. Deep Lithospheric uses its dedicated calibration split (σ̂_D = 0.02417, ratio = 1.82× vs GT 0.01329).*
+*Depth grids: Shallow D = 70 layers over 0–2.76 km (Δz = 0.04 km; bounds [0.08, 4.45] km/s; T in [0.20, 10.0] s, field 0.26–1.67 s); Deep D = 301 layers over 0–300 km (Δz = 1.0 km; bounds [0.15, 4.98] km/s; T in [1.0, 100.0] s, field 8.0–70.0 s). Calibrated L2 trust-region bounds Δ (km/s): OpenSWI shallow = 0.2445, OpenSWI deep = 0.0821, DispFormer shallow = 0.1713, DispFormer deep = 0.0784. Deep Lithospheric uses its dedicated calibration split (σ̂_D = 0.02417, ratio = 1.82× vs GT 0.01329).*
